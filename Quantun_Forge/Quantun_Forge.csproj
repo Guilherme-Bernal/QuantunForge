@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<Platforms>x64</Platforms>
+		<!-- Corrigido: usar apenas x64 já que QuantumSimulators são AMD64 -->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Dependência da Microsoft Quantum SDK -->
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc5.4" />
+		<PackageReference Include="Microsoft.Quantum.Standard" Version="0.28.302812" />
+		<PackageReference Include="SkiaSharp" Version="3.116.1" />
+		<PackageReference Include="SkiaSharp.Views" Version="3.116.1" />
+		<PackageReference Include="SkiaSharp.Views.WPF" Version="3.116.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Definição explícita de imagens ou recursos -->
+		<Resource Include="Assets\Logo.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Quantum_Forge.Services\Quantum_Forge.Services.csproj" />
+	</ItemGroup>
+
+</Project>

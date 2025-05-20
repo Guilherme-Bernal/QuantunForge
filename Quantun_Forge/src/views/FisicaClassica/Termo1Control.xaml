@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.FisicaClassica.Termo1Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="900">
+
+    <Grid Background="#1E1E1E" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- TÍTULO -->
+        <TextBlock Text="1ª Lei da Termodinâmica – Energia Interna"
+                   FontSize="26" FontWeight="Bold" Foreground="White"
+                   HorizontalAlignment="Center" Margin="0,10"/>
+
+        <!-- TEORIA -->
+        <ScrollViewer Grid.Row="1" Margin="20,0,20,10">
+            <StackPanel>
+                <TextBlock Text="📘 História e Conceito" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,10,0,5"/>
+                <TextBlock Text="A variação da energia interna de um sistema é dada pela diferença entre o calor recebido e o trabalho realizado: ΔU = Q - W." 
+                           FontSize="14" Foreground="White" TextWrapping="Wrap"/>
+                <TextBlock Text="Fórmula: ΔU = Q - W" FontSize="18" FontWeight="Bold" Foreground="LightBlue" Margin="10,10,0,4"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- SIMULADOR -->
+        <Grid Grid.Row="2" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Visualização e cilindro -->
+            <Border Margin="10" BorderThickness="2" BorderBrush="Gray" CornerRadius="5">
+                <Canvas x:Name="CanvasSimulacao" Background="#2E2E2E" ClipToBounds="True">
+                    <Rectangle x:Name="Cilindro" Width="100" Height="100" Fill="LightBlue" Canvas.Left="100" Canvas.Top="50"/>
+                    <TextBlock x:Name="TxtSimulacaoEstado" Text="🧊 Sistema em equilíbrio" Foreground="White" FontSize="14" Canvas.Left="70" Canvas.Top="170"/>
+
+                    <!-- Barras -->
+                    <Rectangle x:Name="BarraQ" Width="20" Height="0" Fill="Orange" Canvas.Left="250" Canvas.Top="150"/>
+                    <TextBlock Text="Q" Foreground="White" Canvas.Left="250" Canvas.Top="160"/>
+
+                    <Rectangle x:Name="BarraW" Width="20" Height="0" Fill="SkyBlue" Canvas.Left="280" Canvas.Top="150"/>
+                    <TextBlock Text="W" Foreground="White" Canvas.Left="280" Canvas.Top="160"/>
+
+                    <Rectangle x:Name="BarraU" Width="20" Height="0" Fill="LimeGreen" Canvas.Left="310" Canvas.Top="150"/>
+                    <TextBlock Text="ΔU" Foreground="White" Canvas.Left="310" Canvas.Top="160"/>
+                </Canvas>
+            </Border>
+
+            <!-- Sliders -->
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="🔥 Calor fornecido (Q - J)" Foreground="White"/>
+                <Slider x:Name="SliderQ" Minimum="-1000" Maximum="1000" Value="500"/>
+                <TextBlock Text="{Binding ElementName=SliderQ, Path=Value, StringFormat='Q = {0:F0} J'}" Foreground="White"/>
+
+                <TextBlock Text="⚙️ Trabalho realizado (W - J)" Foreground="White" Margin="10,10,0,0"/>
+                <Slider x:Name="SliderW" Minimum="-1000" Maximum="1000" Value="200"/>
+                <TextBlock Text="{Binding ElementName=SliderW, Path=Value, StringFormat='W = {0:F0} J'}" Foreground="White"/>
+
+                <!-- Ações -->
+                <Button Content="▶ Calcular" Width="200" Margin="0,10,0,0" Click="BtnCalcular_Click"/>
+                <Button Content="⏹ Resetar" Width="200" Click="BtnResetar_Click" Margin="0,5,0,0"/>
+                <Button Content="🎲 Modo Desafio" Width="200" Margin="0,5,0,0" Click="BtnDesafio_Click"/>
+
+                <!-- Cenários rápidos -->
+                <TextBlock Text="⚡ Exemplos prontos:" Foreground="White" Margin="10,15,0,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Aquece &amp; Expande" Click="BtnCenario1_Click" Margin="0,0,5,0"/>
+                    <Button Content="Esfria &amp; Comprime" Click="BtnCenario2_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Resultado -->
+            <StackPanel Grid.Column="2" Margin="10">
+                <TextBlock x:Name="TxtResultado" FontSize="14" FontWeight="Bold" Foreground="LightGreen" TextWrapping="Wrap"/>
+                <TextBlock x:Name="TxtInterpretacao" FontSize="13" Foreground="White" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                <TextBlock x:Name="TxtRespostaDesafio" FontSize="13" Foreground="Gold" Margin="10,10,0,0" Visibility="Collapsed"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

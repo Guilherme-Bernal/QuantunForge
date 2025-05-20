@@ -1,0 +1,204 @@
+﻿<Window x:Class="Quantun_Forge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Quantum Forge" Height="600" Width="1000" Background="#1E1E1E" MinHeight="400" MinWidth="600">
+
+    <Window.Resources>
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#444"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Expander" x:Key="BaseExpanderStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Margin" Value="10,5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <DockPanel Background="#252526" LastChildFill="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Logo + Título -->
+                <StackPanel Grid.Row="0" Margin="0,30,0,10" HorizontalAlignment="Center">
+                    <Image Source="Assets/Logo.png" Width="100" Height="100" Margin="0,0,0,10">
+                        <Image.Effect>
+                            <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                        </Image.Effect>
+                    </Image>
+                    <TextBlock Text="QUANTUM FORGE" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Menu com Submenus e Sub-Submenus -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,5,0">
+                    <StackPanel Margin="10,0,10,0">
+                        <Button Content="Introdução" Style="{StaticResource MenuButtonStyle}" ToolTip="Apresentação geral do projeto"/>
+
+                        <!-- Computação -->
+                        <Expander Header="Computação" Style="{StaticResource BaseExpanderStyle}">
+                            <StackPanel>
+                                <Expander Header="Computação Clássica" Style="{StaticResource BaseExpanderStyle}" Margin="20,0,0,0">
+                                    <StackPanel>
+                                        <Button x:Name="btnPortasLogicas"
+                                         Content="Portas Lógicas"
+                                         Style="{StaticResource MenuButtonStyle}"
+                                         Padding="15,5,5,5"
+                                         Click="BtnPortasLogicas_Click"/>
+
+                                        <Button x:Name="btnSistemaBinario"
+                                         Content="Sistema Binário"
+                                         Style="{StaticResource MenuButtonStyle}"
+                                         Padding="15,5,5,5"
+                                         Click="BtnSistemaBinario_Click"/>
+
+                                        <Button x:Name="btnAlu"
+                                         Content="Unidade Aritmética e Lógica (ALU)"
+                                         Style="{StaticResource MenuButtonStyle}"
+                                         Padding="15,5,5,5"
+                                         Click="BtnAlu_Click"/>
+
+                                        <Button x:Name="btnCicloInstrucao"
+                                         Content="Ciclo de Instrução"
+                                         Style="{StaticResource MenuButtonStyle}"
+                                         Padding="15,5,5,5"
+                                         Click="BtnCicloInstrucao_Click"/>
+                                        <Button x:Name="btnLogicaBooleana" Content="Lógica Booleana"
+                                          Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"
+                                          Click="BtnLogicaBooleana_Click"/>
+
+                                        <Button x:Name="btnVonNeumann" Content="Arquitetura Von Neumann"
+                                           Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"
+                                           Click="BtnVonNeumann_Click"/>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Header="Computação Quântica" Style="{StaticResource BaseExpanderStyle}" Margin="20,0,0,0">
+                                    <StackPanel>
+                                        <Button Content="Superposição Quântica" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5" Click="BtnSuperposicao_Click"/>
+                                        <Button Content="Emaranhamento" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5" Click= "BtnEmaranhamento_Click "/>
+                                        <Button Content="Portas Quânticas e suas Transformações" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                                        <Button Content="Simulação de Probabilidades" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Física -->
+                        <Expander Header="Física" Style="{StaticResource BaseExpanderStyle}">
+                            <StackPanel>
+                                <Expander Header="Física Clássica" Style="{StaticResource BaseExpanderStyle}" Margin="20,0,0,0">
+                                    <StackPanel Margin="10,5,0,0" Orientation="Vertical" VerticalAlignment="Top">
+
+                                        <!-- Grupo: Leis de Newton -->
+                                        <TextBlock Text="1. Leis de Newton" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
+                                        <Button Content="1.1 - 1ª Lei (Inércia)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_LeiNewton1_Click"/>
+                                        <Button Content="1.2 - 2ª Lei (F = m.a)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_LeiNewton2_Click"/>
+                                        <Button Content="1.3 - 3ª Lei (Ação e Reação)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_LeiNewton3_Click"/>
+
+                                        <!-- Grupo: Gravitação -->
+                                        <TextBlock Text="2. Lei da Gravitação" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
+                                        <Button Content="2.1 - Lei da Gravitação Universal" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Gravitacao_Click"/>
+
+                                        <!-- Grupo: Termodinâmica -->
+                                        <TextBlock Text="3. Leis da Termodinâmica" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
+                                        <Button Content="3.1 - 1ª Lei (Energia Interna)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Termo1_Click"/>
+                                        <Button Content="3.2 - 2ª Lei (Entropia)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Termo2_Click"/>
+                                        <Button Content="3.3 - 3ª Lei (Entropia no 0 K)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Termo3_Click"/>
+
+                                        <!-- Grupo: Eletromagnetismo -->
+                                        <TextBlock Text="4. Eletromagnetismo" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
+                                        <Button Content="4.1 - Lei de Coulomb" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Coulomb_Click"/>
+                                        <Button Content="4.2 - Leis de Maxwell" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Maxwell_Click"/>
+
+                                        <!-- Grupo: Hidrostática -->
+                                        <TextBlock Text="5. Hidrostática" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
+                                        <Button Content="5.1 - Princípio de Pascal" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Pascal_Click"/>
+                                        <Button Content="5.2 - Princípio de Arquimedes" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Arquimedes_Click"/>
+                                        <Button Content="5.3 - Teorema de Torricelli" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Torricelli_Click"/>
+
+                                    </StackPanel>
+                                </Expander>
+
+                                <Expander Header="Física Quântica" Style="{StaticResource BaseExpanderStyle}" Margin="20,0,0,0">
+                                    <StackPanel>
+                                        <Button Content="Quantização de Energia" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                                        <Button Content="Dualidade Onda-Particula" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                                        <Button Content="Principio da Incerteza" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                                        <Button Content="Superposição Quantica" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                                        <Button Content="Emeranhamento Quantico" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Sobre -->
+                        <Button Content="ℹ️ Sobre" Style="{StaticResource MenuButtonStyle}" ToolTip="Informacoes gerais sobre o projeto"/>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Rodapé -->
+                <StackPanel Grid.Row="2" Margin="10">
+                    <Button Style="{StaticResource MenuButtonStyle}" Margin="0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⚙" FontSize="14" Margin="0,0,5,0"/>
+                            <TextBlock Text="Configurações"/>
+                        </StackPanel>
+                    </Button>
+                    <TextBlock Text="Versão 1.0.0" Foreground="Gray" FontSize="10" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+
+        <!-- Área principal -->
+        <Frame x:Name="MainFrame" Grid.Column="1" Background="#1E1E1E"/>
+    </Grid>
+</Window>

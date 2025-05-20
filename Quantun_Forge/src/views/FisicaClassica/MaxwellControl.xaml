@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.FisicaClassica.MaxwellControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="900">
+
+    <Grid Background="#1E1E1E" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título -->
+        <TextBlock Text="⚡ Leis de Maxwell – Fundamentos do Eletromagnetismo"
+                   FontSize="24" FontWeight="Bold" Foreground="White"
+                   HorizontalAlignment="Center" Margin="0,10"/>
+
+        <!-- Conteúdo com Scroll -->
+        <ScrollViewer Grid.Row="1" Margin="10">
+            <StackPanel>
+
+                <!-- Introdução -->
+                <TextBlock Text="📘 Introdução" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,10,0,5"/>
+                <TextBlock Text="As Equações de Maxwell descrevem como os campos elétricos e magnéticos se comportam e interagem. São fundamentais para entender a luz, eletricidade, magnetismo e ondas eletromagnéticas." 
+                           FontSize="14" Foreground="White" TextWrapping="Wrap"/>
+
+                <!-- Equações -->
+                <UniformGrid Columns="2" Rows="2" Margin="0,20,0,0" HorizontalAlignment="Center">
+
+                    <!-- Gauss E -->
+                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="10" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="1️⃣ Lei de Gauss (E)" FontSize="16" FontWeight="Bold" Foreground="LightBlue"/>
+                            <TextBlock Text="∮ E · dA = Q / ε₀" FontSize="18" Foreground="White" Margin="0,5"/>
+                            <TextBlock Text="O fluxo elétrico através de uma superfície é proporcional à carga total dentro dela." 
+                                       FontSize="13" Foreground="LightGray" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Gauss B -->
+                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="10" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="2️⃣ Lei de Gauss (B)" FontSize="16" FontWeight="Bold" Foreground="LightBlue"/>
+                            <TextBlock Text="∮ B · dA = 0" FontSize="18" Foreground="White" Margin="0,5"/>
+                            <TextBlock Text="O fluxo magnético líquido através de uma superfície fechada é sempre zero – não existem monopólos magnéticos." 
+                                       FontSize="13" Foreground="LightGray" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Faraday -->
+                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="10" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="3️⃣ Lei de Faraday" FontSize="16" FontWeight="Bold" Foreground="LightBlue"/>
+                            <TextBlock Text="∮ E · dl = - dΦB/dt" FontSize="18" Foreground="White" Margin="0,5"/>
+                            <TextBlock Text="Uma variação de campo magnético induz um campo elétrico." 
+                                       FontSize="13" Foreground="LightGray" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Ampère-Maxwell -->
+                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="10" Padding="10" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="4️⃣ Lei de Ampère-Maxwell" FontSize="16" FontWeight="Bold" Foreground="LightBlue"/>
+                            <TextBlock Text="∮ B · dl = μ₀·I + μ₀·ε₀·dΦE/dt" FontSize="18" Foreground="White" Margin="0,5"/>
+                            <TextBlock Text="Corrente elétrica e variação de campo elétrico criam campo magnético." 
+                                       FontSize="13" Foreground="LightGray" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+                <!-- Interpretação -->
+                <TextBlock Text="🧠 Interpretação" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,30,0,5"/>
+                <TextBlock Text="As equações mostram que eletricidade e magnetismo estão interligados. Mudanças em campos elétricos geram campos magnéticos, e vice-versa – base das ondas eletromagnéticas." 
+                           FontSize="14" Foreground="White" TextWrapping="Wrap"/>
+
+                <!-- Simulação -->
+                <TextBlock Text="🎞️ Simulação Interativa – Onda Eletromagnética"
+                           FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,30,0,10"/>
+
+                <StackPanel Margin="0,0,0,20">
+                    <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="10" Margin="0,10">
+                        <Canvas x:Name="CanvasOnda" Background="#222" Height="200" ClipToBounds="True"/>
+                    </Border>
+
+                    <Button Content="▶ Iniciar Onda Eletromagnética"
+                            Width="250" HorizontalAlignment="Left" Click="BtnIniciar_Click" Margin="0,10"/>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

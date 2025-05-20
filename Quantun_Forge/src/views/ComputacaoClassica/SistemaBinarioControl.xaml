@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.SistemaBinarioControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#1E1E1E">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="40">
+
+            <!-- Título -->
+            <TextBlock Text="💡 Sistema Binário" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,20"/>
+
+            <!-- Explicação -->
+            <Border Background="#2D2D30" CornerRadius="8" Padding="15" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="📜 Sobre o Sistema Binário" Foreground="White" FontWeight="Bold" FontSize="16" Margin="0,0,0,8"/>
+                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="14"
+                               Text="O sistema binário é a base da computação moderna. Ele utiliza apenas dois dígitos, 0 e 1, representando estados desligado e ligado, respectivamente. Todos os dados e instruções em computadores são processados usando combinações binárias."/>
+                </StackPanel>
+            </Border>
+
+            <!-- Conversão Decimal -> Binário -->
+            <TextBlock Text="🔢 Decimal → Binário / Hex / Oct" Foreground="White" FontWeight="Bold" Margin="0,0,0,5"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBox x:Name="txtDecimal" Width="120" Margin="0,0,10,0" Foreground="White" Background="#2D2D30"/>
+                <Button Content="Converter" Click="Converter_Click" Background="#007ACC" Foreground="White" Width="100"/>
+            </StackPanel>
+            <TextBlock x:Name="lblBinario" FontSize="16" Foreground="#00C8FF" FontWeight="Bold"/>
+            <TextBlock x:Name="lblHex" FontSize="14" Foreground="LightGray"/>
+            <TextBlock x:Name="lblOct" FontSize="14" Foreground="LightGray"/>
+            <TextBlock x:Name="lblAscii" FontSize="14" Foreground="LightGray"/>
+
+            <!-- Visualização dos Bits -->
+            <StackPanel Margin="20,30,0,0">
+                <TextBlock Text="🧠 Visualização dos Bits" Foreground="White" FontWeight="Bold" Margin="0,0,0,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel x:Name="BitDisplay" Orientation="Horizontal" Margin="0,0,0,5"/>
+                </StackPanel>
+                <StackPanel x:Name="BitLabels" Orientation="Horizontal"/>
+            </StackPanel>
+
+            <!-- Conversão Binário -> Decimal -->
+            <TextBlock Text="🔄 Binário → Decimal" Foreground="White" FontWeight="Bold" Margin="30,30,0,5"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBox x:Name="txtBinario" Width="120" Margin="0,0,10,0" Foreground="White" Background="#2D2D30"/>
+                <Button Content="Converter" Click="ConverterBinario_Click" Background="#007ACC" Foreground="White" Width="100"/>
+            </StackPanel>
+            <TextBlock x:Name="lblDecimal" FontSize="16" Foreground="#00C8FF" FontWeight="Bold"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
