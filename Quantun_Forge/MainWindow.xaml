@@ -125,8 +125,7 @@
                                     <StackPanel>
                                         <Button Content="Superposição Quântica" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5" Click="BtnSuperposicao_Click"/>
                                         <Button Content="Emaranhamento" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5" Click= "BtnEmaranhamento_Click "/>
-                                        <Button Content="Portas Quânticas e suas Transformações" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
-                                        <Button Content="Simulação de Probabilidades" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                                        
                                     </StackPanel>
                                 </Expander>
                             </StackPanel>
@@ -173,8 +172,7 @@
                                         <Button Content="Quantização de Energia" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
                                         <Button Content="Dualidade Onda-Particula" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
                                         <Button Content="Principio da Incerteza" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
-                                        <Button Content="Superposição Quantica" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
-                                        <Button Content="Emeranhamento Quantico" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
+                            
                                     </StackPanel>
                                 </Expander>
                             </StackPanel>
