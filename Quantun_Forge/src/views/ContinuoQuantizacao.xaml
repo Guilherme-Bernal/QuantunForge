@@ -1,0 +1,644 @@
+﻿<UserControl x:Class="Quantun_Forge.src.ContinuoQuantizacao"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1000"
+             Background="White">
+
+    <UserControl.Resources>
+        <!-- Cores do Tema -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#2C3E50"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#E74C3C"/>
+        <SolidColorBrush x:Key="SuccessColor" Color="#27AE60"/>
+        <SolidColorBrush x:Key="WarningColor" Color="#F39C12"/>
+        <SolidColorBrush x:Key="LightGray" Color="#ECF0F1"/>
+        <SolidColorBrush x:Key="DarkGray" Color="#7F8C8D"/>
+        <SolidColorBrush x:Key="ClassicalColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="QuantumColor" Color="#9B59B6"/>
+
+        <!-- Animação de Fade In -->
+        <Storyboard x:Key="FadeInAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                           From="0" To="1" Duration="0:0:0.8"/>
+        </Storyboard>
+
+        <!-- Estilo para Cards -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#BDC3C7" BlurRadius="15" ShadowDepth="3" Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para Botões -->
+        <Style x:Key="SimulationButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2980B9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para Badge -->
+        <Style x:Key="BadgeStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="5,0"/>
+        </Style>
+
+        <!-- Estilos de Texto -->
+        <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="22"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                  HorizontalScrollBarVisibility="Disabled"
+                  Background="#FAFAFA">
+        <StackPanel MaxWidth="1200" Margin="40,30">
+
+            <!-- Header Principal -->
+            <Border Style="{StaticResource CardStyle}" 
+                    Background="White"
+                    Margin="0,0,0,20">
+                <StackPanel>
+                    <!-- Título -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <Viewbox Width="50" Height="50" Margin="0,0,15,0">
+                            <Canvas Width="100" Height="100">
+                                <!-- Onda Contínua -->
+                                <Path Data="M 10,50 Q 20,20 30,50 T 50,50" 
+                                      Stroke="#3498DB" StrokeThickness="3" Fill="Transparent"/>
+                                <!-- Fótons Discretos -->
+                                <Ellipse Canvas.Left="60" Canvas.Top="40" Width="8" Height="8" Fill="#FFD700"/>
+                                <Ellipse Canvas.Left="72" Canvas.Top="45" Width="8" Height="8" Fill="#FFD700"/>
+                                <Ellipse Canvas.Left="84" Canvas.Top="40" Width="8" Height="8" Fill="#FFD700"/>
+                                <!-- Seta de transição -->
+                                <Path Data="M 52,35 L 58,35 L 55,30 M 58,35 L 55,40" 
+                                      Stroke="#E74C3C" StrokeThickness="2"/>
+                            </Canvas>
+                        </Viewbox>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="🌈 Do Campo Contínuo à Quantização" 
+                                     Style="{StaticResource SectionTitleStyle}"
+                                     Margin="0"/>
+                            <TextBlock Text="A Revolução da Luz" 
+                                     FontSize="16"
+                                     Foreground="{StaticResource DarkGray}"
+                                     FontStyle="Italic"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Badges -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,15">
+                        <Border Style="{StaticResource BadgeStyle}" Background="#E3F2FD">
+                            <TextBlock Text="🏛️ Maxwell" Foreground="#1976D2" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#FFF3E0">
+                            <TextBlock Text="💡 Einstein" Foreground="#E65100" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#F3E5F5">
+                            <TextBlock Text="⚛️ Fótons" Foreground="#7B1FA2" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                    </StackPanel>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,15,0,20"/>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource ContentTextStyle}" FontSize="15">
+                        No século XIX, as <Run FontWeight="SemiBold" Foreground="#3498DB">equações de Maxwell</Run> 
+                        unificaram eletricidade, magnetismo e luz em um 
+                        <Run FontWeight="Bold">campo contínuo</Run> que se propaga em ondas suaves.
+                        <LineBreak/><LineBreak/>
+                        Mas ao estudar <Run FontWeight="SemiBold" Foreground="#E74C3C">a interação da luz com a matéria</Run>, 
+                        descobriram que a luz não é um fluxo contínuo — 
+                        ela é feita de <Run FontWeight="Bold" Foreground="#FFD700">pacotes de energia</Run> chamados 
+                        <Run FontWeight="Bold" Foreground="#9B59B6">fótons</Run>.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Simulador Comparativo Principal -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="🎮 Simulador Comparativo: Onda vs Fótons" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,20"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <!-- Controles Globais -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Controle de Frequência -->
+                        <StackPanel Grid.Column="0" Margin="10">
+                            <TextBlock Text="Frequência (f):" 
+                                     FontWeight="Bold"
+                                     FontSize="14"
+                                     Margin="0,0,0,10"/>
+                            <Slider x:Name="SliderFrequencia"
+                                    Minimum="1" Maximum="10" Value="5"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="SliderFrequencia_ValueChanged"/>
+                            <TextBlock x:Name="TxtFrequencia"
+                                     Text="f = 5 | E(fóton) = 5hf"
+                                     FontSize="12"
+                                     Foreground="{StaticResource DarkGray}"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,5,0,0"/>
+                        </StackPanel>
+
+                        <!-- Controle de Intensidade -->
+                        <StackPanel Grid.Column="1" Margin="10">
+                            <TextBlock Text="Intensidade (I):" 
+                                     FontWeight="Bold"
+                                     FontSize="14"
+                                     Margin="0,0,0,10"/>
+                            <Slider x:Name="SliderIntensidade"
+                                    Minimum="1" Maximum="10" Value="5"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="SliderIntensidade_ValueChanged"/>
+                            <TextBlock x:Name="TxtIntensidade"
+                                     Text="I = 5 | Nº de fótons = 5"
+                                     FontSize="12"
+                                     Foreground="{StaticResource DarkGray}"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Área de Comparação Visual -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- VISÃO CLÁSSICA -->
+                        <Border Grid.Column="0"
+                                Background="#E3F2FD"
+                                CornerRadius="10"
+                                Padding="20"
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="🏛️ Visão Clássica" 
+                                         FontSize="18"
+                                         FontWeight="Bold"
+                                         Foreground="#1976D2"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <TextBlock Text="Campo Eletromagnético Contínuo" 
+                                         FontSize="12"
+                                         FontWeight="SemiBold"
+                                         HorizontalAlignment="Center"
+                                         Foreground="{StaticResource DarkGray}"
+                                         Margin="0,0,0,15"/>
+
+                                <!-- Canvas para Onda Contínua -->
+                                <Canvas x:Name="CanvasClassico" 
+                                        Height="180" 
+                                        Background="White"
+                                        Margin="0,10">
+                                    <!-- Eixos -->
+                                    <Line X1="20" Y1="90" X2="420" Y2="90" 
+                                          Stroke="#BDC3C7" StrokeThickness="1"/>
+
+                                    <!-- Onda Senoidal Contínua -->
+                                    <Path x:Name="OndaClassica"
+                                          Stroke="#1976D2" 
+                                          StrokeThickness="3" 
+                                          Fill="Transparent"/>
+
+                                    <!-- Indicadores -->
+                                    <TextBlock Text="Amplitude" Canvas.Left="10" Canvas.Top="10" 
+                                             FontSize="10" Foreground="{StaticResource DarkGray}"/>
+                                    <Line X1="15" Y1="30" X2="15" Y2="80" 
+                                          Stroke="#E74C3C" StrokeThickness="2" StrokeDashArray="2,2"/>
+                                </Canvas>
+
+                                <!-- Explicação Clássica -->
+                                <Border Background="White"
+                                        BorderBrush="#1976D2"
+                                        BorderThickness="2"
+                                        CornerRadius="8"
+                                        Padding="12"
+                                        Margin="0,15,0,0">
+                                    <StackPanel>
+                                        <TextBlock FontSize="11" TextWrapping="Wrap">
+                                            <Run FontWeight="Bold">Características:</Run>
+                                            <LineBreak/>
+                                            • Onda contínua e suave
+                                            <LineBreak/>
+                                            • Energia distribuída uniformemente
+                                            <LineBreak/>
+                                            • Intensidade ∝ Amplitude²
+                                            <LineBreak/>
+                                            • Frequência afeta cor, não energia
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- VISÃO QUÂNTICA -->
+                        <Border Grid.Column="1"
+                                Background="#F3E5F5"
+                                CornerRadius="10"
+                                Padding="20"
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="⚛️ Visão Quântica" 
+                                         FontSize="18"
+                                         FontWeight="Bold"
+                                         Foreground="#7B1FA2"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <TextBlock Text="Fluxo de Fótons Discretos" 
+                                         FontSize="12"
+                                         FontWeight="SemiBold"
+                                         HorizontalAlignment="Center"
+                                         Foreground="{StaticResource DarkGray}"
+                                         Margin="0,0,0,15"/>
+
+                                <!-- Canvas para Fótons -->
+                                <Canvas x:Name="CanvasQuantico" 
+                                        Height="180" 
+                                        Background="White"
+                                        Margin="0,10">
+                                    <!-- Eixos -->
+                                    <Line X1="20" Y1="90" X2="420" Y2="90" 
+                                          Stroke="#BDC3C7" StrokeThickness="1"/>
+
+                                    <!-- Container para Fótons (será preenchido dinamicamente) -->
+                                    <ItemsControl x:Name="ContainerFotons">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <Canvas/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                    <!-- Legenda -->
+                                    <Border Canvas.Left="10" Canvas.Top="10"
+                                            Background="White"
+                                            BorderBrush="#9B59B6"
+                                            BorderThickness="1"
+                                            CornerRadius="4"
+                                            Padding="8,4">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="8" Height="8" Fill="#FFD700" Margin="0,0,5,0"/>
+                                            <TextBlock Text="= 1 Fóton" FontSize="9" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Canvas>
+
+                                <!-- Explicação Quântica -->
+                                <Border Background="White"
+                                        BorderBrush="#7B1FA2"
+                                        BorderThickness="2"
+                                        CornerRadius="8"
+                                        Padding="12"
+                                        Margin="0,15,0,0">
+                                    <StackPanel>
+                                        <TextBlock FontSize="11" TextWrapping="Wrap">
+                                            <Run FontWeight="Bold">Características:</Run>
+                                            <LineBreak/>
+                                            • Pacotes discretos de energia
+                                            <LineBreak/>
+                                            • E(fóton) = hf (cada fóton)
+                                            <LineBreak/>
+                                            • Intensidade ∝ Nº de fótons
+                                            <LineBreak/>
+                                            • Frequência determina energia individual
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Info Card Comparativo -->
+                    <Border Background="#FFF3E0" 
+                            BorderBrush="#F57C00"
+                            BorderThickness="2"
+                            CornerRadius="8"
+                            Padding="15"
+                            Margin="0,20,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" 
+                                     Text="💡" 
+                                     FontSize="32"
+                                     VerticalAlignment="Center"
+                                     Margin="0,0,15,0"/>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock FontWeight="Bold" 
+                                         FontSize="14"
+                                         Foreground="#E65100"
+                                         Margin="0,0,0,8">
+                                    Diferença Fundamental:
+                                </TextBlock>
+                                <TextBlock FontSize="12" TextWrapping="Wrap">
+                                    <Run FontWeight="SemiBold">Clássico:</Run> Aumentar intensidade = aumentar amplitude da onda
+                                    <LineBreak/>
+                                    <Run FontWeight="SemiBold">Quântico:</Run> Aumentar intensidade = aumentar NÚMERO de fótons (energia de cada fóton permanece E=hf)
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Efeito Fotoelétrico -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="⚡ O Efeito Fotoelétrico: A Prova Definitiva" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource AccentColor}"
+                             Margin="0,0,0,15"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <TextBlock Style="{StaticResource ContentTextStyle}" FontSize="14" Margin="0,0,0,20">
+                        Em 1905, <Run FontWeight="Bold">Einstein</Run> mostrou que a luz interage com a matéria de forma discreta. 
+                        Se a frequência fosse baixa, <Run FontWeight="SemiBold" Foreground="#E74C3C">nenhum elétron era ejetado</Run>, 
+                        independente da intensidade!
+                    </TextBlock>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Falha Clássica -->
+                        <Border Grid.Column="0"
+                                Background="#FFEBEE"
+                                BorderBrush="#E74C3C"
+                                BorderThickness="2"
+                                CornerRadius="10"
+                                Padding="20"
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="❌ Previsão Clássica (FALHA)" 
+                                         FontSize="16"
+                                         FontWeight="Bold"
+                                         Foreground="#C62828"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <TextBlock FontSize="13" TextWrapping="Wrap" TextAlignment="Center">
+                                    "Luz mais intensa deveria ejetar elétrons com mais energia"
+                                    <LineBreak/><LineBreak/>
+                                    <Run FontWeight="Bold">Mas não acontece!</Run>
+                                    <LineBreak/><LineBreak/>
+                                    Luz vermelha intensa: ❌ Nenhum elétron
+                                    <LineBreak/>
+                                    Luz UV fraca: ✅ Elétrons ejetados
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Sucesso Quântico -->
+                        <Border Grid.Column="1"
+                                Background="#E8F5E9"
+                                BorderBrush="#27AE60"
+                                BorderThickness="2"
+                                CornerRadius="10"
+                                Padding="20"
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="✅ Explicação Quântica" 
+                                         FontSize="16"
+                                         FontWeight="Bold"
+                                         Foreground="#1B5E20"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <TextBlock FontSize="13" TextWrapping="Wrap" TextAlignment="Center">
+                                    "Cada fóton tem energia E = hf"
+                                    <LineBreak/><LineBreak/>
+                                    <Run FontWeight="Bold">Faz sentido!</Run>
+                                    <LineBreak/><LineBreak/>
+                                    Fóton vermelho (f baixo): energia insuficiente
+                                    <LineBreak/>
+                                    Fóton UV (f alto): energia suficiente para ejetar elétron
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Tabela Comparativa -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="⚖️ Comparação: Maxwell vs Einstein" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,15"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <!-- Header -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="{StaticResource LightGray}" 
+                                Padding="12" CornerRadius="8,0,0,0">
+                            <TextBlock Text="Conceito" FontWeight="Bold" FontSize="14"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="#E3F2FD" Padding="12">
+                            <TextBlock Text="🏛️ Maxwell (Clássico)" FontWeight="Bold" FontSize="14" Foreground="#1976D2"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="#F3E5F5" 
+                                Padding="12" CornerRadius="0,8,0,0">
+                            <TextBlock Text="⚛️ Einstein (Quântico)" FontWeight="Bold" FontSize="14" Foreground="#7B1FA2"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Linhas -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Natureza da Luz" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Onda eletromagnética contínua" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Fluxo de fótons (E = hf)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Energia" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Distribuída continuamente" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Quantizada em múltiplos de hf" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Intensidade" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Determina energia total" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Determina número de fótons" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1" CornerRadius="0,0,0,8">
+                            <TextBlock Text="Efeito Fotoelétrico" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Depende da intensidade ❌" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1" CornerRadius="0,0,8,0">
+                            <TextBlock Text="Depende da frequência ✅" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Conclusão Filosófica -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,40">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#E3F2FD" Offset="0"/>
+                        <GradientStop Color="#F3E5F5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel>
+                    <TextBlock Text="💭 Reflexão Final" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,20"/>
+
+                    <Border Background="White" 
+                            CornerRadius="10" 
+                            Padding="25"
+                            BorderBrush="#FFD700"
+                            BorderThickness="3">
+                        <TextBlock TextWrapping="Wrap" 
+                                 TextAlignment="Center"
+                                 LineHeight="28"
+                                 FontSize="16"
+                                 Foreground="{StaticResource SecondaryColor}">
+                            <Run FontSize="20" Text="✨" />
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#3498DB">
+                                A Física Clássica vê a luz como um mar infinito.
+                            </Run>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#9B59B6">
+                                A Física Quântica revela que esse mar é feito de gotas —
+                            </Run>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#FFD700">
+                                cada uma pulsando com a frequência do universo.
+                            </Run>
+                            <LineBreak/><LineBreak/>
+                            <Run FontStyle="Italic" Foreground="{StaticResource DarkGray}">
+                                "O campo contínuo revelou-se feito de grãos de energia, 
+                                cada um transportando uma quantidade mínima e indivisível de informação."
+                            </Run>
+                            <LineBreak/>
+                            <Run FontSize="20" Text="✨" />
+                        </TextBlock>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

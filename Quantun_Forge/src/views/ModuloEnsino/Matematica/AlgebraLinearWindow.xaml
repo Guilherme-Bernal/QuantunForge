@@ -1,0 +1,571 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Matematica.AlgebraLinearWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Matematica"
+        mc:Ignorable="d"
+        Title="Álgebra Linear - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#7F8C8D"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,5,10,5"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="FormulaText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Cambria Math, Segoe UI"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="15,10"/>
+            <Setter Property="Foreground" Value="#2980B9"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="CodeExample" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Cascadia Code, Consolas, Courier New"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="5,3"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#EBF5FB"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="ExampleBox" TargetType="Border">
+            <Setter Property="Background" Value="#FEF9E7"/>
+            <Setter Property="BorderBrush" Value="#F39C12"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="SuccessBox" TargetType="Border">
+            <Setter Property="Background" Value="#E8F8F5"/>
+            <Setter Property="BorderBrush" Value="#1ABC9C"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Álgebra Linear" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="Organização e Transformação de Informações"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <Border Style="{StaticResource SuccessBox}">
+                        <StackPanel>
+                            <TextBlock Text="O que é Álgebra Linear?" 
+                                     FontSize="15" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                Imagine que você precisa organizar informações em tabelas, movimentar objetos no espaço ou encontrar padrões em grandes conjuntos de dados. 
+                                A <Run Foreground="#2980B9" FontWeight="Bold">Álgebra Linear</Run> é a ferramenta matemática que faz tudo isso de forma eficiente!
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,8,0,0">
+                                É como ter uma linguagem especial para trabalhar com números organizados em grupos, 
+                                seja uma lista de valores ou uma tabela inteira de dados.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Vetores -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Vetores
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource NormalText}">
+                        Pense em uma seta que aponta para algum lugar. Um vetor é exatamente isso: uma direção e uma distância.
+                    </TextBlock>
+                    <Border Style="{StaticResource ExampleBox}">
+                        <StackPanel>
+                            <TextBlock Text="Exemplo do dia a dia:" 
+                                     FontSize="12" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,4"/>
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                "Ande 3 passos para frente e 2 para a direita" é um vetor!
+                            </TextBlock>
+                            <Border Background="#F8F9FA" 
+                                    BorderBrush="#F39C12" 
+                                    BorderThickness="1" 
+                                    CornerRadius="4" 
+                                    Padding="10" 
+                                    Margin="0,8,0,0">
+                                <TextBlock Style="{StaticResource FormulaText}" 
+                                         TextAlignment="Center"
+                                         Margin="0">
+                                    v = [3, 2]
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Matrizes -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Matrizes
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource NormalText}">
+                        São como planilhas: números organizados em linhas e colunas. 
+                        Perfeitas para guardar muitas informações de forma estruturada.
+                    </TextBlock>
+                    <Border Style="{StaticResource ExampleBox}">
+                        <StackPanel>
+                            <TextBlock Text="Exemplo do dia a dia:" 
+                                     FontSize="12" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,4"/>
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                Uma tabela de notas escolares (alunos nas linhas, matérias nas colunas) é uma matriz!
+                            </TextBlock>
+                            <Border Background="#F8F9FA" 
+                                    BorderBrush="#F39C12" 
+                                    BorderThickness="1" 
+                                    CornerRadius="4" 
+                                    Padding="10" 
+                                    Margin="0,8,0,0">
+                                <TextBlock Style="{StaticResource FormulaText}" 
+                                         TextAlignment="Center"
+                                         Margin="0">
+                                    A = [[1, 2], [3, 4]]
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Transformações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Transformações Lineares
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource NormalText}">
+                        São regras para modificar vetores de forma consistente: girar, esticar, espelhar, etc. 
+                        Como filtros do Instagram, mas matemáticos!
+                    </TextBlock>
+                    <Border Style="{StaticResource ExampleBox}">
+                        <StackPanel>
+                            <TextBlock Text="Exemplo do dia a dia:" 
+                                     FontSize="12" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,4"/>
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                Girar a tela do seu celular 90° é uma transformação linear aplicada a todos os pixels!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Aplicações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Aplicações no Mundo Real
+                    </TextBlock>
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🤖" FontSize="16"/> 
+                                <Run Text="Inteligência Artificial:" FontWeight="Bold"/>
+                                ChatGPT, reconhecimento facial e carros autônomos usam matrizes gigantes
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🎮" FontSize="16"/> 
+                                <Run Text="Jogos e Animações:" FontWeight="Bold"/>
+                                Cada movimento em jogos 3D usa transformações lineares
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🔐" FontSize="16"/> 
+                                <Run Text="Segurança Digital:" FontWeight="Bold"/>
+                                Suas senhas são protegidas por criptografia com matrizes
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="📱" FontSize="16"/> 
+                                <Run Text="Compressão de Imagens:" FontWeight="Bold"/>
+                                Fotos pelo WhatsApp são comprimidas usando álgebra linear
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🔬" FontSize="16"/> 
+                                <Run Text="Física Quântica:" FontWeight="Bold"/>
+                                Estados quânticos são representados como vetores especiais
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Dica Final -->
+                    <Border Style="{StaticResource ExampleBox}">
+                        <StackPanel>
+                            <TextBlock Text="Dica de Aprendizado" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,6"/>
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                Não se preocupe em memorizar fórmulas no início. Foque em entender O QUE cada conceito faz e PARA QUE serve. 
+                                As operações matemáticas vêm naturalmente depois!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: INTERPRETADOR -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" MinHeight="200"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título do Interpretador -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Interpretador Portugol" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Experimente criar e manipular matrizes!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+
+                    <!-- Comandos Disponíveis -->
+                    <Expander Header="Comandos Disponíveis" 
+                            IsExpanded="False" 
+                            Margin="0,15,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="escreva(&quot;texto&quot;)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Exibe mensagens" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="matriz([[1,2],[3,4]])" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Cria uma matriz" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="vetor([1,2,3])" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Cria um vetor" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="determinante(A)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Calcula o determinante" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="multiplicar(A, B)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Multiplica matrizes" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+
+                <!-- Editor de Código -->
+                <Border Grid.Row="1" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="Editor de Código" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <TextBox x:Name="CodeEditor" 
+                                 Grid.Row="1"
+                                 AcceptsReturn="True" 
+                                 AcceptsTab="True" 
+                                 FontFamily="Cascadia Code, Consolas"
+                                 FontSize="13"
+                                 Background="White"
+                                 Foreground="#2C3E50"
+                                 CaretBrush="#3498DB"
+                                 VerticalScrollBarVisibility="Auto" 
+                                 BorderThickness="0"
+                                 Padding="15"
+                                 Text="// Experimente os comandos!&#x0A;escreva(&quot;Bem-vindo à Álgebra Linear!&quot;)&#x0A;&#x0A;// Crie uma matriz 2x2:&#x0A;var A = matriz([[1, 2], [3, 4]])&#x0A;&#x0A;// Calcule o determinante:&#x0A;determinante(A)" />
+                    </Grid>
+                </Border>
+
+                <!-- Botões de Ação -->
+                <Grid Grid.Row="2" Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" 
+                            Content="EXECUTAR" 
+                            Height="45" 
+                            Style="{StaticResource ButtonStyle}"
+                            FontSize="14" 
+                            Click="RunCode_Click"/>
+
+                    <Button Grid.Column="2" 
+                            Content="LIMPAR" 
+                            Height="45"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            FontSize="14"
+                            Click="ClearCode_Click"/>
+                </Grid>
+
+                <!-- Console de Saída -->
+                <Border Grid.Row="3" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="Console de Saída" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" 
+                                    VerticalScrollBarVisibility="Auto" 
+                                    Padding="15">
+                            <TextBlock x:Name="ConsoleOutput" 
+                                     Foreground="#27AE60" 
+                                     FontFamily="Cascadia Code, Consolas"
+                                     FontSize="12"
+                                     TextWrapping="Wrap"
+                                     Text="&gt; Interpretador Portugol iniciado.&#x0A;&gt; Digite seu código e clique em EXECUTAR.&#x0A;"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Botão de Exercícios -->
+                <Button Grid.Row="4" 
+                        Content="IR PARA EXERCÍCIOS PRÁTICOS"
+                        Height="50" 
+                        Margin="0,15,0,0"
+                        Style="{StaticResource DangerButtonStyle}"
+                        FontSize="15"
+                        Click="btnExerciciosClick"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

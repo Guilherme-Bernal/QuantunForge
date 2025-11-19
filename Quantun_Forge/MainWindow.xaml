@@ -4,40 +4,128 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Quantum Forge" Height="600" Width="1000" Background="#1E1E1E" MinHeight="400" MinWidth="600">
+        Title="FromBit To Quibit - Quantum Computing Education"
+        Height="700"
+        Width="1200"
+        MinHeight="500"
+        MinWidth="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#ECF0F1">
 
     <Window.Resources>
+        <!-- ================================
+             PALETA DE CORES
+             ================================ -->
+        <SolidColorBrush x:Key="BackgroundLight" Color="#ECF0F1"/>
+        <SolidColorBrush x:Key="SidebarBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SidebarBorder" Color="#BDC3C7"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="AccentHover" Color="#2980B9"/>
+        <SolidColorBrush x:Key="ButtonHover" Color="#ECF0F1"/>
+        <SolidColorBrush x:Key="ButtonPressed" Color="#D5DBDB"/>
+        <SolidColorBrush x:Key="ButtonSelected" Color="#D6EAF8"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#2C3E50"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#7F8C8D"/>
+        <SolidColorBrush x:Key="QuantumGreen" Color="#27AE60"/>
+        <SolidColorBrush x:Key="ClassicalBlue" Color="#3498DB"/>
+
+        <!-- ================================
+             ANIMAÇÕES
+             ================================ -->
+        <Storyboard x:Key="FadeIn">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                           From="0" To="1" Duration="0:0:0.3"/>
+        </Storyboard>
+
+        <!-- ================================
+             ESTILO PARA BOTÕES DO MENU
+             ================================ -->
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="Margin" Value="8,2"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" RecognizesAccessKey="True"/>
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                BorderThickness="0">
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="shadow" 
+                                                Color="#BDC3C7" 
+                                                BlurRadius="0" 
+                                                ShadowDepth="0" 
+                                                Opacity="0"/>
+                            </Border.Effect>
+
+                            <Grid>
+                                <!-- Indicador de Seleção -->
+                                <Rectangle x:Name="SelectionIndicator"
+                                           Width="4"
+                                           Fill="{StaticResource AccentColor}"
+                                           HorizontalAlignment="Left"
+                                           RadiusX="2"
+                                           RadiusY="2"
+                                           Visibility="Collapsed"
+                                           Margin="2,0,0,0"/>
+
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Grid>
                         </Border>
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#444"/>
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow"
+                                                           Storyboard.TargetProperty="BlurRadius"
+                                                           To="8" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="shadow"
+                                                           Storyboard.TargetProperty="ShadowDepth"
+                                                           To="2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="shadow"
+                                                           Storyboard.TargetProperty="Opacity"
+                                                           To="0.3" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow"
+                                                           Storyboard.TargetProperty="BlurRadius"
+                                                           To="0" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="shadow"
+                                                           Storyboard.TargetProperty="ShadowDepth"
+                                                           To="0" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="shadow"
+                                                           Storyboard.TargetProperty="Opacity"
+                                                           To="0" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPressed}"/>
+                            </Trigger>
+                            <Trigger Property="Tag" Value="Selected">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSelected}"/>
+                                <Setter TargetName="SelectionIndicator" Property="Visibility" Value="Visible"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Foreground" Value="{StaticResource AccentColor}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -45,23 +133,176 @@
             </Setter>
         </Style>
 
-        <Style TargetType="Expander" x:Key="BaseExpanderStyle">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+        <!-- ================================
+             ESTILO PARA SUB-BOTÕES
+             ================================ -->
+        <Style x:Key="SubMenuButtonStyle" BasedOn="{StaticResource MenuButtonStyle}" TargetType="Button">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+            <Setter Property="Padding" Value="35,8,15,8"/>
+            <Setter Property="Margin" Value="8,1"/>
+        </Style>
+
+        <!-- ================================
+             ESTILO PARA EXPANDER
+             ================================ -->
+        <Style x:Key="ModernExpanderStyle" TargetType="Expander">
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Margin" Value="8,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Expander">
+                        <StackPanel>
+                            <!-- Header do Expander -->
+                            <ToggleButton x:Name="HeaderToggle"
+                                          IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                          FocusVisualStyle="{x:Null}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="headerBorder"
+                                                Background="Transparent"
+                                                CornerRadius="8"
+                                                Padding="12,10">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="24"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Ícone de Expansão -->
+                                                <Path x:Name="ExpandArrow"
+                                                      Grid.Column="0"
+                                                      Data="M 0 0 L 4 4 L 8 0"
+                                                      Stroke="{StaticResource TextSecondary}"
+                                                      StrokeThickness="2"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"
+                                                      RenderTransformOrigin="0.5,0.5">
+                                                    <Path.RenderTransform>
+                                                        <RotateTransform Angle="-90"/>
+                                                    </Path.RenderTransform>
+                                                </Path>
+
+                                                <!-- Texto do Header -->
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding Header, RelativeSource={RelativeSource AncestorType=Expander}}"
+                                                           VerticalAlignment="Center"
+                                                           Margin="4,0,0,0"
+                                                           FontWeight="{Binding FontWeight, RelativeSource={RelativeSource AncestorType=Expander}}"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="headerBorder" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="headerBorder" Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="ExpandArrow" Property="Stroke" Value="{StaticResource AccentColor}"/>
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="ExpandArrow"
+                                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                                             To="0"
+                                                                             Duration="0:0:0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="ExpandArrow"
+                                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                                             To="-90"
+                                                                             Duration="0:0:0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <!-- Conteúdo do Expander -->
+                            <Border x:Name="ContentBorder"
+                                    Visibility="Collapsed"
+                                    Margin="0,2,0,0">
+                                <ContentPresenter ContentSource="Content"/>
+                            </Border>
+                        </StackPanel>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="HeaderToggle" Property="IsChecked" Value="True">
+                                <Setter TargetName="ContentBorder" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ================================
+             ESTILO PARA SCROLLBAR
+             ================================ -->
+        <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate>
+                                                <Border Background="#BDC3C7"
+                                                        CornerRadius="4"
+                                                        Margin="1"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ================================
+             ESTILO PARA SEPARADOR
+             ================================ -->
+        <Style x:Key="CategorySeparator" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource AccentColor}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="20,12,0,6"/>
         </Style>
     </Window.Resources>
 
+    <!-- ======================================
+         LAYOUT PRINCIPAL
+         ====================================== -->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar -->
-        <DockPanel Background="#252526" LastChildFill="True">
+        <!-- ======================================
+             SIDEBAR DE NAVEGAÇÃO
+             ====================================== -->
+        <Border Grid.Column="0"
+                Background="{StaticResource SidebarBackground}"
+                BorderBrush="{StaticResource SidebarBorder}"
+                BorderThickness="0,0,1,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -69,134 +310,440 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Logo + Título -->
-                <StackPanel Grid.Row="0" Margin="0,30,0,10" HorizontalAlignment="Center">
-                    <Image Source="Assets/Logo.png" Width="100" Height="100" Margin="0,0,0,10">
-                        <Image.Effect>
-                            <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
-                        </Image.Effect>
-                    </Image>
-                    <TextBlock Text="QUANTUM FORGE" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
-                </StackPanel>
+                <!-- ======================================
+                     HEADER DA APLICAÇÃO
+                     ====================================== -->
+                <Border Grid.Row="0"
+                        Background="White"
+                        Padding="20,30"
+                        BorderBrush="{StaticResource SidebarBorder}"
+                        BorderThickness="0,0,0,1">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#BDC3C7" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+                    </Border.Effect>
 
-                <!-- Menu com Submenus e Sub-Submenus -->
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,5,0">
-                    <StackPanel Margin="10,0,10,0">
-                        <Button Content="Introdução" Style="{StaticResource MenuButtonStyle}" ToolTip="Apresentação geral do projeto"/>
+                    <StackPanel>
+                        <!-- Logo -->
+                        <Viewbox Width="50" Height="50" Margin="0,0,0,10">
+                            <Canvas Width="100" Height="100">
+                                <Ellipse Canvas.Left="30" Canvas.Top="30" Width="40" Height="40" 
+                                       Stroke="#3498DB" StrokeThickness="3" Fill="Transparent"/>
+                                <Ellipse Canvas.Left="45" Canvas.Top="45" Width="10" Height="10" 
+                                       Fill="#27AE60"/>
+                                <Path Data="M 30,50 Q 50,20 70,50 Q 50,80 30,50" 
+                                    Stroke="#3498DB" StrokeThickness="2" Fill="Transparent" Opacity="0.5"/>
+                                <Path Data="M 50,30 Q 20,50 50,70 Q 80,50 50,30" 
+                                    Stroke="#27AE60" StrokeThickness="2" Fill="Transparent" Opacity="0.5"/>
+                            </Canvas>
+                        </Viewbox>
 
-                        <!-- Computação -->
-                        <Expander Header="Computação" Style="{StaticResource BaseExpanderStyle}">
+                        <!-- Título -->
+                        <TextBlock HorizontalAlignment="Center"
+                                   FontSize="22"
+                                   FontWeight="Bold"
+                                   Margin="0,0,0,2">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#3498DB" Offset="0"/>
+                                    <GradientStop Color="#27AE60" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                            FromBit To Quibit
+                        </TextBlock>
+
+                        <!-- Subtítulo -->
+                        <TextBlock Text="Education Platform"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="10"
+                                   FontWeight="Medium"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,5"/>
+
+                        <!-- Badge de Versão -->
+                        <Border Background="{StaticResource AccentColor}"
+                                CornerRadius="10"
+                                Padding="8,3"
+                                HorizontalAlignment="Center"
+                                Margin="0,5,0,0">
+                            <TextBlock Text="v2.0.0"
+                                     Foreground="White"
+                                     FontSize="9"
+                                     FontWeight="Bold"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ======================================
+                     MENU DE NAVEGAÇÃO
+                     ====================================== -->
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              Background="White">
+                    <ScrollViewer.Resources>
+                        <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}"/>
+                    </ScrollViewer.Resources>
+
+                    <StackPanel Margin="10,15">
+                        <!-- HOME -->
+                        <Button Content="🏠 Introdução"
+                                Style="{StaticResource MenuButtonStyle}"
+                                Click="BtnIntroducao_Click"/>
+                        <Button Content="🗺️ Mapa de Navegação"
+                                Style="{StaticResource MenuButtonStyle}"
+                                Click="roadmap_Click"/>
+
+
+                        <!-- EXERCÍCIOS PRÁTICOS -->
+                        <Expander Header="✍️ Exercícios Práticos"
+                                  Style="{StaticResource ModernExpanderStyle}"
+                                  IsExpanded="False">
                             <StackPanel>
-                                <Expander Header="Computação Clássica" Style="{StaticResource BaseExpanderStyle}" Margin="20,0,0,0">
+                                <Button Content="💻 Computação Clássica"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="BtnExerciciosClassica_Click"/>
+                                <Button Content="⚛️ Computação Quântica"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="BtnExerciciosQuantica_Click"/>
+                                <Button Content="📐 Física"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="BtnExerciciosFisica_Click"/>
+                                <Button Content="🌌 Física Quântica"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="BtnExerciciosFisicaQuantica_Click"/>
+                                <Button Content="🔢 Matemática"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="BtnExerciciosMatematica_Click"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- SIMULADORES -->
+                        <Expander Header="🎮 Simuladores"
+                                  Style="{StaticResource ModernExpanderStyle}"
+                                  IsExpanded="False">
+                            <StackPanel>
+                                <!-- COMPUTAÇÃO -->
+                                <Expander Header="💻 Computação"
+                                          Style="{StaticResource ModernExpanderStyle}"
+                                          IsExpanded="True">
                                     <StackPanel>
-                                        <Button x:Name="btnPortasLogicas"
-                                         Content="Portas Lógicas"
-                                         Style="{StaticResource MenuButtonStyle}"
-                                         Padding="15,5,5,5"
-                                         Click="BtnPortasLogicas_Click"/>
+                                        <!-- Computação Clássica -->
+                                        <Expander Header="Computação Clássica"
+                                                  Style="{StaticResource ModernExpanderStyle}"
+                                                  Margin="15,0,0,0">
+                                            <StackPanel>
+                                                <Button Content="⚡ Portas Lógicas"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="BtnPortasLogicas_Click"/>
+                                                <Button Content="📊 Sistema Binário"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="BtnSistemaBinario_Click"/>
+                                                <Button Content="🔧 ALU"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="BtnAlu_Click"/>
+                                                <Button Content="🔄 Ciclo de Instrução"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="BtnCicloInstrucao_Click"/>
+                                                <Button Content="🧮 Lógica Booleana"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="BtnLogicaBooleana_Click"/>
+                                                <Button Content="🏛️ Arquitetura Von Neumann"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="BtnVonNeumann_Click"/>
+                                            </StackPanel>
+                                        </Expander>
 
-                                        <Button x:Name="btnSistemaBinario"
-                                         Content="Sistema Binário"
-                                         Style="{StaticResource MenuButtonStyle}"
-                                         Padding="15,5,5,5"
-                                         Click="BtnSistemaBinario_Click"/>
-
-                                        <Button x:Name="btnAlu"
-                                         Content="Unidade Aritmética e Lógica (ALU)"
-                                         Style="{StaticResource MenuButtonStyle}"
-                                         Padding="15,5,5,5"
-                                         Click="BtnAlu_Click"/>
-
-                                        <Button x:Name="btnCicloInstrucao"
-                                         Content="Ciclo de Instrução"
-                                         Style="{StaticResource MenuButtonStyle}"
-                                         Padding="15,5,5,5"
-                                         Click="BtnCicloInstrucao_Click"/>
-                                        <Button x:Name="btnLogicaBooleana" Content="Lógica Booleana"
-                                          Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"
-                                          Click="BtnLogicaBooleana_Click"/>
-
-                                        <Button x:Name="btnVonNeumann" Content="Arquitetura Von Neumann"
-                                           Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"
-                                           Click="BtnVonNeumann_Click"/>
+                                        <!-- Computação Quântica -->
+                                        <Expander Header="Computação Quântica"
+                                                  Style="{StaticResource ModernExpanderStyle}"
+                                                  Margin="15,0,0,0">
+                                            <StackPanel>
+                                                <Button Content="🌊 Superposição"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="BtnSuperposicao_Click"/>
+                                                <Button Content="🔗 Emaranhamento"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="BtnEmaranhamento_Click"/>
+                                                <Button Content="⚖️ Clássico vs Quântico"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btncls_Click"/>
+                                                <Button Content="⟨0| e |1⟩"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn01Quantun"/>
+                                            </StackPanel>
+                                        </Expander>
                                     </StackPanel>
                                 </Expander>
-                                <Expander Header="Computação Quântica" Style="{StaticResource BaseExpanderStyle}" Margin="20,0,0,0">
+
+                                <!-- FÍSICA -->
+                                <Expander Header="⚛️ Física"
+                                          Style="{StaticResource ModernExpanderStyle}">
                                     <StackPanel>
-                                        <Button Content="Superposição Quântica" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5" Click="BtnSuperposicao_Click"/>
-                                        <Button Content="Emaranhamento" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5" Click= "BtnEmaranhamento_Click "/>
-                                        
+                                        <!-- Física Clássica -->
+                                        <Expander Header="Física Clássica"
+                                                  Style="{StaticResource ModernExpanderStyle}"
+                                                  Margin="15,0,0,0">
+                                            <StackPanel>
+                                                <!-- Mecânica -->
+                                                <TextBlock Text="Mecânica"
+                                                           Style="{StaticResource CategorySeparator}"/>
+                                                <Button Content="1ª Lei de Newton"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_LeiNewton1_Click"/>
+                                                <Button Content="2ª Lei de Newton"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_LeiNewton2_Click"/>
+                                                <Button Content="3ª Lei de Newton"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_LeiNewton3_Click"/>
+                                                <Button Content="Oscilador Harmônico"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Oscilador_Click"/>
+                                                <Button Content="Gravitação Universal"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Gravitacao_Click"/>
+
+                                                <!-- Termodinâmica -->
+                                                <TextBlock Text="Termodinâmica"
+                                                           Style="{StaticResource CategorySeparator}"/>
+                                                <Button Content="1ª Lei"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Termo1_Click"/>
+                                                <Button Content="2ª Lei"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Termo2_Click"/>
+                                                <Button Content="3ª Lei"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Termo3_Click"/>
+
+                                                <!-- Eletromagnetismo -->
+                                                <TextBlock Text="Eletromagnetismo"
+                                                           Style="{StaticResource CategorySeparator}"/>
+                                                <Button Content="Lei de Coulomb"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Coulomb_Click"/>
+                                                <Button Content="Leis de Maxwell"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Maxwell_Click"/>
+
+                                                <!-- Fluidos -->
+                                                <TextBlock Text="Fluidos"
+                                                           Style="{StaticResource CategorySeparator}"/>
+                                                <Button Content="Princípio de Pascal"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Pascal_Click"/>
+                                                <Button Content="Princípio de Arquimedes"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Arquimedes_Click"/>
+                                            </StackPanel>
+                                        </Expander>
+
+                                        <!-- Física Quântica -->
+                                        <Expander Header="Física Quântica"
+                                                  Style="{StaticResource ModernExpanderStyle}"
+                                                  Margin="15,0,0,0">
+                                            <StackPanel>
+                                                <!-- Fundamentos -->
+                                                <TextBlock Text="Fundamentos"
+                                                           Style="{StaticResource CategorySeparator}"/>
+                                                <Button Content="💡 Quantização de Energia (Planck)"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_QuantizacaoEnergia_Click"/>
+                                                <Button Content="〰️ Dualidade Onda-Partícula"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Dualidade_Click"/>
+                                                <Button Content="🌈 Espectros Atômicos e Transições"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_EspectroAto_Click"/>
+                                                <Button Content="⚫ Corpo Negro e Radiação de Planck"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_CorpoNegro_Click"/>
+
+                                                <!-- Princípios Fundamentais -->
+                                                <TextBlock Text="Princípios Fundamentais"
+                                                           Style="{StaticResource CategorySeparator}"/>
+                                                <Button Content="❓ Princípio da Incerteza de Heisenberg"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Heisenberg_Click"/>
+                                                <Button Content="🌊 Equação de Schrödinger (1D)"
+                                                        Style="{StaticResource SubMenuButtonStyle}"
+                                                        Click="Btn_Schrodinger1D_Click"/>
+                                            </StackPanel>
+                                        </Expander>
                                     </StackPanel>
                                 </Expander>
                             </StackPanel>
                         </Expander>
 
-                        <!-- Física -->
-                        <Expander Header="Física" Style="{StaticResource BaseExpanderStyle}">
+                        <!-- MÓDULOS HÍBRIDOS -->
+                        <!-- Transição Física Clássica → Quântica -->
+                        <Expander Header="🌉 Transição Física Clássica → Quântica"
+                                  Style="{StaticResource ModernExpanderStyle}"
+                                  IsExpanded="False">
                             <StackPanel>
-                                <Expander Header="Física Clássica" Style="{StaticResource BaseExpanderStyle}" Margin="20,0,0,0">
-                                    <StackPanel Margin="10,5,0,0" Orientation="Vertical" VerticalAlignment="Top">
-
-                                        <!-- Grupo: Leis de Newton -->
-                                        <TextBlock Text="1. Leis de Newton" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
-                                        <Button Content="1.1 - 1ª Lei (Inércia)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_LeiNewton1_Click"/>
-                                        <Button Content="1.2 - 2ª Lei (F = m.a)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_LeiNewton2_Click"/>
-                                        <Button Content="1.3 - 3ª Lei (Ação e Reação)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_LeiNewton3_Click"/>
-
-                                        <!-- Grupo: Gravitação -->
-                                        <TextBlock Text="2. Lei da Gravitação" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
-                                        <Button Content="2.1 - Lei da Gravitação Universal" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Gravitacao_Click"/>
-
-                                        <!-- Grupo: Termodinâmica -->
-                                        <TextBlock Text="3. Leis da Termodinâmica" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
-                                        <Button Content="3.1 - 1ª Lei (Energia Interna)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Termo1_Click"/>
-                                        <Button Content="3.2 - 2ª Lei (Entropia)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Termo2_Click"/>
-                                        <Button Content="3.3 - 3ª Lei (Entropia no 0 K)" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Termo3_Click"/>
-
-                                        <!-- Grupo: Eletromagnetismo -->
-                                        <TextBlock Text="4. Eletromagnetismo" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
-                                        <Button Content="4.1 - Lei de Coulomb" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Coulomb_Click"/>
-                                        <Button Content="4.2 - Leis de Maxwell" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Maxwell_Click"/>
-
-                                        <!-- Grupo: Hidrostática -->
-                                        <TextBlock Text="5. Hidrostática" FontWeight="Bold" Foreground="White" Margin="5,10,0,2"/>
-                                        <Button Content="5.1 - Princípio de Pascal" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Pascal_Click"/>
-                                        <Button Content="5.2 - Princípio de Arquimedes" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Arquimedes_Click"/>
-                                        <Button Content="5.3 - Teorema de Torricelli" Style="{StaticResource MenuButtonStyle}" Padding="20,5,5,5" Click="Btn_Torricelli_Click"/>
-
-                                    </StackPanel>
-                                </Expander>
-
-                                <Expander Header="Física Quântica" Style="{StaticResource BaseExpanderStyle}" Margin="20,0,0,0">
-                                    <StackPanel>
-                                        <Button Content="Quantização de Energia" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
-                                        <Button Content="Dualidade Onda-Particula" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
-                                        <Button Content="Principio da Incerteza" Style="{StaticResource MenuButtonStyle}" Padding="15,5,5,5"/>
-                            
-                                    </StackPanel>
-                                </Expander>
+                                <TextBlock Text="Do Contínuo ao Discreto"
+                                           Style="{StaticResource CategorySeparator}"/>
+                                <Button Content="📉 Limites da Física Clássica"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_LimitesFisicaClassica_Click"/>
+                                <Button Content="🌊 Dualidade Onda-Partícula (Comparativo)"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_DualidadeComparativo_Click"/>
+                                <Button Content="⚡ Quantização da Energia"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_QuantizacaoTransicao_Click"/>
+                                <Button Content="🔬 Do Determinismo ao Probabilismo"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_DeterminismoProbabilismo_Click"/>
+                                <Button Content="🌈 Do Campo Contínuo à Quantização"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_CampoQuantizado_Click"/>
                             </StackPanel>
                         </Expander>
 
-                        <!-- Sobre -->
-                        <Button Content="ℹ️ Sobre" Style="{StaticResource MenuButtonStyle}" ToolTip="Informacoes gerais sobre o projeto"/>
+                        <!-- Transição Computação Clássica → Quântica -->
+                        <Expander Header="🤖 Transição Computação Clássica → Quântica"
+                                  Style="{StaticResource ModernExpanderStyle}"
+                                  IsExpanded="False">
+                            <StackPanel>
+                                <TextBlock Text="Da Lógica Binária à Lógica Quântica"
+                                           Style="{StaticResource CategorySeparator}"/>
+                                <Button Content="🔢 Bit vs Qubit (Esfera de Bloch)"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_BitVsQubit_Click"/>
+                                <Button Content="⚙️ Portas Lógicas Clássicas e Quânticas"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_PortasHibridas_Click"/>
+                                <Button Content="🧮 Paralelismo e Superposição"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_ParalelismoHibrido_Click"/>
+                                <Button Content="🎯 Erro, Medição e Decoerência"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_ErroDecoerencia_Click"/>
+                                <Button Content="🧠 Entropia: Shannon vs von Neumann"
+                                        Style="{StaticResource SubMenuButtonStyle}"
+                                        Click="Btn_EntropiaComparativo_Click"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- SOBRE -->
+                        <Button Content="ℹ️ Sobre"
+                                Style="{StaticResource MenuButtonStyle}"
+                                Click="BtnSobre_Click"
+                                Margin="8,15,8,2"/>
                     </StackPanel>
                 </ScrollViewer>
 
-                <!-- Rodapé -->
-                <StackPanel Grid.Row="2" Margin="10">
-                    <Button Style="{StaticResource MenuButtonStyle}" Margin="0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="⚙" FontSize="14" Margin="0,0,5,0"/>
-                            <TextBlock Text="Configurações"/>
-                        </StackPanel>
-                    </Button>
-                    <TextBlock Text="Versão 1.0.0" Foreground="Gray" FontSize="10" HorizontalAlignment="Center" Margin="0,5,0,0"/>
-                </StackPanel>
-            </Grid>
-        </DockPanel>
+                <!-- ======================================
+                     FOOTER DA SIDEBAR
+                     ====================================== -->
+                <Border Grid.Row="2"
+                        Background="White"
+                        Padding="12"
+                        BorderBrush="{StaticResource SidebarBorder}"
+                        BorderThickness="0,1,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-        <!-- Área principal -->
-        <Frame x:Name="MainFrame" Grid.Column="1" Background="#1E1E1E"/>
+                        <!-- Status Indicator -->
+                        <Border Grid.Row="0"
+                                Background="#E8F8F5"
+                                BorderBrush="#1ABC9C"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Padding="10,8"
+                                Margin="0,0,0,10">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="8" Height="8" 
+                                       Fill="#27AE60" 
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,8,0">
+                                    <Ellipse.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard RepeatBehavior="Forever">
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                   From="1" To="0.3" Duration="0:0:1"
+                                                                   AutoReverse="True"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Ellipse.Triggers>
+                                </Ellipse>
+                                <TextBlock Text="Sistema Online"
+                                         Foreground="#16A085"
+                                         FontSize="11"
+                                         FontWeight="SemiBold"
+                                         VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        
+                       
+
+                        <!-- Copyright -->
+                        <StackPanel Grid.Row="2" HorizontalAlignment="Center">
+                            <TextBlock Text="© 2025 Quantum Forge"
+                                     Foreground="{StaticResource TextSecondary}"
+                                     FontSize="9"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,2"/>
+                            <TextBlock Text="Todos os direitos reservados"
+                                     Foreground="{StaticResource TextSecondary}"
+                                     FontSize="8"
+                                     HorizontalAlignment="Center"
+                                     Opacity="0.7"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ======================================
+             ÁREA DE CONTEÚDO PRINCIPAL
+             ====================================== -->
+        <Grid Grid.Column="1">
+            <!-- Background com padrão -->
+            <Grid.Background>
+                <DrawingBrush Viewport="0,0,20,20" ViewportUnits="Absolute" TileMode="Tile" Opacity="0.03">
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing Brush="#3498DB">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,10,10"/>
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Grid.Background>
+
+            <!-- Camada de cor sólida -->
+            <Rectangle Fill="#ECF0F1" Opacity="0.97"/>
+
+            <!-- Frame Principal -->
+            <Frame x:Name="MainFrame"
+                   NavigationUIVisibility="Hidden"
+                   Background="Transparent"
+                   Margin="0">
+                <Frame.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
+                    </EventTrigger>
+                </Frame.Triggers>
+            </Frame>
+
+            <!-- Watermark -->
+            <TextBlock Text="🔬 Quantum Learning"
+                     Foreground="{StaticResource TextSecondary}"
+                     FontSize="11"
+                     Opacity="0.3"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Bottom"
+                     Margin="0,0,20,20"
+                     FontStyle="Italic"/>
+        </Grid>
     </Grid>
 </Window>

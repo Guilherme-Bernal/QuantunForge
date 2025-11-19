@@ -1,0 +1,691 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica.MecanicaAnaliticaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica"
+        mc:Ignorable="d"
+        Title="Mecânica Lagrangiana e Hamiltoniana - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#8E44AD"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7D3C98"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#EBE4F5"/>
+            <Setter Property="BorderBrush" Value="#8E44AD"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="EquationBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#8E44AD"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Mecânica Analítica" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="Lagrange, Hamilton e o Princípio da Ação Mínima"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#8E44AD" FontWeight="Bold">Mecânica Analítica</Run> é uma reformulação elegante 
+                        da mecânica newtoniana. Em vez de trabalhar com forças e acelerações, ela utiliza 
+                        <Run FontWeight="Bold">energia</Run> e <Run FontWeight="Bold">princípios variacionais</Run>. 
+                        Esta abordagem é fundamental para a física moderna, especialmente a <Run FontWeight="Bold">Mecânica Quântica</Run>!
+                    </TextBlock>
+
+                    <!-- Por que é importante -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Por que Reformular a Mecânica?
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#8E44AD"
+                                     Margin="0,0,0,10">
+                                🎯 Vantagens da Mecânica Analítica
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#8E44AD" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Coordenadas Generalizadas:</Run> Escolha as melhores coordenadas para o problema
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Vínculos Automáticos:</Run> Forças de vínculo desaparecem naturalmente
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Simetrias → Conservação:</Run> Teorema de Noether conecta simetrias a leis de conservação
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Base para Quântica:</Run> Formalismo hamiltoniano leva diretamente à equação de Schrödinger
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- LAGRANGIANA -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        1. Formalismo Lagrangiano
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#F4ECF7" BorderBrush="#8E44AD">
+                        <StackPanel>
+                            <TextBlock Text="📐 A Lagrangiana" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                A Lagrangiana é a diferença entre energia cinética (T) e energia potencial (V):
+                            </TextBlock>
+
+                            <Border Background="#E8DAEF" BorderBrush="#7D3C98" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="L(q, q̇, t) = T - V" 
+                                             FontSize="24" 
+                                             FontWeight="Bold" 
+                                             Foreground="#6C3483"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="q = coordenadas generalizadas | q̇ = velocidades generalizadas" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,5" FontWeight="SemiBold">
+                                📚 Equações de Euler-Lagrange:
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <TextBlock Text="d/dt(∂L/∂q̇) - ∂L/∂q = 0" 
+                                         FontSize="20" 
+                                         FontWeight="Bold" 
+                                         Foreground="#7D3C98"
+                                         HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                💡 Esta equação substitui a 2ª Lei de Newton (F = ma) de forma mais geral!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Princípio da Ação Mínima -->
+                    <Border Style="{StaticResource EquationBox}" Background="#E8F8F5" BorderBrush="#16A085" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Princípio da Ação Mínima (Princípio de Hamilton)" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#138D75" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                A natureza escolhe o caminho que minimiza (ou torna estacionária) a <Run FontWeight="Bold">ação</Run>:
+                            </TextBlock>
+
+                            <Border Background="#D1F2EB" BorderBrush="#138D75" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="S = ∫ L dt" 
+                                             FontSize="24" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="δS = 0  ⟹  Equações de movimento" 
+                                             FontSize="14" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,8,0,5"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                💫 <Run FontWeight="SemiBold">Interpretação profunda:</Run> O universo "escolhe" o caminho ótimo entre dois pontos!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- HAMILTONIANA -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        2. Formalismo Hamiltoniano
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#FEF5E7" BorderBrush="#F39C12" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="⚡ A Hamiltoniana (Energia Total)" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                A Hamiltoniana é obtida através da transformada de Legendre da Lagrangiana.
+                                Para sistemas conservativos, ela representa a <Run FontWeight="Bold">energia total</Run>:
+                            </TextBlock>
+
+                            <Border Background="#FAD7A0" BorderBrush="#D68910" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="H(q, p, t) = T + V" 
+                                             FontSize="24" 
+                                             FontWeight="Bold" 
+                                             Foreground="#B7950B"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="ou matematicamente:" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,8,0,3"/>
+                                    <TextBlock Text="H = Σ(p·q̇) - L" 
+                                             FontSize="18" 
+                                             FontWeight="Bold" 
+                                             Foreground="#B7950B"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                • <Bold>p = momento conjugado:</Bold> p = ∂L/∂q̇
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>q = coordenada generalizada</Bold>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Equações de Hamilton -->
+                    <Border Style="{StaticResource EquationBox}" Background="#FDEDEC" BorderBrush="#E74C3C" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🔄 Equações Canônicas de Hamilton" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#C0392B" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                O formalismo hamiltoniano usa um par de equações de 1ª ordem:
+                            </TextBlock>
+
+                            <Border Background="#FADBD8" BorderBrush="#943126" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="q̇ = ∂H/∂p" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="ṗ = -∂H/∂q" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                🎯 Estas equações descrevem a evolução temporal no <Run FontWeight="Bold">espaço de fase</Run> (q, p)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Espaço de Fase -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        3. Espaço de Fase
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#8E44AD"
+                                     Margin="0,0,0,10">
+                                📊 O Conceito Fundamental
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                O <Run FontWeight="Bold">espaço de fase</Run> é um espaço multidimensional onde cada ponto 
+                                representa um estado completo do sistema através de suas coordenadas (q) e momentos (p).
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,10,0,10">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">1 partícula em 1D:</Run> Espaço 2D (q, p)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">1 partícula em 3D:</Run> Espaço 6D (x, y, z, pₓ, pᵧ, pᵧ)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">N partículas em 3D:</Run> Espaço 6N-dimensional
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,5,0,0">
+                                💡 A trajetória no espaço de fase é determinística e única (dado H)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Teorema de Noether -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        4. Teorema de Noether
+                    </TextBlock>
+
+                    <Border Background="#E8F8F5" BorderBrush="#16A085" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🏆 A Joia da Física Teórica" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#138D75"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,0,0,10">
+                                <Run FontWeight="Bold">Teorema de Emmy Noether (1918):</Run> Para cada simetria contínua 
+                                de um sistema físico, existe uma lei de conservação correspondente.
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#16A085" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Simetria no tempo → Conservação de Energia" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             Margin="0,3"/>
+                                    <TextBlock Text="Simetria no espaço → Conservação de Momento Linear" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             Margin="0,3"/>
+                                    <TextBlock Text="Simetria rotacional → Conservação de Momento Angular" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             Margin="0,3"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Aplicações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Aplicações Práticas
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⚛️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Mecânica Quântica:</Run> Base do formalismo hamiltoniano quântico
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌌" FontSize="16"/> 
+                                <Run FontWeight="Bold">Teoria Quântica de Campos:</Run> Lagrangianas de campos
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🔬" FontSize="16"/> 
+                                <Run FontWeight="Bold">Física de Partículas:</Run> Modelo padrão usa lagrangianas
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🛰️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Mecânica Celeste:</Run> Órbitas e perturbações
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🤖" FontSize="16"/> 
+                                <Run FontWeight="Bold">Robótica:</Run> Controle de sistemas com vínculos
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Curiosidade -->
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Curiosidade: O Caminho para a Quântica" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12">
+                                A mecânica quântica nasceu diretamente do formalismo hamiltoniano! Heisenberg e Schrödinger 
+                                substituíram as variáveis clássicas (q, p) por operadores quânticos. Os famosos 
+                                "colchetes de Poisson" {A, B} da mecânica clássica se tornaram os "comutadores" [Â, B̂] 
+                                da mecânica quântica. Richard Feynman depois mostrou que o princípio da ação mínima se 
+                                transforma na "integral de caminho" quântica, onde a partícula explora TODOS os caminhos 
+                                possíveis simultaneamente!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: SIMULADOR VISUAL -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Simulador Visual" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Explore trajetórias no espaço de fase!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- Área de Visualização -->
+                <Border Grid.Row="1" Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="8" Padding="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Seletor de Sistema -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                            <TextBlock Text="Escolha um Sistema:" FontWeight="SemiBold" FontSize="13" Margin="0,0,0,8"/>
+                            <ComboBox x:Name="SystemSelector" 
+                                    FontSize="12" 
+                                    SelectionChanged="SystemSelector_Changed"
+                                    Padding="8">
+                                <ComboBoxItem Content="🔵 Oscilador Harmônico Simples" IsSelected="True"/>
+                                <ComboBoxItem Content="🎱 Pêndulo Simples"/>
+                                <ComboBoxItem Content="🔄 Partícula Livre"/>
+                                <ComboBoxItem Content="🌀 Pêndulo Duplo (Caótico)"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Canvas de Visualização -->
+                        <Border Grid.Row="1" Background="White" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="6" Margin="0,10">
+                            <Canvas x:Name="PhaseSpaceCanvas" Background="White" />
+                        </Border>
+
+                        <!-- Controles -->
+                        <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                            <TextBlock Text="Parâmetros do Sistema:" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8"/>
+
+                            <!-- Energia Inicial -->
+                            <StackPanel Margin="0,5">
+                                <TextBlock Text="Energia Inicial:" FontSize="11" Foreground="#7F8C8D"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <Slider x:Name="EnergySlider" 
+                                          Width="200" 
+                                          Minimum="0.1" 
+                                          Maximum="5" 
+                                          Value="1"
+                                          TickFrequency="0.1"
+                                          ValueChanged="Parameter_Changed"/>
+                                    <TextBlock x:Name="EnergyValue" 
+                                             Text="1.0" 
+                                             Margin="10,0,0,0" 
+                                             FontWeight="Bold"
+                                             Foreground="#8E44AD"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Botões de Controle -->
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" Content="▶ SIMULAR" Height="35" Style="{StaticResource ButtonStyle}" FontSize="12" Click="Simulate_Click"/>
+                                <Button Grid.Column="2" Content="🔄 LIMPAR" Height="35" Style="{StaticResource SecondaryButtonStyle}" FontSize="12" Click="Clear_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Informações e Fórmulas -->
+                <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                    <Border Background="#F4ECF7" BorderBrush="#8E44AD" BorderThickness="1" CornerRadius="6" Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="📐 Fórmulas do Sistema Atual" 
+                                     FontWeight="Bold" 
+                                     FontSize="12"
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock x:Name="CurrentSystemFormula" 
+                                     FontSize="11"
+                                     Foreground="#2C3E50"
+                                     TextWrapping="Wrap"
+                                     Text="Lagrangiana: L = ½mẋ² - ½kx²&#x0A;Hamiltoniana: H = p²/2m + ½kx²&#x0A;Espaço de Fase: Elipse"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#E8F8F5" BorderBrush="#16A085" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="💡 Interpretação" 
+                                     FontWeight="Bold" 
+                                     FontSize="11"
+                                     Foreground="#138D75"
+                                     Margin="0,0,0,5"/>
+                            <TextBlock x:Name="InterpretationText" 
+                                     FontSize="10"
+                                     Foreground="#2C3E50"
+                                     TextWrapping="Wrap"
+                                     Text="No espaço de fase (q,p), a trajetória forma uma curva fechada. A área encerrada é proporcional à energia do sistema."/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exemplos Práticos -->
+                    <Expander Header="📚 Exemplos Resolvidos" 
+                            IsExpanded="False" 
+                            Margin="0,10,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            FontSize="11"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Exemplo 1: Partícula Livre" 
+                                             Foreground="#7D3C98" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="L = ½mẋ² (só energia cinética)" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="H = p²/2m" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="Resultado: Movimento retilíneo uniforme" 
+                                             Foreground="#7F8C8D" FontSize="9" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Exemplo 2: Oscilador Harmônico" 
+                                             Foreground="#7D3C98" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="L = ½mẋ² - ½kx²" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="H = p²/2m + ½kx²" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="Resultado: x(t) = A·cos(ωt + φ)" 
+                                             Foreground="#7F8C8D" FontSize="9" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Exemplo 3: Pêndulo Simples" 
+                                             Foreground="#7D3C98" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="L = ½ml²θ̇² + mgl·cos(θ)" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="H = p²/2ml² - mgl·cos(θ)" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="Resultado: Oscilações periódicas" 
+                                             Foreground="#7F8C8D" FontSize="9" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+
+                    <!-- Botões Finais -->
+                    <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="6" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🎓 Recursos Adicionais" 
+                                     FontWeight="Bold" 
+                                     FontSize="13"
+                                     Foreground="#8E44AD"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" x:Name="ExercisesButton" Content="📝 Exercícios" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="ExercisesButton_Click"/>
+                                <Button Grid.Column="2" x:Name="QuizButton" Content="🧪 Quiz" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="QuizButton_Click"/>
+                            </Grid>
+
+                            <Button x:Name="BackButton" Content="← Voltar ao Menu" Style="{StaticResource SecondaryButtonStyle}" Height="35" FontSize="12" Margin="0,10,0,0" Click="BackButton_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

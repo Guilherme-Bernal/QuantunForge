@@ -1,0 +1,189 @@
+﻿<Page x:Class="Quantun_Forge.src.views.ModuloEnsino.ExerciciosMatematicaControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ExerciciosMatematicaControl">
+
+    <Page.Resources>
+        <!-- Estilo para os Cards de Tópicos de Matemática -->
+        <Style x:Key="MathCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#06D6A0"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F0FBF7"/>
+                    <Setter Property="BorderBrush" Value="#26E5B5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="MathTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style x:Key="MathSubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#5A5A6B"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+        </Style>
+
+        <Style x:Key="MathHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="#F5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <StackPanel Grid.Row="0" Margin="30,20,30,0">
+            <TextBlock Text="Fundamentos de Matemática" Style="{StaticResource MathHeaderStyle}"/>
+            <TextBlock Text="Domine os conceitos essenciais da matemática" 
+                       FontSize="14" 
+                       Foreground="#5A5A6B" 
+                       Margin="0,0,0,20"/>
+        </StackPanel>
+
+        <!-- ScrollViewer para o conteúdo -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="20,0,20,20">
+            <StackPanel>
+                <!-- Tópico 1: Binômio de Newton -->
+                <Border Style="{StaticResource MathCardStyle}" 
+                        x:Name="BinomioCard"
+                        MouseLeftButtonDown="BinomioCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🎯" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Binômio de Newton" Style="{StaticResource MathTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Expansão binomial e triângulo de Pascal" 
+                                   Style="{StaticResource MathSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 2: Álgebra Linear -->
+                <Border Style="{StaticResource MathCardStyle}"
+                        x:Name="AlgebraLinearCard"
+                        MouseLeftButtonDown="AlgebraLinearCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📊" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Álgebra Linear" Style="{StaticResource MathTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Matrizes, vetores e transformações lineares" 
+                                   Style="{StaticResource MathSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 3: Números Complexos -->
+                <Border Style="{StaticResource MathCardStyle}"
+                        x:Name="NumerosComplexosCard"
+                        MouseLeftButtonDown="NumerosComplexosCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🔄" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Números Complexos" 
+                                       Style="{StaticResource MathTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Plano complexo, operações e forma polar" 
+                                   Style="{StaticResource MathSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 4: Teoria da Probabilidade -->
+                <Border Style="{StaticResource MathCardStyle}"
+                        x:Name="ProbabilidadeCard"
+                        MouseLeftButtonDown="ProbabilidadeCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🎲" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Teoria da Probabilidade" 
+                                       Style="{StaticResource MathTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Eventos, espaço amostral e probabilidades" 
+                                   Style="{StaticResource MathSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 5: Estatística -->
+                <Border Style="{StaticResource MathCardStyle}"
+                        x:Name="EstatisticaCard"
+                        MouseLeftButtonDown="EstatisticaCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📈" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Estatística" 
+                                       Style="{StaticResource MathTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Análise de dados, distribuições e inferência" 
+                                   Style="{StaticResource MathSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 6: Cálculo -->
+                <Border Style="{StaticResource MathCardStyle}"
+                        x:Name="CalculoCard"
+                        MouseLeftButtonDown="CalculoCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="∫" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Cálculo (Diferencial e Integral)" 
+                                       Style="{StaticResource MathTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Derivadas, integrais e suas aplicações" 
+                                   Style="{StaticResource MathSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 7: Logaritmos e Exponenciais -->
+                <Border Style="{StaticResource MathCardStyle}"
+                        x:Name="LogaritmoCard"
+                        MouseLeftButtonDown="LogaritmoCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📉" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Logaritmos e Exponenciais" 
+                                       Style="{StaticResource MathTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Propriedades e aplicações práticas" 
+                                   Style="{StaticResource MathSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 8: Função Afim e Função Quadrática -->
+                <Border Style="{StaticResource MathCardStyle}"
+                        x:Name="FuncoesCard"
+                        MouseLeftButtonDown="FuncoesCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📐" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Função Afim e Função Quadrática" 
+                                       Style="{StaticResource MathTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Gráficos, raízes e características das funções" 
+                                   Style="{StaticResource MathSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

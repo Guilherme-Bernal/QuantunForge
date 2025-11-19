@@ -1,0 +1,804 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica.RelatividadeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica"
+        mc:Ignorable="d"
+        Title="Relatividade Geral - Quantum Forge" 
+        Height="800" Width="1200"
+        Background="#ECF0F1" 
+        WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#EBF5FB"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="EquationBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Relatividade Geral" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="A Geometria do Espaço-Tempo"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#3498DB" FontWeight="Bold">Relatividade Geral</Run> é a teoria de Einstein 
+                        que descreve a gravidade não como uma força, mas como uma <Run FontWeight="Bold">curvatura 
+                        do espaço-tempo</Run> causada pela massa e energia. É uma das teorias mais elegantes e 
+                        revolucionárias da física!
+                    </TextBlock>
+
+                    <!-- Princípios Fundamentais -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Princípios Fundamentais
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#3498DB"
+                                     Margin="0,0,0,10">
+                                🌌 Os Pilares da Teoria
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Princípio de Equivalência:</Run> Gravidade = aceleração localmente
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Covariância Geral:</Run> Leis físicas independem do referencial
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Limite Newtoniano:</Run> Recupera gravidade de Newton em campos fracos
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Espaço-Tempo Curvo:</Run> Massa/energia curvam a geometria
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Equações de Einstein -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        1. As Equações de Campo de Einstein
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#EBF5FB" BorderBrush="#3498DB">
+                        <StackPanel>
+                            <TextBlock Text="🌟 A Equação Mais Bela da Física" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Esta única equação descreve como a matéria e energia curvam o espaço-tempo, 
+                                e como essa curvatura diz à matéria como se mover. John Wheeler resumiu: 
+                                <Run FontStyle="Italic">"Matéria diz ao espaço-tempo como curvar, espaço-tempo 
+                                diz à matéria como se mover."</Run>
+                            </TextBlock>
+
+                            <Border Background="#AED6F1" BorderBrush="#2471A3" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="G_μν + Λg_μν = (8πG/c⁴) T_μν" 
+                                             FontSize="26" 
+                                             FontWeight="Bold" 
+                                             Foreground="#1A5490"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="Geometria = Energia-Momento" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                💡 <Bold>G_μν</Bold> = Tensor de Einstein (curvatura do espaço-tempo)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                💡 <Bold>Λ</Bold> = Constante cosmológica (energia do vácuo)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                💡 <Bold>T_μν</Bold> = Tensor energia-momento (matéria e energia)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                💡 <Bold>g_μν</Bold> = Tensor métrico (geometria do espaço-tempo)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Métrica de Schwarzschild -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        2. Métrica de Schwarzschild
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#E8F8F5" BorderBrush="#16A085" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="⚫ Solução para um Buraco Negro" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#138D75"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                A primeira solução exata das equações de Einstein, encontrada por Karl Schwarzschild 
+                                em 1916. Descreve o espaço-tempo ao redor de uma massa esférica não-rotativa.
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#16A085" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="ds² = -(1-r_s/r)c²dt² + (1-r_s/r)⁻¹dr² + r²dΩ²" 
+                                             FontSize="16" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="r_s = 2GM/c² (Raio de Schwarzschild)" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,5" FontWeight="SemiBold">
+                                🌑 Propriedades do Raio de Schwarzschild:
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>r &gt; r_s:</Bold> Região externa (observável)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>r = r_s:</Bold> Horizonte de eventos (sem retorno!)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>r &lt; r_s:</Bold> Interior do buraco negro (singularidade em r=0)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Sol:</Bold> r_s ≈ 3 km | <Bold>Terra:</Bold> r_s ≈ 9 mm
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Dilatação do Tempo -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        3. Dilatação Gravitacional do Tempo
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#FDEDEC" BorderBrush="#E74C3C" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="⏰ O Tempo Flui Diferente!" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#C0392B" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Em campos gravitacionais fortes, o tempo passa mais devagar. Um relógio próximo 
+                                de uma estrela massiva tiquetaqueia mais lentamente que um relógio distante!
+                            </TextBlock>
+
+                            <Border Background="#FADBD8" BorderBrush="#943126" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="t₀ = t∞ √(1 - r_s/r)" 
+                                             FontSize="24" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="t₀ = tempo próprio | t∞ = tempo no infinito" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,5" FontWeight="SemiBold">
+                                📡 Aplicações práticas:
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>GPS:</Bold> Correção de +38 μs/dia devido à menor gravidade
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Horizonte de Eventos:</Bold> Tempo "congela" para observador externo
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Filme "Interestelar":</Bold> 1 hora no planeta = 7 anos na Terra!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Geodésicas -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        4. Geodésicas e Movimento
+                    </TextBlock>
+
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🛤️ O Caminho Mais Curto no Espaço-Tempo Curvo" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,0,0,10">
+                                Partículas livres seguem <Run FontWeight="Bold">geodésicas</Run> - os caminhos 
+                                "mais retos possíveis" no espaço-tempo curvo. É como andar em linha reta numa 
+                                superfície curva!
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="d²x^μ/dτ² + Γ^μ_αβ (dx^α/dτ)(dx^β/dτ) = 0" 
+                                             FontSize="16" 
+                                             FontWeight="Bold" 
+                                             Foreground="#6C3483"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3"/>
+                                    <TextBlock Text="Γ^μ_αβ = Símbolos de Christoffel (conexão)" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,10,0,0">
+                                🌍 <Run FontWeight="Bold">Órbitas planetárias</Run> são geodésicas no espaço-tempo curvo pelo Sol!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Deflexão da Luz -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        5. Lentes Gravitacionais
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#3498DB"
+                                     Margin="0,0,0,10">
+                                🔭 A Luz se Curva!
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Massas grandes <Run FontWeight="Bold">desviam a trajetória da luz</Run>. Este 
+                                efeito foi a primeira confirmação experimental da Relatividade Geral no eclipse 
+                                de 1919!
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#3498DB" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,10,0,10">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Ângulo de deflexão:</Run> θ = 4GM/(c²b)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">b</Run> = parâmetro de impacto (distância mínima)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Sol:</Run> θ ≈ 1.75 arcsec (medido em 1919!)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Galáxias:</Run> Efeito de lente forte - múltiplas imagens
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,5,0,0">
+                                🌌 <Run FontWeight="Bold">Anéis de Einstein:</Run> Alinhamento perfeito cria um anel de luz!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Ondas Gravitacionais -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        6. Ondas Gravitacionais
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#FEF5E7" BorderBrush="#F39C12" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="〰️ Ondulações no Espaço-Tempo" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Massas aceleradas produzem <Run FontWeight="Bold">ondas gravitacionais</Run> que 
+                                se propagam à velocidade da luz. Detectadas pela primeira vez em 2015 pelo LIGO!
+                            </TextBlock>
+
+                            <Border Background="#FAD7A0" BorderBrush="#B9770E" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="h_μν = A_μν cos(ω(t - z/c))" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#BA4A00"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="h = amplitude da onda (perturbação métrica)" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,5" FontWeight="SemiBold">
+                                🌊 Fontes de Ondas Gravitacionais:
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Buracos Negros:</Bold> Fusões liberam energia ≈ 3 M☉c²
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Estrelas de Nêutrons:</Bold> Colisões produzem kilonovas
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Big Bang:</Bold> Fundo primordial de ondas gravitacionais
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Detecção:</Bold> h ≈ 10⁻²¹ (LIGO) - espetacular sensibilidade!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Soluções Importantes -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Soluções Clássicas da Relatividade Geral
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⚫" FontSize="16"/> 
+                                <Run FontWeight="Bold">Schwarzschild:</Run> Buraco negro estático e esférico
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌀" FontSize="16"/> 
+                                <Run FontWeight="Bold">Kerr:</Run> Buraco negro rotativo (mais realista)
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌌" FontSize="16"/> 
+                                <Run FontWeight="Bold">FLRW:</Run> Universo em expansão (cosmologia)
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="〰️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Ondas Planas:</Run> Ondas gravitacionais no vácuo
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⭐" FontSize="16"/> 
+                                <Run FontWeight="Bold">Reissner-Nordström:</Run> Buraco negro carregado
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🕳️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Kerr-Newman:</Run> Buraco negro carregado e rotativo
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Curiosidade -->
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Curiosidade: O Paradoxo da Informação" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12">
+                                Stephen Hawking descobriu que buracos negros <Run FontWeight="Bold">evaporam</Run> emitindo 
+                                radiação térmica! Isso criou o "paradoxo da informação": o que acontece com a informação 
+                                que cai em um buraco negro? A mecânica quântica diz que informação nunca é destruída, mas 
+                                parece desaparecer no buraco negro. Este paradoxo uniu Relatividade Geral e Mecânica Quântica, 
+                                levando ao desenvolvimento da teoria de cordas e holografia. Em 2004, Hawking admitiu que 
+                                a informação é preservada, possivelmente codificada na radiação emitida. O debate continua!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: SIMULADOR DE RELATIVIDADE -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Simulador Relativístico" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Explore os efeitos da curvatura!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- Área de Visualização -->
+                <Border Grid.Row="1" Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="8" Padding="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Seletor de Simulação -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                            <TextBlock Text="Escolha uma Simulação:" FontWeight="SemiBold" FontSize="13" Margin="0,0,0,8"/>
+                            <ComboBox x:Name="RelativitySelector" 
+                                    FontSize="12" 
+                                    SelectionChanged="RelativitySelector_Changed"
+                                    Padding="8">
+                                <ComboBoxItem Content="🌍 Curvatura do Espaço-Tempo" IsSelected="True"/>
+                                <ComboBoxItem Content="⏰ Dilatação do Tempo Gravitacional"/>
+                                <ComboBoxItem Content="🔭 Deflexão da Luz (Lente Gravitacional)"/>
+                                <ComboBoxItem Content="⚫ Órbitas ao Redor de Buraco Negro"/>
+                                <ComboBoxItem Content="〰️ Ondas Gravitacionais"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Canvas de Visualização -->
+                        <Border Grid.Row="1" Background="White" BorderBrush="#3498DB" BorderThickness="2" CornerRadius="6" Margin="0,10">
+                            <Canvas x:Name="RelativityCanvas" Background="White" />
+                        </Border>
+
+                        <!-- Controles -->
+                        <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                            <TextBlock Text="Parâmetros:" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8"/>
+
+                            <!-- Massa -->
+                            <StackPanel x:Name="MassPanel" Margin="0,5">
+                                <TextBlock Text="Massa (massas solares):" FontSize="11" Foreground="#7F8C8D"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <Slider x:Name="MassSlider" 
+                                          Width="200" 
+                                          Minimum="1" 
+                                          Maximum="100" 
+                                          Value="10"
+                                          TickFrequency="1"
+                                          ValueChanged="Parameter_Changed"/>
+                                    <TextBlock x:Name="MassValue" 
+                                             Text="10 M☉" 
+                                             Margin="10,0,0,0" 
+                                             FontWeight="Bold"
+                                             Foreground="#3498DB"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Distância -->
+                            <StackPanel x:Name="DistancePanel" Margin="0,5">
+                                <TextBlock Text="Distância (raios de Schwarzschild):" FontSize="11" Foreground="#7F8C8D"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <Slider x:Name="DistanceSlider" 
+                                          Width="200" 
+                                          Minimum="1.5" 
+                                          Maximum="10" 
+                                          Value="3"
+                                          TickFrequency="0.1"
+                                          ValueChanged="Parameter_Changed"/>
+                                    <TextBlock x:Name="DistanceValue" 
+                                             Text="3.0 r_s" 
+                                             Margin="10,0,0,0" 
+                                             FontWeight="Bold"
+                                             Foreground="#3498DB"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Velocidade/Energia -->
+                            <StackPanel x:Name="VelocityPanel" Margin="0,5" Visibility="Collapsed">
+                                <TextBlock Text="Parâmetro de Impacto:" FontSize="11" Foreground="#7F8C8D"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <Slider x:Name="VelocitySlider" 
+                                          Width="200" 
+                                          Minimum="0.5" 
+                                          Maximum="5" 
+                                          Value="2"
+                                          TickFrequency="0.1"
+                                          ValueChanged="Parameter_Changed"/>
+                                    <TextBlock x:Name="VelocityValue" 
+                                             Text="2.0" 
+                                             Margin="10,0,0,0" 
+                                             FontWeight="Bold"
+                                             Foreground="#3498DB"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Botões de Controle -->
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" Content="▶ SIMULAR" Height="35" Style="{StaticResource ButtonStyle}" FontSize="12" Click="Simulate_Click"/>
+                                <Button Grid.Column="2" Content="🔄 LIMPAR" Height="35" Style="{StaticResource SecondaryButtonStyle}" FontSize="12" Click="Clear_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Informações e Interpretação -->
+                <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                    <Border Background="#EBF5FB" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="6" Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="📊 Sobre a Simulação Atual" 
+                                     FontWeight="Bold" 
+                                     FontSize="12"
+                                     Foreground="#2980B9"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock x:Name="CurrentSimulationInfo" 
+                                     FontSize="11"
+                                     Foreground="#2C3E50"
+                                     TextWrapping="Wrap"
+                                     Text="Curvatura do Espaço-Tempo: visualização da deformação da geometria causada por uma massa. Linhas de grade representam o espaço-tempo curvo."/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#E8F8F5" BorderBrush="#16A085" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="💡 O que Observar" 
+                                     FontWeight="Bold" 
+                                     FontSize="11"
+                                     Foreground="#138D75"
+                                     Margin="0,0,0,5"/>
+                            <TextBlock x:Name="ObservationText" 
+                                     FontSize="10"
+                                     Foreground="#2C3E50"
+                                     TextWrapping="Wrap"
+                                     Text="Quanto maior a massa, maior a curvatura. Próximo ao horizonte de eventos, a curvatura se torna extrema. O espaço-tempo é literalmente 'puxado' pela gravidade."/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Valores de Referência -->
+                    <Expander Header="📏 Valores de Referência" 
+                            IsExpanded="False" 
+                            Margin="0,10,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            FontSize="11"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Raios de Schwarzschild:" 
+                                             Foreground="#2980B9" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="• Sol: r_s ≈ 3 km" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="• Terra: r_s ≈ 9 mm" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="• Buraco negro estelar (10 M☉): r_s ≈ 30 km" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="• Sgr A* (4 milhões M☉): r_s ≈ 12 milhões km" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Constantes Importantes:" 
+                                             Foreground="#2980B9" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="• G = 6.674×10⁻¹¹ m³/(kg·s²)" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="• c = 299,792,458 m/s" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="• M☉ = 1.989×10³⁰ kg" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Órbitas Estáveis:" 
+                                             Foreground="#2980B9" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="• ISCO (circular): r = 3 r_s" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="• Órbita de fóton: r = 1.5 r_s" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="• r &lt; 1.5 r_s: Captura garantida!" 
+                                             Foreground="#E74C3C" FontSize="10" FontWeight="Bold" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+
+                    <!-- Dados Históricos -->
+                    <Expander Header="🏆 Confirmações Experimentais" 
+                            IsExpanded="False" 
+                            Margin="0,5,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            FontSize="11"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="• 1919: Eclipse solar confirma deflexão da luz" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                            <TextBlock Text="• 1959: Experimento Pound-Rebka (redshift gravitacional)" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                            <TextBlock Text="• 1971: Relógios atômicos em aviões (dilatação do tempo)" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                            <TextBlock Text="• 1974: Púlsar binário PSR B1913+16 (ondas gravitacionais)" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                            <TextBlock Text="• 2015: LIGO detecta ondas gravitacionais (GW150914)" 
+                                     Foreground="#E74C3C" FontSize="10" FontWeight="Bold" Margin="0,2,0,0"/>
+                            <TextBlock Text="• 2019: Event Horizon Telescope - foto de M87*" 
+                                     Foreground="#E74C3C" FontSize="10" FontWeight="Bold" Margin="0,2,0,0"/>
+                            <TextBlock Text="• 2022: Foto de Sagittarius A* (centro da Via Láctea)" 
+                                     Foreground="#E74C3C" FontSize="10" FontWeight="Bold" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Expander>
+
+                    <!-- Botões Finais -->
+                    <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="6" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🎓 Recursos Adicionais" 
+                                     FontWeight="Bold" 
+                                     FontSize="13"
+                                     Foreground="#3498DB"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" x:Name="ExercisesButton" Content="📝 Exercícios" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="ExercisesButton_Click"/>
+                                <Button Grid.Column="2" x:Name="QuizButton" Content="🧪 Quiz" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="QuizButton_Click"/>
+                            </Grid>
+
+                            <Button x:Name="BackButton" Content="← Voltar ao Menu" Style="{StaticResource SecondaryButtonStyle}" Height="35" FontSize="12" Margin="0,10,0,0" Click="BackButton_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

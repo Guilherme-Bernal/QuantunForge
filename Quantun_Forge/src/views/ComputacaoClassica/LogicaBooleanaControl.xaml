@@ -1,97 +1,427 @@
 ﻿<UserControl x:Class="Quantun_Forge.src.views.LogicaBooleanaControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="#1E1E1E">
+             Background="#F5F5F5">
+
     <UserControl.Resources>
-        <Style TargetType="CheckBox">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="10,5"/>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
         </Style>
 
-        <Style TargetType="TextBox">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#2D2D30"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="6,3"/>
-            <Setter Property="Margin" Value="0,5,0,15"/>
-        </Style>
-
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="#007ACC"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="Margin" Value="0,5,10,0"/>
+        <Style x:Key="InputToggleStyle" TargetType="ToggleButton">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-
-        <Style TargetType="DataGrid">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#1E1E1E"/>
-            <Setter Property="GridLinesVisibility" Value="All"/>
-            <Setter Property="Margin" Value="0,20,0,0"/>
-            <Setter Property="AutoGenerateColumns" Value="True"/>
-            <Setter Property="ColumnHeaderStyle">
+            <Setter Property="Template">
                 <Setter.Value>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Background" Value="#333"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                    </Style>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="border"
+                                Background="#E74C3C"
+                                BorderBrush="#C0392B"
+                                BorderThickness="2"
+                                CornerRadius="8">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock x:Name="label" 
+                                          Text="{TemplateBinding Content}" 
+                                          FontSize="14" 
+                                          FontWeight="Bold"
+                                          Foreground="White"
+                                          HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="value" 
+                                          Text="0 (FALSE)" 
+                                          FontSize="18" 
+                                          FontWeight="Bold"
+                                          Foreground="White"
+                                          Margin="0,5,0,0"
+                                          HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#27AE60"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#229954"/>
+                                <Setter TargetName="value" Property="Text" Value="1 (TRUE)"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <Style x:Key="GateCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FAFAFA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#ECF0F1"/>
+                    <Setter Property="BorderBrush" Value="#3498DB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2E86C1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ButtonDangerStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="40">
-            <TextBlock Text="🧠 Simulador de Lógica Booleana"
-                       Foreground="White" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+        <Grid Margin="30,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- Aba lateral explicativa -->
-            <Border Background="#2D2D30" CornerRadius="5" Padding="10" Margin="0,0,0,20">
-                <StackPanel>
-                    <TextBlock Text="📘 Como usar este simulador:" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="13" Text="1. Marque as caixas A, B e C para definir os valores de entrada."/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="13" Text="2. Digite uma expressão lógica usando A, B, C, !, &amp;&amp;, ||. Ex: (A &amp;&amp; !B) || C"/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="13" Text="3. Clique em 'Gerar Tabela Verdade' para visualizar todas as combinações."/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="13" Text="4. O resultado ao vivo será exibido abaixo com base nas entradas marcadas."/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="13" Text="5. Use 'Limpar Tudo' para recomeçar."/>
-                </StackPanel>
-            </Border>
+            <!-- Coluna Principal -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="Simulador de Lógica Booleana" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="Portas lógicas e álgebra de Boole" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
 
-            <!-- Entradas -->
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <CheckBox x:Name="chkA" Content="Entrada A" Checked="AtualizarResultado" Unchecked="AtualizarResultado"/>
-                <CheckBox x:Name="chkB" Content="Entrada B" Checked="AtualizarResultado" Unchecked="AtualizarResultado"/>
-                <CheckBox x:Name="chkC" Content="Entrada C" Checked="AtualizarResultado" Unchecked="AtualizarResultado"/>
+                <!-- Entradas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎚️ Entradas" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Clique nos botões para alternar entre 0 (FALSE) e 1 (TRUE)" 
+                                   FontSize="12" 
+                                   Foreground="#7F8C8D" 
+                                   Margin="0,0,0,15"/>
+
+                        <WrapPanel HorizontalAlignment="Center">
+                            <ToggleButton x:Name="toggleA" 
+                                         Content="Entrada A" 
+                                         Style="{StaticResource InputToggleStyle}"
+                                         Checked="AtualizarResultado"
+                                         Unchecked="AtualizarResultado"/>
+                            <ToggleButton x:Name="toggleB" 
+                                         Content="Entrada B" 
+                                         Style="{StaticResource InputToggleStyle}"
+                                         Checked="AtualizarResultado"
+                                         Unchecked="AtualizarResultado"/>
+                            <ToggleButton x:Name="toggleC" 
+                                         Content="Entrada C" 
+                                         Style="{StaticResource InputToggleStyle}"
+                                         Checked="AtualizarResultado"
+                                         Unchecked="AtualizarResultado"/>
+                            <ToggleButton x:Name="toggleD" 
+                                         Content="Entrada D" 
+                                         Style="{StaticResource InputToggleStyle}"
+                                         Checked="AtualizarResultado"
+                                         Unchecked="AtualizarResultado"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Portas Lógicas Básicas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔌 Portas Lógicas Básicas" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- AND -->
+                            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource GateCardStyle}" MouseLeftButtonDown="PortaAND_Click">
+                                <StackPanel>
+                                    <TextBlock Text="AND" FontSize="18" FontWeight="Bold" Foreground="#3498DB" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="A ∧ B" FontSize="14" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                                    <TextBlock x:Name="txtResultAND" Text="0" FontSize="24" FontWeight="Bold" Foreground="#E74C3C" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- OR -->
+                            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource GateCardStyle}" MouseLeftButtonDown="PortaOR_Click">
+                                <StackPanel>
+                                    <TextBlock Text="OR" FontSize="18" FontWeight="Bold" Foreground="#3498DB" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="A ∨ B" FontSize="14" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                                    <TextBlock x:Name="txtResultOR" Text="0" FontSize="24" FontWeight="Bold" Foreground="#E74C3C" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- NOT A -->
+                            <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource GateCardStyle}" MouseLeftButtonDown="PortaNOT_Click">
+                                <StackPanel>
+                                    <TextBlock Text="NOT" FontSize="18" FontWeight="Bold" Foreground="#3498DB" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="¬A" FontSize="14" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                                    <TextBlock x:Name="txtResultNOT" Text="1" FontSize="24" FontWeight="Bold" Foreground="#27AE60" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- NAND -->
+                            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource GateCardStyle}" MouseLeftButtonDown="PortaNAND_Click">
+                                <StackPanel>
+                                    <TextBlock Text="NAND" FontSize="18" FontWeight="Bold" Foreground="#9B59B6" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="¬(A ∧ B)" FontSize="14" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                                    <TextBlock x:Name="txtResultNAND" Text="1" FontSize="24" FontWeight="Bold" Foreground="#27AE60" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- NOR -->
+                            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource GateCardStyle}" MouseLeftButtonDown="PortaNOR_Click">
+                                <StackPanel>
+                                    <TextBlock Text="NOR" FontSize="18" FontWeight="Bold" Foreground="#9B59B6" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="¬(A ∨ B)" FontSize="14" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                                    <TextBlock x:Name="txtResultNOR" Text="1" FontSize="24" FontWeight="Bold" Foreground="#27AE60" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- XOR -->
+                            <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource GateCardStyle}" MouseLeftButtonDown="PortaXOR_Click">
+                                <StackPanel>
+                                    <TextBlock Text="XOR" FontSize="18" FontWeight="Bold" Foreground="#E67E22" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="A ⊕ B" FontSize="14" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                                    <TextBlock x:Name="txtResultXOR" Text="0" FontSize="24" FontWeight="Bold" Foreground="#E74C3C" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <TextBlock Text="💡 Clique em uma porta para ver sua tabela verdade" 
+                                   FontSize="11" 
+                                   Foreground="#95A5A6" 
+                                   Margin="0,15,0,0"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Expressões Customizadas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Expressão Customizada" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Digite uma expressão booleana:" 
+                                   FontSize="12" 
+                                   Foreground="#2C3E50" 
+                                   Margin="0,0,0,5"/>
+                        <TextBlock Text="Operadores: &amp; (AND), | (OR), ! (NOT), ^ (XOR)" 
+                                   FontSize="11" 
+                                   Foreground="#7F8C8D" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBox x:Name="txtExpressao"
+                                 Height="35"
+                                 FontFamily="Consolas"
+                                 FontSize="14"
+                                 Padding="8"
+                                 Background="#ECF0F1"
+                                 BorderBrush="#BDC3C7"
+                                 BorderThickness="1"
+                                 ToolTip="Exemplo: (A &amp; B) | (!C &amp; D)"/>
+
+                        <WrapPanel Margin="0,10,0,0">
+                            <Button Content="🧮 Avaliar Expressão" 
+                                    Style="{StaticResource ButtonPrimaryStyle}"
+                                    Click="AvaliarExpressao_Click"/>
+                            <Button Content="📊 Gerar Tabela Verdade" 
+                                    Style="{StaticResource ButtonPrimaryStyle}"
+                                    Click="GerarTabela_Click"/>
+                            <Button Content="🗑️ Limpar" 
+                                    Style="{StaticResource ButtonDangerStyle}"
+                                    Click="LimparExpressao_Click"/>
+                        </WrapPanel>
+
+                        <!-- Resultado da Expressão -->
+                        <Border Background="#E8F8F5" 
+                                BorderBrush="#1ABC9C" 
+                                BorderThickness="2" 
+                                CornerRadius="5" 
+                                Padding="15" 
+                                Margin="0,15,0,0"
+                                Visibility="Collapsed"
+                                x:Name="borderResultadoExpressao">
+                            <StackPanel>
+                                <TextBlock Text="Resultado da expressão:" 
+                                           FontSize="12" 
+                                           Foreground="#16A085" 
+                                           FontWeight="Bold"/>
+                                <TextBlock x:Name="txtResultadoExpressao" 
+                                           Text="0 (FALSE)" 
+                                           FontSize="28" 
+                                           FontWeight="Bold" 
+                                           Foreground="#000000" 
+                                           Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tabela Verdade -->
+                <Border Style="{StaticResource SectionBorderStyle}" x:Name="borderTabelaVerdade" Visibility="Collapsed">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                            <TextBlock Text="📋 Tabela Verdade" 
+                                       FontSize="16" 
+                                       FontWeight="Bold" 
+                                       Foreground="#000000"/>
+                            <TextBlock x:Name="txtTituloTabela" 
+                                       Text="" 
+                                       FontSize="14" 
+                                       Foreground="#7F8C8D" 
+                                       Margin="10,0,0,0"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <DataGrid x:Name="dataGridTabela"
+                                  AutoGenerateColumns="True"
+                                  IsReadOnly="True"
+                                  Background="White"
+                                  BorderBrush="#BDC3C7"
+                                  BorderThickness="1"
+                                  GridLinesVisibility="All"
+                                  HeadersVisibility="Column"
+                                  MaxHeight="300">
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#3498DB"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Padding" Value="8"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Padding" Value="8"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGrid.CellStyle>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
             </StackPanel>
 
-            <!-- Expressão -->
-            <TextBlock Text="Expressão Booleana:" Foreground="White" Margin="0,0,0,5"/>
-            <TextBox x:Name="txtExpressao"
-                     Height="30"
-                     ToolTip="Exemplo: (A &amp;&amp; !B) || C" />
+            <!-- Coluna Lateral - Referência Rápida -->
+            <StackPanel Grid.Column="2">
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📚 Referência Rápida" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-            <!-- Botões -->
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Gerar Tabela Verdade" Click="GerarTabela_Click"/>
-                <Button Content="Limpar Tudo" Background="#CC3333" Click="LimparTudo_Click"/>
+                        <TextBlock Text="Símbolos:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,5,0,5"/>
+                        <TextBlock Text="∧  AND (E)" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+                        <TextBlock Text="∨  OR (OU)" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+                        <TextBlock Text="¬  NOT (NÃO)" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+                        <TextBlock Text="⊕  XOR (OU-EX)" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+
+                        <Separator Margin="0,15,0,15" Background="#E0E0E0"/>
+
+                        <TextBlock Text="Identidades:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <TextBlock Text="A ∧ 1 = A" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+                        <TextBlock Text="A ∧ 0 = 0" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+                        <TextBlock Text="A ∨ 1 = 1" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+                        <TextBlock Text="A ∨ 0 = A" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+                        <TextBlock Text="¬(¬A) = A" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas"/>
+
+                        <Separator Margin="0,15,0,15" Background="#E0E0E0"/>
+
+                        <TextBlock Text="Leis de De Morgan:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <TextBlock Text="¬(A ∧ B) = ¬A ∨ ¬B" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas" TextWrapping="Wrap"/>
+                        <TextBlock Text="¬(A ∨ B) = ¬A ∧ ¬B" FontSize="11" Foreground="#7F8C8D" FontFamily="Consolas" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Dica" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F39C12" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock Text="Experimente diferentes combinações de entradas para entender como cada porta lógica funciona!" 
+                                   FontSize="11" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
             </StackPanel>
-
-            <!-- Resultado ao vivo -->
-            <Border Background="#222" CornerRadius="10" Padding="15" Margin="0,20,0,0">
-                <StackPanel>
-                    <TextBlock Text="Resultado atual com as entradas marcadas:"
-                               Foreground="Gray" FontSize="14"/>
-                    <TextBlock x:Name="txtResultado"
-                               FontSize="28" FontWeight="Bold" Foreground="#00C8FF" Margin="0,5,0,0"/>
-                </StackPanel>
-            </Border>
-
-            <!-- Tabela Verdade -->
-            <DataGrid x:Name="dataGrid" IsReadOnly="True"/>
-        </StackPanel>
+        </Grid>
     </ScrollViewer>
 </UserControl>

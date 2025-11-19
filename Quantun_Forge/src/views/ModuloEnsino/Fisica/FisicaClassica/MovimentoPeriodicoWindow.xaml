@@ -1,0 +1,839 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica.MovimentoPeriodicoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica"
+        mc:Ignorable="d"
+        Title="Movimento Periódico - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#16A085"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#138D75"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#E8F8F5"/>
+            <Setter Property="BorderBrush" Value="#16A085"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="EquationBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#16A085"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Movimento Periódico" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="O Oscilador Harmônico Simples e suas Aplicações"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#16A085" FontWeight="Bold">Movimento Periódico</Run> é qualquer movimento 
+                        que se repete em intervalos regulares de tempo. O <Run FontWeight="Bold">Oscilador Harmônico Simples (OHS)</Run> 
+                        é o modelo fundamental que descreve pêndulos, molas, ondas sonoras, vibrações moleculares e até 
+                        circuitos elétricos!
+                    </TextBlock>
+
+                    <!-- O que é Movimento Periódico -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        O que é Movimento Periódico?
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,10">
+                                🔄 Movimentos que se Repetem no Tempo
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Um movimento é periódico quando o objeto retorna à mesma posição e velocidade depois 
+                                de um intervalo de tempo constante chamado <Run FontWeight="Bold">período (T)</Run>.
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="📊 Grandezas Fundamentais:" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#16A085"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">Período (T):</Run> Tempo para completar uma oscilação (segundos)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">Frequência (f):</Run> Número de oscilações por segundo (Hertz)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">Amplitude (A):</Run> Máximo deslocamento da posição de equilíbrio
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">Fase (φ):</Run> Posição inicial no ciclo da oscilação
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Relações Fundamentais -->
+                    <Border Background="#D1F2EB" BorderBrush="#16A085" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="📐 Relações Matemáticas Básicas" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#117A65"
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="White" BorderBrush="#16A085" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="f = 1/T" 
+                                             FontSize="18" 
+                                             FontWeight="Bold" 
+                                             Foreground="#138D75"
+                                             HorizontalAlignment="Center"/>
+                                    <TextBlock Text="(frequência = inverso do período)" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#16A085" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="ω = 2πf = 2π/T" 
+                                             FontSize="18" 
+                                             FontWeight="Bold" 
+                                             Foreground="#138D75"
+                                             HorizontalAlignment="Center"/>
+                                    <TextBlock Text="(frequência angular em rad/s)" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Oscilador Harmônico Simples -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Oscilador Harmônico Simples (OHS)
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,10">
+                                🎯 O Modelo Matemático Mais Importante da Física
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                O OHS ocorre quando a força restauradora é proporcional ao deslocamento e age na 
+                                direção oposta. É o caso ideal de uma massa presa a uma mola ou um pêndulo com 
+                                pequenas amplitudes.
+                            </TextBlock>
+
+                            <Border Background="#D6EAF8" BorderBrush="#2874A6" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,10,0,10">
+                                <StackPanel>
+                                    <TextBlock Text="🔧 Lei de Hooke (Força Restauradora):" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#1F618D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Text="F = -kx" 
+                                             FontSize="22" 
+                                             FontWeight="Bold" 
+                                             Foreground="#2874A6"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="k = constante da mola | x = deslocamento" 
+                                             FontSize="11" 
+                                             Foreground="#5D6D7E"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Equações do MHS -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Equações do Movimento Harmônico Simples
+                    </TextBlock>
+
+                    <!-- Posição -->
+                    <Border Style="{StaticResource EquationBox}" Background="#EBF5FB" BorderBrush="#3498DB">
+                        <StackPanel>
+                            <TextBlock Text="📍 Equação da Posição" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2874A6" 
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="#D6EAF8" BorderBrush="#2874A6" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <TextBlock Text="x(t) = A cos(ωt + φ)" 
+                                         FontSize="20" 
+                                         FontWeight="Bold" 
+                                         Foreground="#1F618D"
+                                         HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                Descreve a posição do oscilador em função do tempo usando uma função cosseno.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Velocidade -->
+                    <Border Style="{StaticResource EquationBox}" Background="#E8F8F5" BorderBrush="#16A085" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🚀 Equação da Velocidade" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#138D75" 
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="#D1F2EB" BorderBrush="#138D75" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <TextBlock Text="v(t) = -Aω sen(ωt + φ)" 
+                                         FontSize="20" 
+                                         FontWeight="Bold" 
+                                         Foreground="#117A65"
+                                         HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                A velocidade é máxima quando passa pela posição de equilíbrio (x = 0).
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Aceleração -->
+                    <Border Style="{StaticResource EquationBox}" Background="#FDEDEC" BorderBrush="#E74C3C" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="⚡ Equação da Aceleração" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#C0392B" 
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="#FADBD8" BorderBrush="#943126" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <TextBlock Text="a(t) = -Aω² cos(ωt + φ) = -ω²x" 
+                                         FontSize="18" 
+                                         FontWeight="Bold" 
+                                         Foreground="#943126"
+                                         HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                A aceleração é sempre proporcional e oposta ao deslocamento!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Período e Frequência -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Período e Frequência do OHS
+                    </TextBlock>
+
+                    <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="⏱️ Sistema Massa-Mola" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="White" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="T = 2π√(m/k)" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#B7950B"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="f = (1/2π)√(k/m)" 
+                                             FontSize="16" 
+                                             FontWeight="Bold" 
+                                             Foreground="#B7950B"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                • Maior massa → período maior (oscila mais devagar)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • Mola mais rígida (k maior) → período menor (oscila mais rápido)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🕰️ Pêndulo Simples" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="T = 2π√(L/g)" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#6C3483"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                • L = comprimento do fio
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • g = aceleração da gravidade (9,8 m/s²)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0" FontStyle="Italic">
+                                ⚠️ Válido apenas para pequenas amplitudes (&lt; 15°)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Energia no OHS -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Energia no Oscilador Harmônico
+                    </TextBlock>
+
+                    <Border Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="⚡ Conservação de Energia" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="White" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Energia Cinética:" 
+                                             FontSize="12" 
+                                             FontWeight="Bold" 
+                                             Foreground="#138D75"
+                                             Margin="0,5,0,3"/>
+                                    <TextBlock Text="Ec = (1/2)mv²" 
+                                             FontSize="16" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3"/>
+
+                                    <TextBlock Text="Energia Potencial:" 
+                                             FontSize="12" 
+                                             FontWeight="Bold" 
+                                             Foreground="#138D75"
+                                             Margin="0,10,0,3"/>
+                                    <TextBlock Text="Ep = (1/2)kx²" 
+                                             FontSize="16" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3"/>
+
+                                    <TextBlock Text="Energia Total:" 
+                                             FontSize="12" 
+                                             FontWeight="Bold" 
+                                             Foreground="#138D75"
+                                             Margin="0,10,0,3"/>
+                                    <TextBlock Text="E = (1/2)kA² = constante" 
+                                             FontSize="16" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0" FontWeight="SemiBold" Foreground="#27AE60">
+                                💡 A energia total é constante e proporcional ao quadrado da amplitude!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Aplicações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Aplicações do Movimento Periódico
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🎸" FontSize="16"/> 
+                                <Run FontWeight="Bold">Instrumentos Musicais:</Run> Cordas de violão, piano, tambores - todos vibram harmonicamente
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🏗️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Engenharia Civil:</Run> Pontes, prédios - análise de vibração e ressonância
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🚗" FontSize="16"/> 
+                                <Run FontWeight="Bold">Suspensão de Veículos:</Run> Amortecedores e molas para conforto
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⚛️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Física Atômica:</Run> Vibrações moleculares e ligações químicas
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="📡" FontSize="16"/> 
+                                <Run FontWeight="Bold">Circuitos Elétricos:</Run> Circuitos LC osciladores em rádios e eletrônicos
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⏰" FontSize="16"/> 
+                                <Run FontWeight="Bold">Relógios:</Run> Pêndulos e osciladores de quartzo para medição do tempo
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Curiosidade -->
+                    <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Curiosidade: Ressonância" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12">
+                                Quando você empurra alguém no balanço, você aplica força na frequência natural de oscilação 
+                                do sistema - isso é <Run FontWeight="Bold">ressonância</Run>! O mesmo fenômeno fez a ponte 
+                                Tacoma Narrows colapsar em 1940 quando ventos criaram oscilações ressonantes. Cantores de 
+                                ópera podem quebrar taças de cristal atingindo sua frequência de ressonância!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: CALCULADORA -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" MinHeight="200"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título do Calculadora -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Calculadora de MHS" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Calcule períodos, frequências e energias!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+
+                    <!-- Comandos Disponíveis -->
+                    <Expander Header="Comandos Disponíveis" 
+                            IsExpanded="False" 
+                            Margin="0,15,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularPeriodoMola(massa: 2, k: 50)" 
+                                             Foreground="#138D75" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula o período de um sistema massa-mola" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0
+                                               "/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularPeriodoPendulo(comprimento: 1)" 
+                                             Foreground="#138D75" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula o período de um pêndulo simples (em metros)" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularFrequencia(periodo: 2)" 
+                                             Foreground="#138D75" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula frequência a partir do período" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularEnergiaTotal(k: 100, amplitude: 0.5)" 
+                                             Foreground="#138D75" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula a energia total do oscilador" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularVelocidadeMaxima(amplitude: 0.3, frequencia: 2)" 
+                                             Foreground="#138D75" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula velocidade máxima do oscilador" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="escreva(&quot;mensagem&quot;)" 
+                                             Foreground="#138D75" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Exibe mensagens no console" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+
+                <!-- Editor de Código -->
+                <Border Grid.Row="1" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="Editor de Código" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <TextBox x:Name="CodeEditor" 
+                                 Grid.Row="1"
+                                 AcceptsReturn="True" 
+                                 AcceptsTab="True" 
+                                 FontFamily="Cascadia Code, Consolas"
+                                 FontSize="13"
+                                 Background="White"
+                                 Foreground="#2C3E50"
+                                 CaretBrush="#16A085"
+                                 VerticalScrollBarVisibility="Auto" 
+                                 BorderThickness="0"
+                                 Padding="15"
+                                 Text="// 🎯 Análise de um Sistema Massa-Mola&#x0A;escreva(&quot;=== OSCILADOR MASSA-MOLA ===&quot;)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Dados do sistema&#x0A;escreva(&quot;🔧 Sistema: massa = 2 kg, k = 50 N/m&quot;)&#x0A;calcularPeriodoMola(massa: 2, k: 50)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Calculando frequência&#x0A;calcularFrequencia(periodo: 1.26)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Energia com amplitude de 0.5 m&#x0A;escreva(&quot;⚡ Calculando energia com A = 0.5 m&quot;)&#x0A;calcularEnergiaTotal(k: 50, amplitude: 0.5)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Velocidade máxima&#x0A;calcularVelocidadeMaxima(amplitude: 0.5, frequencia: 0.79)" />
+                    </Grid>
+                </Border>
+
+                <!-- Botões de Ação -->
+                <Grid Grid.Row="2" Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" 
+                            Content="EXECUTAR" 
+                            Height="45" 
+                            Style="{StaticResource ButtonStyle}"
+                            FontSize="14" 
+                            Click="RunCode_Click"/>
+
+                    <Button Grid.Column="2" 
+                            Content="LIMPAR" 
+                            Height="45"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            FontSize="14"
+                            Click="ClearCode_Click"/>
+                </Grid>
+
+                <!-- Console de Saída -->
+                <Border Grid.Row="3" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="Console de Saída" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" 
+                                    VerticalScrollBarVisibility="Auto" 
+                                    Padding="15">
+                            <TextBlock x:Name="ConsoleOutput" 
+                                     Foreground="#27AE60" 
+                                     FontFamily="Cascadia Code, Consolas"
+                                     FontSize="12"
+                                     TextWrapping="Wrap"
+                                     Text="&gt; Calculadora de MHS iniciada.&#x0A;&gt; Digite seu código e clique em EXECUTAR.&#x0A;&gt; Explore o movimento periódico!"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Botões Finais -->
+                <StackPanel Grid.Row="4" Margin="0,15,0,0">
+                    <Border Background="#F8F9FA" 
+                            BorderBrush="#BDC3C7" 
+                            BorderThickness="1" 
+                            CornerRadius="6" 
+                            Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="🎓 Recursos Adicionais" 
+                                     FontWeight="Bold" 
+                                     FontSize="13"
+                                     Foreground="#16A085"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" 
+                                        x:Name="ExercisesButton"
+                                        Content="📝 Exercícios" 
+                                        Style="{StaticResource ButtonStyle}"
+                                        Height="35"
+                                        FontSize="12"
+                                        Click="ExercisesButton_Click"/>
+
+                                <Button Grid.Column="2" 
+                                        x:Name="QuizButton"
+                                        Content="🧪 Quiz" 
+                                        Style="{StaticResource ButtonStyle}"
+                                        Height="35"
+                                        FontSize="12"
+                                        Click="QuizButton_Click"/>
+                            </Grid>
+
+                            <Button x:Name="BackButton"
+                                    Content="← Voltar ao Menu" 
+                                    Style="{StaticResource SecondaryButtonStyle}"
+                                    Height="35"
+                                    FontSize="12"
+                                    Margin="0,10,0,0"
+                                    Click="BackButton_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

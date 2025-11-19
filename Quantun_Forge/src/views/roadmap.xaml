@@ -1,0 +1,906 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.roadmap"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Quantun_Forge.src.views"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="900"
+             Background="#ECF0F1">
+
+    <UserControl.Resources>
+        <!-- ================================
+             PALETA DE CORES (MESMA DO MAINWINDOW)
+             ================================ -->
+        <SolidColorBrush x:Key="BackgroundLight" Color="#ECF0F1"/>
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="AccentHover" Color="#2980B9"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#2C3E50"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#7F8C8D"/>
+        <SolidColorBrush x:Key="QuantumGreen" Color="#27AE60"/>
+        <SolidColorBrush x:Key="ClassicalBlue" Color="#3498DB"/>
+        <SolidColorBrush x:Key="TransitionPurple" Color="#9B59B6"/>
+        <SolidColorBrush x:Key="WarningOrange" Color="#E67E22"/>
+
+        <!-- ================================
+             ANIMAÇÕES
+             ================================ -->
+        <Storyboard x:Key="FadeInUp">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                           From="0" To="1" Duration="0:0:0.5"/>
+            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                              From="0,30,0,0" To="0,0,0,0" Duration="0:0:0.5"/>
+        </Storyboard>
+
+        <Storyboard x:Key="CardHover">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="1.02" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="1.02" Duration="0:0:0.2"/>
+        </Storyboard>
+
+        <!-- ================================
+             ESTILO PARA CARDS DO ROADMAP
+             ================================ -->
+        <Style x:Key="RoadmapCard" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBackground}"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="0,0,0,25"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#BDC3C7" BlurRadius="15" ShadowDepth="3" Opacity="0.2"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1.02" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1.02" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.BlurRadius)"
+                                               To="20" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.ShadowDepth)"
+                                               To="5" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.BlurRadius)"
+                                               To="15" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Effect).(DropShadowEffect.ShadowDepth)"
+                                               To="3" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- ================================
+             ESTILO PARA TÍTULOS
+             ================================ -->
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="CardTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+
+        <Style x:Key="CardSubtitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="20"/>
+        </Style>
+
+        <!-- ================================
+             ESTILO PARA BADGES
+             ================================ -->
+        <Style x:Key="BadgeStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+
+        <!-- ================================
+             ESTILO PARA SCROLLBAR
+             ================================ -->
+        <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate>
+                                                <Border Background="#BDC3C7"
+                                                        CornerRadius="4"
+                                                        Margin="1"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ================================
+             ESTILO PARA LINHA CONECTORA
+             ================================ -->
+        <Style x:Key="ConnectorLine" TargetType="Rectangle">
+            <Setter Property="Width" Value="4"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="RadiusX" Value="2"/>
+            <Setter Property="RadiusY" Value="2"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,-10,0,-10"/>
+            <Setter Property="Opacity" Value="0.3"/>
+        </Style>
+    </UserControl.Resources>
+
+    <!-- ======================================
+         CONTAINER PRINCIPAL
+         ====================================== -->
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      Padding="40,30">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}"/>
+            </ScrollViewer.Resources>
+
+            <StackPanel MaxWidth="800">
+                <!-- ======================================
+                     HEADER DO ROADMAP
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}"
+                        Background="{StaticResource AccentColor}"
+                        Margin="0,0,0,40">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="🗺️ Mapa de Navegação"
+                                     FontSize="32"
+                                     FontWeight="Bold"
+                                     Foreground="White"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Jornada de Aprendizado: Do Bit ao Qubit"
+                                     FontSize="16"
+                                     Foreground="White"
+                                     Opacity="0.9"
+                                     Margin="0,0,0,15"/>
+
+                            <TextBlock FontSize="13" 
+                                     Foreground="White" 
+                                     Opacity="0.85"
+                                     TextWrapping="Wrap"
+                                     LineHeight="20">
+                                Este roadmap guia você através dos conceitos fundamentais da computação clássica
+                                até os princípios avançados da computação quântica, estabelecendo uma base sólida
+                                de conhecimento em física e matemática.
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Logo Decorativo -->
+                        <Viewbox Grid.Column="1" Width="100" Height="100" Opacity="0.3">
+                            <Canvas Width="100" Height="100">
+                                <Ellipse Canvas.Left="30" Canvas.Top="30" Width="40" Height="40" 
+                                       Stroke="White" StrokeThickness="3" Fill="Transparent"/>
+                                <Ellipse Canvas.Left="45" Canvas.Top="45" Width="10" Height="10" 
+                                       Fill="White"/>
+                                <Path Data="M 30,50 Q 50,20 70,50 Q 50,80 30,50" 
+                                    Stroke="White" StrokeThickness="2" Fill="Transparent" Opacity="0.7"/>
+                                <Path Data="M 50,30 Q 20,50 50,70 Q 80,50 50,30" 
+                                    Stroke="White" StrokeThickness="2" Fill="Transparent" Opacity="0.7"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Grid>
+                </Border>
+
+                <!-- ======================================
+                     FASE 0: INTRODUÇÃO
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Número da Fase -->
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource TextSecondary}"
+                                    CornerRadius="25"
+                                    Width="50" Height="50"
+                                    Margin="0,0,20,0">
+                                <TextBlock Text="0"
+                                         Foreground="White"
+                                         FontSize="24"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="🏠 Bem-vindo ao Bit FromQuibit"
+                                         Style="{StaticResource CardTitle}"/>
+                                <TextBlock Text="Comece sua jornada aqui"
+                                         Style="{StaticResource CardSubtitle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="Familiarize-se com a plataforma e entenda o objetivo do aprendizado. Esta introdução estabelece o contexto e a importância da computação quântica no mundo moderno."
+                                 Foreground="{StaticResource TextSecondary}"
+                                 TextWrapping="Wrap"
+                                 LineHeight="22"
+                                 Margin="0,0,0,15"/>
+
+                        <!-- Badges -->
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource BadgeStyle}"
+                                    Background="#E8F8F5">
+                                <TextBlock Text="⏱️ 10 min" 
+                                         Foreground="#16A085"
+                                         FontSize="11"
+                                         FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Style="{StaticResource BadgeStyle}"
+                                    Background="#FEF5E7">
+                                <TextBlock Text="🎯 Iniciante" 
+                                         Foreground="#D68910"
+                                         FontSize="11"
+                                         FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Linha Conectora -->
+                <Rectangle Style="{StaticResource ConnectorLine}" Fill="{StaticResource TextSecondary}"/>
+
+                <!-- ======================================
+                     FASE 1: FUNDAMENTOS MATEMÁTICOS
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource WarningOrange}"
+                                    CornerRadius="25"
+                                    Width="50" Height="50"
+                                    Margin="0,0,20,0">
+                                <TextBlock Text="1"
+                                         Foreground="White"
+                                         FontSize="24"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="🔢 Fundamentos Matemáticos"
+                                         Style="{StaticResource CardTitle}"/>
+                                <TextBlock Text="Base essencial para física e computação"
+                                         Style="{StaticResource CardSubtitle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock TextWrapping="Wrap" LineHeight="22" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,15">
+                            <Run Text="Domine os conceitos matemáticos fundamentais:"/>
+                            <LineBreak/>
+                            <Run Text="• Álgebra Linear: vetores, matrizes, espaços vetoriais"/>
+                            <LineBreak/>
+                            <Run Text="• Números Complexos: representação e operações"/>
+                            <LineBreak/>
+                            <Run Text="• Probabilidade e Estatística: distribuições e análise de dados"/>
+                            <LineBreak/>
+                            <Run Text="• Cálculo: derivadas, integrais e equações diferenciais"/>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource BadgeStyle}" Background="#FEF5E7">
+                                <TextBlock Text="⏱️ 2-3 horas" Foreground="#D68910" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Style="{StaticResource BadgeStyle}" Background="#FADBD8">
+                                <TextBlock Text="📚 Fundamental" Foreground="#C0392B" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Rectangle Style="{StaticResource ConnectorLine}" Fill="{StaticResource WarningOrange}"/>
+
+                <!-- ======================================
+                     FASE 2: COMPUTAÇÃO CLÁSSICA
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource ClassicalBlue}"
+                                    CornerRadius="25"
+                                    Width="50" Height="50"
+                                    Margin="0,0,20,0">
+                                <TextBlock Text="2"
+                                         Foreground="White"
+                                         FontSize="24"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="💻 Computação Clássica"
+                                         Style="{StaticResource CardTitle}"/>
+                                <TextBlock Text="Entenda como os computadores funcionam"
+                                         Style="{StaticResource CardSubtitle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock TextWrapping="Wrap" LineHeight="22" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,15">
+                            <Run Text="Explore os fundamentos da computação tradicional:"/>
+                            <LineBreak/>
+                            <Run Text="• Sistema Binário: representação de dados"/>
+                            <LineBreak/>
+                            <Run Text="• Portas Lógicas: AND, OR, NOT, XOR"/>
+                            <LineBreak/>
+                            <Run Text="• Lógica Booleana: álgebra de Boole e circuitos"/>
+                            <LineBreak/>
+                            <Run Text="• ALU: Unidade Lógica Aritmética"/>
+                            <LineBreak/>
+                            <Run Text="• Ciclo de Instrução: fetch, decode, execute"/>
+                            <LineBreak/>
+                            <Run Text="• Arquitetura Von Neumann: organização do computador"/>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource BadgeStyle}" Background="#E8F8F5">
+                                <TextBlock Text="⏱️ 3-4 horas" Foreground="#16A085" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Style="{StaticResource BadgeStyle}" Background="#EBF5FB">
+                                <TextBlock Text="🎯 Intermediário" Foreground="{StaticResource ClassicalBlue}" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Rectangle Style="{StaticResource ConnectorLine}" Fill="{StaticResource ClassicalBlue}"/>
+
+                <!-- ======================================
+                     FASE 3: FÍSICA CLÁSSICA
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource ClassicalBlue}"
+                                    CornerRadius="25"
+                                    Width="50" Height="50"
+                                    Margin="0,0,20,0">
+                                <TextBlock Text="3"
+                                         Foreground="White"
+                                         FontSize="24"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="⚛️ Física Clássica"
+                                         Style="{StaticResource CardTitle}"/>
+                                <TextBlock Text="Leis fundamentais do universo macroscópico"
+                                         Style="{StaticResource CardSubtitle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock TextWrapping="Wrap" LineHeight="22" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,15">
+                            <Run Text="Compreenda os princípios da física newtoniana:"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="📍 Mecânica:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Leis de Newton (1ª, 2ª, 3ª)"/>
+                            <LineBreak/>
+                            <Run Text="• Oscilador Harmônico"/>
+                            <LineBreak/>
+                            <Run Text="• Gravitação Universal"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="🌡️ Termodinâmica:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• 1ª Lei: Conservação de Energia"/>
+                            <LineBreak/>
+                            <Run Text="• 2ª Lei: Entropia"/>
+                            <LineBreak/>
+                            <Run Text="• 3ª Lei: Zero Absoluto"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="⚡ Eletromagnetismo:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Lei de Coulomb"/>
+                            <LineBreak/>
+                            <Run Text="• Leis de Maxwell"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="💧 Fluidos:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Princípio de Pascal"/>
+                            <LineBreak/>
+                            <Run Text="• Princípio de Arquimedes"/>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource BadgeStyle}" Background="#FEF5E7">
+                                <TextBlock Text="⏱️ 4-5 horas" Foreground="#D68910" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Style="{StaticResource BadgeStyle}" Background="#EBF5FB">
+                                <TextBlock Text="📊 Intermediário" Foreground="{StaticResource ClassicalBlue}" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Rectangle Style="{StaticResource ConnectorLine}" Fill="{StaticResource TransitionPurple}"/>
+
+                <!-- ======================================
+                     FASE 4: TRANSIÇÃO CLÁSSICO → QUÂNTICO
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource TransitionPurple}"
+                                    CornerRadius="25"
+                                    Width="50" Height="50"
+                                    Margin="0,0,20,0">
+                                <TextBlock Text="4"
+                                         Foreground="White"
+                                         FontSize="24"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="🌉 Ponte entre Mundos"
+                                         Style="{StaticResource CardTitle}"/>
+                                <TextBlock Text="Da física clássica à quântica"
+                                         Style="{StaticResource CardSubtitle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock TextWrapping="Wrap" LineHeight="22" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,15">
+                            <Run Text="Entenda as limitações do mundo clássico e a transição para o quântico:"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="🔬 Física:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Limites da Física Clássica"/>
+                            <LineBreak/>
+                            <Run Text="• Dualidade Onda-Partícula (Comparativo)"/>
+                            <LineBreak/>
+                            <Run Text="• Quantização da Energia"/>
+                            <LineBreak/>
+                            <Run Text="• Do Determinismo ao Probabilismo"/>
+                            <LineBreak/>
+                            <Run Text="• Do Campo Contínuo à Quantização"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="💾 Computação:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Bit vs Qubit (Esfera de Bloch)"/>
+                            <LineBreak/>
+                            <Run Text="• Portas Lógicas: Clássicas vs Quânticas"/>
+                            <LineBreak/>
+                            <Run Text="• Paralelismo e Superposição"/>
+                            <LineBreak/>
+                            <Run Text="• Erro, Medição e Decoerência"/>
+                            <LineBreak/>
+                            <Run Text="• Entropia: Shannon vs von Neumann"/>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource BadgeStyle}" Background="#FEF5E7">
+                                <TextBlock Text="⏱️ 3-4 horas" Foreground="#D68910" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Style="{StaticResource BadgeStyle}" Background="#FADBD8">
+                                <TextBlock Text="🚀 Crítico" Foreground="#C0392B" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Rectangle Style="{StaticResource ConnectorLine}" Fill="{StaticResource QuantumGreen}"/>
+
+                <!-- ======================================
+                     FASE 5: COMPUTAÇÃO QUÂNTICA
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource QuantumGreen}"
+                                    CornerRadius="25"
+                                    Width="50" Height="50"
+                                    Margin="0,0,20,0">
+                                <TextBlock Text="5"
+                                         Foreground="White"
+                                         FontSize="24"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="⚛️ Computação Quântica"
+                                         Style="{StaticResource CardTitle}"/>
+                                <TextBlock Text="O futuro da computação"
+                                         Style="{StaticResource CardSubtitle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock TextWrapping="Wrap" LineHeight="22" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,15">
+                            <Run Text="Mergulhe nos conceitos revolucionários da computação quântica:"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="🌊 Superposição:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Estados quânticos simultâneos"/>
+                            <LineBreak/>
+                            <Run Text="• Representação em qubits"/>
+                            <LineBreak/>
+                            <Run Text="• Vantagem computacional"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="🔗 Emaranhamento:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Correlação quântica"/>
+                            <LineBreak/>
+                            <Run Text="• Estados de Bell"/>
+                            <LineBreak/>
+                            <Run Text="• Teleporte quântico"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="⟨0| e |1⟩ Notação de Dirac:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Bra-ket notation"/>
+                            <LineBreak/>
+                            <Run Text="• Estados base"/>
+                            <LineBreak/>
+                            <Run Text="• Operadores quânticos"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="⚖️ Comparativo Clássico vs Quântico:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Performance e complexidade"/>
+                            <LineBreak/>
+                            <Run Text="• Casos de uso ideais"/>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource BadgeStyle}" Background="#E8F8F5">
+                                <TextBlock Text="⏱️ 3-4 horas" Foreground="#16A085" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Style="{StaticResource BadgeStyle}" Background="#FADBD8">
+                                <TextBlock Text="🎓 Avançado" Foreground="#C0392B" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Rectangle Style="{StaticResource ConnectorLine}" Fill="{StaticResource QuantumGreen}"/>
+
+                <!-- ======================================
+                     FASE 6: FÍSICA QUÂNTICA
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource QuantumGreen}"
+                                    CornerRadius="25"
+                                    Width="50" Height="50"
+                                    Margin="0,0,20,0">
+                                <TextBlock Text="6"
+                                         Foreground="White"
+                                         FontSize="24"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="🌌 Física Quântica"
+                                         Style="{StaticResource CardTitle}"/>
+                                <TextBlock Text="Os mistérios do mundo microscópico"
+                                         Style="{StaticResource CardSubtitle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock TextWrapping="Wrap" LineHeight="22" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,15">
+                            <Run Text="Explore os fundamentos teóricos da mecânica quântica:"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="💡 Fundamentos:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Quantização de Energia (Planck)"/>
+                            <LineBreak/>
+                            <Run Text="• Dualidade Onda-Partícula"/>
+                            <LineBreak/>
+                            <Run Text="• Espectros Atômicos e Transições"/>
+                            <LineBreak/>
+                            <Run Text="• Corpo Negro e Radiação de Planck"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="🔬 Princípios Fundamentais:" FontWeight="SemiBold"/>
+                            <LineBreak/>
+                            <Run Text="• Princípio da Incerteza de Heisenberg"/>
+                            <LineBreak/>
+                            <Run Text="• Equação de Schrödinger (1D)"/>
+                            <LineBreak/>
+                            <Run Text="• Função de onda e probabilidade"/>
+                            <LineBreak/>
+                            <Run Text="• Operadores e observáveis"/>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource BadgeStyle}" Background="#FEF5E7">
+                                <TextBlock Text="⏱️ 4-5 horas" Foreground="#D68910" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Style="{StaticResource BadgeStyle}" Background="#FADBD8">
+                                <TextBlock Text="🎓 Avançado" Foreground="#C0392B" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Rectangle Style="{StaticResource ConnectorLine}" Fill="{StaticResource QuantumGreen}"/>
+
+                <!-- ======================================
+                     FASE 7: EXERCÍCIOS PRÁTICOS
+                     ====================================== -->
+                <Border Style="{StaticResource RoadmapCard}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Background="{StaticResource AccentColor}"
+                                    CornerRadius="25"
+                                    Width="50" Height="50"
+                                    Margin="0,0,20,0">
+                                <TextBlock Text="7"
+                                         Foreground="White"
+                                         FontSize="24"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="✍️ Exercícios Práticos"
+                                         Style="{StaticResource CardTitle}"/>
+                                <TextBlock Text="Consolide seu conhecimento"
+                                         Style="{StaticResource CardSubtitle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock TextWrapping="Wrap" LineHeight="22" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,15">
+                            <Run Text="Teste seu conhecimento com exercícios em cada área:"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="• 💻 Computação Clássica: lógica e arquitetura"/>
+                            <LineBreak/>
+                            <Run Text="• ⚛️ Computação Quântica: algoritmos e circuitos"/>
+                            <LineBreak/>
+                            <Run Text="• 📐 Física Clássica: mecânica e termodinâmica"/>
+                            <LineBreak/>
+                            <Run Text="• 🌌 Física Quântica: probabilidade e operadores"/>
+                            <LineBreak/>
+                            <Run Text="• 🔢 Matemática: álgebra linear e cálculo"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="Complete exercícios progressivos com feedback imediato e explicações detalhadas."/>
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource BadgeStyle}" Background="#E8F8F5">
+                                <TextBlock Text="⏱️ Variável" Foreground="#16A085" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                            <Border Style="{StaticResource BadgeStyle}" Background="#EBF5FB">
+                                <TextBlock Text="💪 Prática" Foreground="{StaticResource AccentColor}" FontSize="11" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ======================================
+                     FOOTER - DICAS E RECOMENDAÇÕES
+                     ====================================== -->
+                <Border Background="#FEF9E7"
+                        BorderBrush="{StaticResource WarningOrange}"
+                        BorderThickness="2"
+                        CornerRadius="12"
+                        Padding="25"
+                        Margin="0,30,0,20">
+                    <StackPanel>
+                        <TextBlock Text="💡 Dicas para Melhor Aproveitamento"
+                                 FontSize="18"
+                                 FontWeight="SemiBold"
+                                 Foreground="{StaticResource TextPrimary}"
+                                 Margin="0,0,0,15"/>
+
+                        <TextBlock TextWrapping="Wrap" LineHeight="22" Foreground="{StaticResource TextSecondary}">
+                            <Run Text="1. " FontWeight="Bold"/>
+                            <Run Text="Siga a ordem sequencial: cada fase constrói sobre a anterior"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="2. " FontWeight="Bold"/>
+                            <Run Text="Use os simuladores interativos: visualização ajuda na compreensão"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="3. " FontWeight="Bold"/>
+                            <Run Text="Faça anotações e revisões: os conceitos são cumulativos"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="4. " FontWeight="Bold"/>
+                            <Run Text="Complete os exercícios práticos ao final de cada fase"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="5. " FontWeight="Bold"/>
+                            <Run Text="Não tenha pressa: aprenda no seu próprio ritmo"/>
+                            <LineBreak/><LineBreak/>
+                            <Run Text="6. " FontWeight="Bold"/>
+                            <Run Text="Revise a Fase 4 (Transição) para consolidar as conexões entre conceitos"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- ======================================
+                     ESTATÍSTICAS DO ROADMAP
+                     ====================================== -->
+                <Grid Margin="0,0,0,30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Total de Horas -->
+                    <Border Grid.Column="0"
+                            Background="White"
+                            CornerRadius="10"
+                            Padding="20"
+                            Margin="0,0,10,0">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#BDC3C7" BlurRadius="10" ShadowDepth="2" Opacity="0.15"/>
+                        </Border.Effect>
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="⏱️"
+                                     FontSize="28"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Text="20-25h"
+                                     FontSize="20"
+                                     FontWeight="Bold"
+                                     Foreground="{StaticResource AccentColor}"
+                                     HorizontalAlignment="Center"/>
+                            <TextBlock Text="Duração Total"
+                                     FontSize="11"
+                                     Foreground="{StaticResource TextSecondary}"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Total de Módulos -->
+                    <Border Grid.Column="1"
+                            Background="White"
+                            CornerRadius="10"
+                            Padding="20"
+                            Margin="5,0,5,0">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#BDC3C7" BlurRadius="10" ShadowDepth="2" Opacity="0.15"/>
+                        </Border.Effect>
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="📚"
+                                     FontSize="28"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Text="7 Fases"
+                                     FontSize="20"
+                                     FontWeight="Bold"
+                                     Foreground="{StaticResource QuantumGreen}"
+                                     HorizontalAlignment="Center"/>
+                            <TextBlock Text="Módulos"
+                                     FontSize="11"
+                                     Foreground="{StaticResource TextSecondary}"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Total de Simuladores -->
+                    <Border Grid.Column="2"
+                            Background="White"
+                            CornerRadius="10"
+                            Padding="20"
+                            Margin="10,0,0,0">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#BDC3C7" BlurRadius="10" ShadowDepth="2" Opacity="0.15"/>
+                        </Border.Effect>
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="🎮"
+                                     FontSize="28"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Text="25+"
+                                     FontSize="20"
+                                     FontWeight="Bold"
+                                     Foreground="{StaticResource TransitionPurple}"
+                                     HorizontalAlignment="Center"/>
+                            <TextBlock Text="Simuladores"
+                                     FontSize="11"
+                                     Foreground="{StaticResource TextSecondary}"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

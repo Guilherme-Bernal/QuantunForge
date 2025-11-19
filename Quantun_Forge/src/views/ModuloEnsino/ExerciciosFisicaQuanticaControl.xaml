@@ -1,0 +1,204 @@
+﻿<Page x:Class="Quantun_Forge.src.views.ModuloEnsino.ExerciciosFisicaQuanticaControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ExerciciosFisicaQuanticaControl">
+
+    <Page.Resources>
+        <!-- Estilo para os Cards de Tópicos de Física Quântica -->
+        <Style x:Key="QuantumPhysicsCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#7209B7"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F9F5FC"/>
+                    <Setter Property="BorderBrush" Value="#A020F0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="QuantumPhysicsTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style x:Key="QuantumPhysicsSubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#5A5A6B"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+        </Style>
+
+        <Style x:Key="QuantumPhysicsHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="#F5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <StackPanel Grid.Row="0" Margin="30,20,30,0">
+            <TextBlock Text="Física Quântica" Style="{StaticResource QuantumPhysicsHeaderStyle}"/>
+            <TextBlock Text="Explore os mistérios do mundo quântico" 
+                       FontSize="14" 
+                       Foreground="#5A5A6B" 
+                       Margin="0,0,0,20"/>
+        </StackPanel>
+
+        <!-- ScrollViewer para o conteúdo -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="20,0,20,20">
+            <StackPanel>
+                <!-- Tópico 1: Quantização -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}" 
+                        x:Name="QuantizacaoCard"
+                        MouseLeftButtonDown="QuantizacaoCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⚡" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Quantização" Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Energia e propriedades discretas da natureza" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 2: Dualidade Onda-Partícula -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}"
+                        x:Name="DualidadeCard"
+                        MouseLeftButtonDown="DualidadeCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🌊" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Dualidade Onda-Partícula" Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="A natureza dual da matéria e da luz" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 3: Superposição -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}"
+                        x:Name="SuperposicaoCard"
+                        MouseLeftButtonDown="SuperposicaoCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🎭" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Superposição" 
+                                       Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Estados quânticos simultâneos" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 4: Analogia Clássica vs. Quântica -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}"
+                        x:Name="AnalogiaCard"
+                        MouseLeftButtonDown="AnalogiaCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⚖️" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Analogia Clássica vs. Quântica" 
+                                       Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Diferenças fundamentais entre os mundos clássico e quântico" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 5: Postulado de Planck -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}"
+                        x:Name="PlanckCard"
+                        MouseLeftButtonDown="PlanckCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="💡" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Postulado de Planck" 
+                                       Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="A constante de Planck e os quanta de energia" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 6: Postulado de Broglie -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}"
+                        x:Name="BroglieCard"
+                        MouseLeftButtonDown="BroglieCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="〰️" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Postulado de Broglie" 
+                                       Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Comprimento de onda associado à matéria" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 7: Colapso da Função de Onda -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}"
+                        x:Name="ColapsoCard"
+                        MouseLeftButtonDown="ColapsoCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📉" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Colapso da Função de Onda" 
+                                       Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="O papel da medição na mecânica quântica" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 8: Emaranhamento -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}"
+                        x:Name="EmaranhamentoCard"
+                        MouseLeftButtonDown="EmaranhamentoCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🔗" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Emaranhamento" 
+                                       Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Correlações quânticas não-locais" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 9: Princípio da Incerteza de Heisenberg -->
+                <Border Style="{StaticResource QuantumPhysicsCardStyle}"
+                        x:Name="HeisenbergCard"
+                        MouseLeftButtonDown="HeisenbergCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="❓" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="O Princípio da Incerteza de Heisenberg" 
+                                       Style="{StaticResource QuantumPhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Limites fundamentais da medição quântica" 
+                                   Style="{StaticResource QuantumPhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

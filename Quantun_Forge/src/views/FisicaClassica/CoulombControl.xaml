@@ -4,76 +4,641 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="550" d:DesignWidth="900">
+             d:DesignHeight="700"
+             d:DesignWidth="1200"
+             Background="#F5F5F5">
 
-    <Grid Background="#1E1E1E" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#4A90E2"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
 
-        <!-- TÍTULO -->
-        <TextBlock Text="Lei de Coulomb – Força de Interação Elétrica"
-                   FontSize="24" FontWeight="Bold" Foreground="White"
-                   HorizontalAlignment="Center" Margin="0,10"/>
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4A90E2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#357ABD"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- TEORIA -->
-        <StackPanel Grid.Row="1" Margin="20,5,20,10">
-            <TextBlock Text="📘 Conceito" FontSize="16" FontWeight="Bold" Foreground="White"/>
-            <TextBlock Text="A força entre duas cargas elétricas é proporcional ao produto de suas cargas e inversamente proporcional ao quadrado da distância entre elas." 
-                       FontSize="14" Foreground="White" TextWrapping="Wrap" Margin="0,4,0,0"/>
-            <TextBlock Text="F = k · |q₁ · q₂| / r²    (k ≈ 8,99 × 10⁹ N·m²/C²)" 
-                       FontSize="14" Foreground="LightBlue" Margin="0,4,0,0"/>
-        </StackPanel>
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
 
-        <!-- SIMULADOR -->
-        <Grid Grid.Row="2">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.5*"/>
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- VISUALIZAÇÃO -->
-            <Border Grid.Column="0" Background="#2E2E2E" CornerRadius="10" BorderBrush="#444" BorderThickness="2" Margin="10">
-                <Canvas x:Name="CanvasSimulador" ClipToBounds="True">
-                    <!-- Carga 1 -->
-                    <TextBlock x:Name="Carga1" Text="🔴 +q₁" FontSize="20" Canvas.Left="80" Canvas.Top="100" Foreground="Red"/>
+            <!-- Coluna Principal -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="⚡ Lei de Coulomb - Força Elétrica" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="Cargas elétricas se atraem ou se repelem com força proporcional às suas intensidades" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
 
-                    <!-- Carga 2 -->
-                    <TextBlock x:Name="Carga2" Text="🔵 -q₂" FontSize="20" Canvas.Left="500" Canvas.Top="100" Foreground="LightBlue"/>
+                <!-- Fórmula Principal -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📐 A Lei de Coulomb" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                    <!-- Linha da força -->
-                    <Line x:Name="LinhaForca" X1="120" Y1="110" X2="540" Y2="110" Stroke="Yellow" StrokeThickness="2" StrokeDashArray="5"/>
+                        <Border Background="#E3F2FD" BorderBrush="#2196F3" BorderThickness="3" CornerRadius="8" Padding="20">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="F = k × |q₁ × q₂| / r²" 
+                                          FontSize="32" 
+                                          FontWeight="Bold" 
+                                          Foreground="#1976D2"
+                                          HorizontalAlignment="Center"/>
 
-                    <!-- Valor da força -->
-                    <TextBlock x:Name="TxtForcaValor" Text="F = ?" Canvas.Left="300" Canvas.Top="70" FontSize="16" Foreground="White"/>
-                </Canvas>
-            </Border>
+                                <Grid Margin="0,20,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-            <!-- SLIDERS -->
-            <StackPanel Grid.Column="1" Margin="10">
-                <TextBlock Text="🔋 Carga 1 (q₁ - C)" Foreground="White"/>
-                <Slider x:Name="SliderQ1" Minimum="-10" Maximum="10" Value="5" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="AtualizarSimulacao"/>
-                <TextBlock Text="{Binding ElementName=SliderQ1, Path=Value, StringFormat='q₁ = {0:F0} C'}" Foreground="White" Margin="0,0,0,10"/>
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock FontSize="12" Foreground="#7F8C8D" Margin="0,0,0,5">
+                                            <Run Text="• F:" FontWeight="Bold" Foreground="#4A90E2"/>
+                                            <Run Text=" Força elétrica (N)"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="12" Foreground="#7F8C8D" Margin="0,0,0,5">
+                                            <Run Text="• q₁, q₂:" FontWeight="Bold" Foreground="#4A90E2"/>
+                                            <Run Text=" Cargas elétricas (C)"/>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                <TextBlock Text="🔋 Carga 2 (q₂ - C)" Foreground="White"/>
-                <Slider x:Name="SliderQ2" Minimum="-10" Maximum="10" Value="-5" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="AtualizarSimulacao"/>
-                <TextBlock Text="{Binding ElementName=SliderQ2, Path=Value, StringFormat='q₂ = {0:F0} C'}" Foreground="White" Margin="0,0,0,10"/>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <TextBlock FontSize="12" Foreground="#7F8C8D" Margin="0,0,0,5">
+                                            <Run Text="• r:" FontWeight="Bold" Foreground="#4A90E2"/>
+                                            <Run Text=" Distância entre cargas (m)"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="12" Foreground="#7F8C8D">
+                                            <Run Text="• k:" FontWeight="Bold" Foreground="#4A90E2"/>
+                                            <Run Text=" 8.99×10⁹ N·m²/C²"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
 
-                <TextBlock Text="📏 Distância (m)" Foreground="White"/>
-                <Slider x:Name="SliderDist" Minimum="0.1" Maximum="10" Value="2" TickFrequency="0.1" IsSnapToTickEnabled="False" ValueChanged="AtualizarSimulacao"/>
-                <TextBlock Text="{Binding ElementName=SliderDist, Path=Value, StringFormat='r = {0:F1} m'}" Foreground="White" Margin="0,0,0,10"/>
+                <!-- Simulação Visual -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎯 Simulação Interativa" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                <Button Content="⏹ Resetar" Width="150" Click="BtnResetar_Click"/>
+                        <!-- Canvas Principal -->
+                        <Border Background="#1A1A2E" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="400"
+                                Margin="0,0,0,15">
+                            <Canvas x:Name="CanvasCoulomb" ClipToBounds="True">
+                                <!-- Grade de fundo -->
+                                <Rectangle Fill="#16213E" Width="800" Height="400"/>
+
+                                <!-- Linhas de campo elétrico (decorativas) -->
+                                <Ellipse Width="120" Height="120" 
+                                        Stroke="#3A4A5A" 
+                                        StrokeThickness="1" 
+                                        StrokeDashArray="5,5"
+                                        Canvas.Left="90" 
+                                        Canvas.Top="140"/>
+                                <Ellipse Width="100" Height="100" 
+                                        Stroke="#3A4A5A" 
+                                        StrokeThickness="1" 
+                                        StrokeDashArray="5,5"
+                                        Canvas.Left="600" 
+                                        Canvas.Top="150"/>
+
+                                <!-- Carga 1 (Esquerda) -->
+                                <Grid x:Name="Carga1Container" Canvas.Left="100" Canvas.Top="150">
+                                    <Ellipse x:Name="Carga1"
+                                            Width="100"
+                                            Height="100"
+                                            Fill="#E74C3C"
+                                            Stroke="#C0392B"
+                                            StrokeThickness="3">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#E74C3C" BlurRadius="40" ShadowDepth="0" Opacity="0.8"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock x:Name="SimboloCarga1" Text="+" FontSize="56" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"/>
+                                        <TextBlock x:Name="LabelCarga1" 
+                                                  Text="q₁" 
+                                                  FontSize="14"
+                                                  FontWeight="Bold"
+                                                  Foreground="White"
+                                                  HorizontalAlignment="Center"
+                                                  Margin="0,5,0,0"/>
+                                        <TextBlock x:Name="ValorCarga1" 
+                                                  Text="+5.0 C" 
+                                                  FontSize="11"
+                                                  Foreground="#ECF0F1"
+                                                  HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Carga 2 (Direita) -->
+                                <Grid x:Name="Carga2Container" Canvas.Left="600" Canvas.Top="150">
+                                    <Ellipse x:Name="Carga2"
+                                            Width="100"
+                                            Height="100"
+                                            Fill="#3498DB"
+                                            Stroke="#2980B9"
+                                            StrokeThickness="3">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#3498DB" BlurRadius="40" ShadowDepth="0" Opacity="0.8"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock x:Name="SimboloCarga2" Text="-" FontSize="56" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"/>
+                                        <TextBlock x:Name="LabelCarga2" 
+                                                  Text="q₂" 
+                                                  FontSize="14"
+                                                  FontWeight="Bold"
+                                                  Foreground="White"
+                                                  HorizontalAlignment="Center"
+                                                  Margin="0,5,0,0"/>
+                                        <TextBlock x:Name="ValorCarga2" 
+                                                  Text="-3.0 C" 
+                                                  FontSize="11"
+                                                  Foreground="#ECF0F1"
+                                                  HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Linha de distância -->
+                                <Line x:Name="LinhaDistancia"
+                                     X1="150" Y1="200"
+                                     X2="650" Y2="200"
+                                     Stroke="#F39C12"
+                                     StrokeThickness="2"
+                                     StrokeDashArray="10,5"/>
+
+                                <!-- Setas de medida -->
+                                <Polygon Points="150,200 160,195 160,205" Fill="#F39C12"/>
+                                <Polygon Points="650,200 640,195 640,205" Fill="#F39C12"/>
+
+                                <!-- Label da distância -->
+                                <Border Background="#34495E" 
+                                       CornerRadius="5" 
+                                       Padding="10,5"
+                                       Canvas.Left="370"
+                                       Canvas.Top="175">
+                                    <StackPanel>
+                                        <TextBlock Text="Distância (r)" 
+                                                  FontSize="10" 
+                                                  Foreground="#ECF0F1"
+                                                  HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="TxtDistanciaVisual" 
+                                                  Text="2.0 m" 
+                                                  FontSize="13"
+                                                  FontWeight="Bold"
+                                                  Foreground="#F39C12"
+                                                  HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Vetores de Força -->
+                                <!-- Força em Carga 1 -->
+                                <Line x:Name="VetorForca1"
+                                     X1="200" Y1="200"
+                                     X2="320" Y2="200"
+                                     Stroke="#2ECC71"
+                                     StrokeThickness="6"
+                                     Visibility="Collapsed">
+                                    <Line.Effect>
+                                        <DropShadowEffect Color="#2ECC71" BlurRadius="15" ShadowDepth="0"/>
+                                    </Line.Effect>
+                                </Line>
+                                <Polygon x:Name="SetaForca1"
+                                        Points="320,200 310,195 310,205"
+                                        Fill="#2ECC71"
+                                        Visibility="Collapsed">
+                                    <Polygon.Effect>
+                                        <DropShadowEffect Color="#2ECC71" BlurRadius="15" ShadowDepth="0"/>
+                                    </Polygon.Effect>
+                                </Polygon>
+
+                                <!-- Força em Carga 2 -->
+                                <Line x:Name="VetorForca2"
+                                     X1="650" Y1="200"
+                                     X2="530" Y2="200"
+                                     Stroke="#9B59B6"
+                                     StrokeThickness="6"
+                                     Visibility="Collapsed">
+                                    <Line.Effect>
+                                        <DropShadowEffect Color="#9B59B6" BlurRadius="15" ShadowDepth="0"/>
+                                    </Line.Effect>
+                                </Line>
+                                <Polygon x:Name="SetaForca2"
+                                        Points="530,200 540,195 540,205"
+                                        Fill="#9B59B6"
+                                        Visibility="Collapsed">
+                                    <Polygon.Effect>
+                                        <DropShadowEffect Color="#9B59B6" BlurRadius="15" ShadowDepth="0"/>
+                                    </Polygon.Effect>
+                                </Polygon>
+
+                                <!-- Labels das forças -->
+                                <TextBlock x:Name="LabelForca1"
+                                          Text="F₁₂"
+                                          FontSize="18"
+                                          FontWeight="Bold"
+                                          Foreground="#2ECC71"
+                                          Canvas.Left="245"
+                                          Canvas.Top="170"
+                                          Visibility="Collapsed"/>
+
+                                <TextBlock x:Name="LabelForca2"
+                                          Text="F₂₁"
+                                          FontSize="18"
+                                          FontWeight="Bold"
+                                          Foreground="#9B59B6"
+                                          Canvas.Left="565"
+                                          Canvas.Top="170"
+                                          Visibility="Collapsed"/>
+
+                                <!-- Tipo de interação -->
+                                <Border x:Name="TipoInteracao"
+                                       Background="#E74C3C" 
+                                       CornerRadius="8" 
+                                       Padding="15,8"
+                                       Canvas.Left="320"
+                                       Canvas.Top="20"
+                                       Visibility="Collapsed">
+                                    <TextBlock x:Name="TxtTipoInteracao" 
+                                              Text="⚡ ATRAÇÃO" 
+                                              FontSize="16"
+                                              FontWeight="Bold"
+                                              Foreground="White"/>
+                                </Border>
+
+                                <!-- Overlay com informações -->
+                                <Border Background="#000000" 
+                                       Opacity="0.85" 
+                                       CornerRadius="8" 
+                                       Padding="15"
+                                       Canvas.Right="10"
+                                       Canvas.Top="10"
+                                       Visibility="Collapsed"
+                                       x:Name="InfoOverlay">
+                                    <StackPanel>
+                                        <TextBlock Text="⚡ Força Elétrica" 
+                                                  FontSize="12" 
+                                                  FontWeight="Bold"
+                                                  Foreground="#F39C12"
+                                                  Margin="0,0,0,8"/>
+                                        <TextBlock x:Name="TxtForcaOverlay" 
+                                                  Text="F = 1.12×10¹⁰ N" 
+                                                  FontSize="18"
+                                                  FontWeight="Bold"
+                                                  Foreground="#2ECC71"
+                                                  Margin="0,0,0,5"/>
+                                        <TextBlock x:Name="TxtComparacaoOverlay" 
+                                                  Text="≈ peso de 1.1 bilhão de kg" 
+                                                  FontSize="11"
+                                                  Foreground="#ECF0F1"/>
+                                    </StackPanel>
+                                </Border>
+                            </Canvas>
+                        </Border>
+
+                        <!-- Legenda -->
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Ellipse Fill="#E74C3C" Width="15" Height="15" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Carga positiva" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Ellipse Fill="#3498DB" Width="15" Height="15" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Carga negativa" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Rectangle Fill="#F39C12" Width="20" Height="3" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Distância" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Polygon Points="0,7.5 10,7.5 8,5 10,7.5 8,10" Fill="#2ECC71" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Força elétrica" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Resultado Detalhado -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Resultado do Cálculo" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Cálculo passo a passo -->
+                        <Border Background="#E8F5E9" BorderBrush="#4CAF50" BorderThickness="2" CornerRadius="5" Padding="15" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="🔢 Cálculo Passo a Passo:" FontSize="13" FontWeight="Bold" Foreground="#2E7D32" Margin="0,0,0,8"/>
+                                <TextBlock x:Name="TxtPassoAPasso" 
+                                          TextWrapping="Wrap"
+                                          FontSize="12" 
+                                          Foreground="#2C3E50" 
+                                          LineHeight="22"
+                                          FontFamily="Consolas"
+                                          Text="Configure os valores e clique em 'Calcular Força' para ver o resultado"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Força resultante -->
+                        <Border Background="#E3F2FD" BorderBrush="#2196F3" BorderThickness="2" CornerRadius="5" Padding="15">
+                            <StackPanel>
+                                <TextBlock Text="⚡ Força Elétrica:" FontSize="13" FontWeight="Bold" Foreground="#1976D2" Margin="0,0,0,8"/>
+                                <TextBlock x:Name="TxtForcaResultado" 
+                                          Text="Aguardando cálculo..." 
+                                          FontSize="20"
+                                          FontWeight="Bold"
+                                          Foreground="#0D47A1"
+                                          Margin="0,0,0,8"/>
+                                <TextBlock x:Name="TxtComparacao" 
+                                          TextWrapping="Wrap"
+                                          FontSize="11" 
+                                          Foreground="#7F8C8D"
+                                          Text="A força será exibida após o cálculo"/>
+                                <TextBlock x:Name="TxtTipoForca" 
+                                          TextWrapping="Wrap"
+                                          FontSize="12" 
+                                          FontWeight="Bold"
+                                          Foreground="#E74C3C"
+                                          Margin="0,5,0,0"
+                                          Text=""/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Entendendo a Lei -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Entendendo a Lei de Coulomb" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" Background="#FFEBEE" CornerRadius="5" Padding="15" Margin="0,0,5,0">
+                                <StackPanel>
+                                    <TextBlock Text="⚡ Cargas Opostas" FontSize="13" FontWeight="Bold" Foreground="#E74C3C" Margin="0,0,0,8"/>
+                                    <TextBlock FontSize="11" Foreground="#2C3E50" TextWrapping="Wrap" Margin="0,0,0,5">
+                                        <Run Text="Sinais diferentes:" FontWeight="Bold"/>
+                                        <Run Text=" (+ e -)"/>
+                                    </TextBlock>
+                                    <TextBlock Text="→ Força de ATRAÇÃO" 
+                                              FontSize="11" 
+                                              Foreground="#C0392B" 
+                                              FontWeight="Bold"
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Background="#E8EAF6" CornerRadius="5" Padding="15" Margin="5,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🔋 Cargas Iguais" FontSize="13" FontWeight="Bold" Foreground="#3498DB" Margin="0,0,0,8"/>
+                                    <TextBlock FontSize="11" Foreground="#2C3E50" TextWrapping="Wrap" Margin="0,0,0,5">
+                                        <Run Text="Mesmo sinal:" FontWeight="Bold"/>
+                                        <Run Text=" (+ e + ou - e -)"/>
+                                    </TextBlock>
+                                    <TextBlock Text="→ Força de REPULSÃO" 
+                                              FontSize="11" 
+                                              Foreground="#1976D2" 
+                                              FontWeight="Bold"
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </StackPanel>
 
-            <!-- INTERPRETAÇÃO -->
-            <StackPanel Grid.Column="2" Margin="10">
-                <TextBlock Text="📊 Interpretação" FontWeight="Bold" FontSize="16" Foreground="White"/>
-                <TextBlock x:Name="TxtInterpretacao" FontSize="14" Foreground="LightGreen" TextWrapping="Wrap" Margin="0,10,0,0"/>
+            <!-- Coluna Lateral - Controles -->
+            <StackPanel Grid.Column="2">
+                <!-- Controles -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Configurações" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Carga 1 -->
+                        <TextBlock Text="Carga 1 (q₁) em Coulombs:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderCarga1"
+                               Minimum="-10"
+                               Maximum="10"
+                               Value="5"
+                               TickFrequency="0.1"
+                               ValueChanged="Sliders_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtCarga1Slider" 
+                                  Text="+5.0 C" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Carga 2 -->
+                        <TextBlock Text="Carga 2 (q₂) em Coulombs:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,5"/>
+                        <Slider x:Name="SliderCarga2"
+                               Minimum="-10"
+                               Maximum="10"
+                               Value="-3"
+                               TickFrequency="0.1"
+                               ValueChanged="Sliders_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtCarga2Slider" 
+                                  Text="-3.0 C" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Distância -->
+                        <TextBlock Text="Distância (r) em metros:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,5"/>
+                        <Slider x:Name="SliderDistancia"
+                               Minimum="0.1"
+                               Maximum="10"
+                               Value="2"
+                               TickFrequency="0.1"
+                               ValueChanged="Sliders_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtDistanciaSlider" 
+                                  Text="2.0 m" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,20"/>
+
+                        <!-- Botões -->
+                        <Button Content="⚡ Calcular Força" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Click="BtnCalcular_Click"/>
+
+                        <Button Content="🔄 Resetar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnResetar_Click"/>
+
+                        <Separator Background="#E0E0E0" Margin="0,15"/>
+
+                        <!-- Cenários -->
+                        <TextBlock Text="⚡ Cenários Prontos:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,10"/>
+
+                        <Button Content="+ − Atração Forte" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#E74C3C"
+                               Click="BtnAtracaoForte_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+
+                        <Button Content="+ + Repulsão Forte" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#3498DB"
+                               Click="BtnRepulsaoForte_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+
+                        <Button Content="⚡ Prótons e Elétrons" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#9B59B6"
+                               Click="BtnProtonEletron_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+
+                        <Button Content="🔋 Cargas Pequenas" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#27AE60"
+                               Click="BtnCargasPequenas_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Constante de Coulomb -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Constante k" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <Border Background="#E3F2FD" BorderBrush="#2196F3" BorderThickness="2" CornerRadius="5" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="k = 8.99×10⁹" 
+                                          FontSize="16"
+                                          FontWeight="Bold"
+                                          Foreground="#1976D2"
+                                          HorizontalAlignment="Center"
+                                          Margin="0,0,0,5"/>
+                                <TextBlock Text="N·m²/C²" 
+                                          FontSize="12"
+                                          Foreground="#7F8C8D"
+                                          HorizontalAlignment="Center"
+                                          Margin="0,0,0,10"/>
+                                <TextBlock Text="Constante eletrostática no vácuo" 
+                                          FontSize="10"
+                                          FontStyle="Italic"
+                                          Foreground="#95A5A6"
+                                          TextWrapping="Wrap"
+                                          TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Info -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Curiosidade" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#4A90E2" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#7F8C8D" LineHeight="18">
+                            <Run Text="A Lei de Coulomb foi descoberta por Charles-Augustin de Coulomb em 1785. Ela é análoga à Lei da Gravitação Universal, mas a força elétrica é muito mais intensa que a gravitacional!"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

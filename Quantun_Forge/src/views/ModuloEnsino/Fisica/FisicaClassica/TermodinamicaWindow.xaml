@@ -1,0 +1,735 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica.TermodinamicaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica"
+        mc:Ignorable="d"
+        Title="Termodinâmica e Entropia - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#FADBD8"/>
+            <Setter Property="BorderBrush" Value="#E74C3C"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="EquationBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E74C3C"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Termodinâmica e Entropia" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="Leis da Termodinâmica e Teoria Estatística"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#E74C3C" FontWeight="Bold">Termodinâmica</Run> é o estudo da energia, 
+                        calor e trabalho. Suas leis governam tudo: desde motores de carros até o destino do universo. 
+                        A <Run FontWeight="Bold">entropia</Run> é uma das ideias mais profundas da física - ela explica 
+                        por que o tempo flui em uma única direção!
+                    </TextBlock>
+
+                    <!-- Conceitos Básicos -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Conceitos Fundamentais
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#E74C3C"
+                                     Margin="0,0,0,10">
+                                🌡️ Temperatura, Calor e Energia Interna
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#E74C3C" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">Temperatura (T):</Run> Medida da energia cinética média das moléculas
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">Calor (Q):</Run> Transferência de energia entre corpos
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">Energia Interna (U):</Run> Energia total das partículas do sistema
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        • <Run FontWeight="Bold">Trabalho (W):</Run> Energia transferida por forças mecânicas
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Escalas de Temperatura -->
+                    <Border Background="#D6EAF8" BorderBrush="#3498DB" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌡️ Escalas de Temperatura" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2874A6"
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="White" BorderBrush="#3498DB" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Kelvin (K) = Celsius (°C) + 273.15" FontSize="12" Foreground="#2874A6" Margin="0,2"/>
+                                    <TextBlock Text="Fahrenheit (°F) = (9/5)°C + 32" FontSize="12" Foreground="#2874A6" Margin="0,2"/>
+                                    <TextBlock Text="Zero Absoluto = 0 K = -273.15°C" FontSize="11" Foreground="#7F8C8D" FontStyle="Italic" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Lei Zero -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        As Quatro Leis da Termodinâmica
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#EBF5FB" BorderBrush="#3498DB">
+                        <StackPanel>
+                            <TextBlock Text="0️⃣ LEI ZERO - Equilíbrio Térmico" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2874A6" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Se dois sistemas estão em equilíbrio térmico com um terceiro, então estão em equilíbrio 
+                                térmico entre si. Esta lei fundamenta a medição de temperatura!
+                            </TextBlock>
+
+                            <Border Background="#D6EAF8" BorderBrush="#2874A6" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <TextBlock Text="A ⇄ C  e  B ⇄ C  ⟹  A ⇄ B" 
+                                         FontSize="18" 
+                                         FontWeight="Bold" 
+                                         Foreground="#1F618D"
+                                         HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                💡 Permite usar termômetros para medir temperatura!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Primeira Lei -->
+                    <Border Style="{StaticResource EquationBox}" Background="#E8F8F5" BorderBrush="#16A085" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="1️⃣ PRIMEIRA LEI - Conservação de Energia" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#138D75" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                A energia não pode ser criada nem destruída, apenas transformada. 
+                                É a lei da conservação de energia aplicada a sistemas térmicos.
+                            </TextBlock>
+
+                            <Border Background="#D1F2EB" BorderBrush="#138D75" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="ΔU = Q - W" 
+                                             FontSize="24" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="Variação de energia = Calor recebido - Trabalho realizado" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                • <Bold>Q &gt; 0:</Bold> Sistema recebe calor
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>W &gt; 0:</Bold> Sistema realiza trabalho (expansão)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>ΔU &gt; 0:</Bold> Energia interna aumenta
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Segunda Lei -->
+                    <Border Style="{StaticResource EquationBox}" Background="#FDEDEC" BorderBrush="#E74C3C" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="2️⃣ SEGUNDA LEI - A Flecha do Tempo" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#C0392B" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                A entropia de um sistema isolado nunca diminui - ela sempre aumenta ou permanece constante. 
+                                Esta é a lei que define a direção do tempo!
+                            </TextBlock>
+
+                            <Border Background="#FADBD8" BorderBrush="#943126" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="ΔS ≥ 0" 
+                                             FontSize="28" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="(para sistemas isolados)" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0" FontWeight="SemiBold">
+                                💡 <Run Foreground="#E74C3C">Consequências fundamentais:</Run>
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,5,0,0">
+                                • Calor flui espontaneamente do quente para o frio (nunca o contrário)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • É impossível converter 100% do calor em trabalho
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • Processos naturais são irreversíveis
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • O universo caminha para a desordem máxima
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Terceira Lei -->
+                    <Border Style="{StaticResource EquationBox}" Background="#E8DAEF" BorderBrush="#8E44AD" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="3️⃣ TERCEIRA LEI - Zero Absoluto" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                É impossível atingir o zero absoluto (0 K = -273.15°C) em um número finito de etapas. 
+                                No zero absoluto, a entropia de um cristal perfeito é zero.
+                            </TextBlock>
+
+                            <Border Background="#D5D8DC" BorderBrush="#7D3C98" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="S(T=0K) = 0" 
+                                             FontSize="22" 
+                                             FontWeight="Bold" 
+                                             Foreground="#6C3483"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="(para cristal perfeito)" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                💡 A temperatura mais baixa já alcançada é cerca de 0.0000000001 K!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Entropia -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Entropia - A Medida da Desordem
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#E74C3C"
+                                     Margin="0,0,0,10">
+                                🎲 O Conceito Mais Profundo da Física
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Entropia mede o grau de desordem ou aleatoriedade de um sistema. Quanto maior a 
+                                entropia, mais desordenado está o sistema. A natureza sempre evolui para estados 
+                                de maior entropia!
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#E74C3C" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,10,0,10">
+                                <StackPanel>
+                                    <TextBlock Text="Definição Termodinâmica:" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#C0392B"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Text="dS = dQ/T" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+
+                                    <TextBlock Text="Definição Estatística (Boltzmann):" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#C0392B"
+                                             Margin="0,15,0,8"/>
+                                    <TextBlock Text="S = k ln(Ω)" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="k = constante de Boltzmann | Ω = microestados possíveis" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Processos Termodinâmicos -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Processos Termodinâmicos
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🔄" FontSize="16"/> 
+                                <Run FontWeight="Bold">Processo Isotérmico:</Run> Temperatura constante (ΔT = 0)
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🔒" FontSize="16"/> 
+                                <Run FontWeight="Bold">Processo Adiabático:</Run> Sem troca de calor (Q = 0)
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="📊" FontSize="16"/> 
+                                <Run FontWeight="Bold">Processo Isobárico:</Run> Pressão constante (ΔP = 0)
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="📦" FontSize="16"/> 
+                                <Run FontWeight="Bold">Processo Isovolumétrico:</Run> Volume constante (ΔV = 0, W = 0)
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Máquinas Térmicas -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Máquinas Térmicas e Eficiência
+                    </TextBlock>
+
+                    <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🚂 Motores e Refrigeradores" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,0,0,10">
+                                Máquinas térmicas convertem calor em trabalho. Nenhuma máquina pode ser 100% eficiente!
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Eficiência (η):" FontSize="12" FontWeight="Bold" Foreground="#B7950B"/>
+                                    <TextBlock Text="η = W/Q_quente = 1 - (Q_frio/Q_quente)" 
+                                             FontSize="14" 
+                                             FontWeight="Bold" 
+                                             Foreground="#D68910"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+
+                                    <TextBlock Text="Ciclo de Carnot (máximo teórico):" FontSize="12" FontWeight="Bold" Foreground="#B7950B" Margin="0,10,0,0"/>
+                                    <TextBlock Text="η_Carnot = 1 - (T_frio/T_quente)" 
+                                             FontSize="14" 
+                                             FontWeight="Bold" 
+                                             Foreground="#D68910"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Aplicações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Aplicações da Termodinâmica
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🚗" FontSize="16"/> 
+                                <Run FontWeight="Bold">Motores de Combustão:</Run> Carros, aviões, geradores
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="❄️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Refrigeração:</Run> Geladeiras, ar condicionado, criogenia
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⚡" FontSize="16"/> 
+                                <Run FontWeight="Bold">Usinas Termelétricas:</Run> Conversão de calor em eletricidade
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌌" FontSize="16"/> 
+                                <Run FontWeight="Bold">Cosmologia:</Run> Evolução e destino do universo
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🧬" FontSize="16"/> 
+                                <Run FontWeight="Bold">Biologia:</Run> Metabolismo, fotossíntese, respiração
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="💻" FontSize="16"/> 
+                                <Run FontWeight="Bold">Computação:</Run> Limites termodinâmicos do processamento
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Curiosidade -->
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Curiosidade: A Morte Térmica do Universo" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12">
+                                Segundo a Segunda Lei, a entropia do universo está sempre aumentando. Em trilhões 
+                                de anos, o universo atingirá entropia máxima - um estado de equilíbrio térmico total 
+                                chamado "morte térmica". Neste cenário, não haverá mais gradientes de temperatura, 
+                                tornando impossível extrair trabalho útil. O universo ficará frio, escuro e "morto" 
+                                termodinamicamente!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: CALCULADORA -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" MinHeight="200"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Calculadora Termodinâmica" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Calcule energia, entropia e eficiência!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+
+                    <!-- Comandos -->
+                    <Expander Header="Comandos Disponíveis" 
+                            IsExpanded="False" 
+                            Margin="0,15,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" BorderBrush="#E74C3C" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="converterTemperatura(valor: 25, de: 'C', para: 'K')" 
+                                             Foreground="#C0392B" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Converte entre Celsius, Kelvin e Fahrenheit" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E74C3C" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="primeiraLei(Q: 1000, W: 300)" 
+                                             Foreground="#C0392B" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula ΔU = Q - W (Primeira Lei)" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E74C3C" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularEficiencia(trabalho: 500, calorQuente: 2000)" 
+                                             Foreground="#C0392B" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula eficiência de máquina térmica" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E74C3C" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="eficienciaCarnot(Tquente: 500, Tfrio: 300)" 
+                                             Foreground="#C0392B" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula eficiência máxima teórica (Carnot)" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E74C3C" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularEntropia(calor: 1000, temperatura: 300)" 
+                                             Foreground="#C0392B" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula variação de entropia ΔS = Q/T" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E74C3C" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="escreva(&quot;mensagem&quot;)" 
+                                             Foreground="#C0392B" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Exibe mensagens no console" Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+
+                <!-- Editor -->
+                <Border Grid.Row="1" Background="White" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="8" Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#ECF0F1" CornerRadius="8,8,0,0" Padding="10,8">
+                            <TextBlock Text="Editor de Código" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <TextBox x:Name="CodeEditor" 
+                                 Grid.Row="1"
+                                 AcceptsReturn="True" 
+                                 AcceptsTab="True" 
+                                 FontFamily="Cascadia Code, Consolas"
+                                 FontSize="13"
+                                 Background="White"
+                                 Foreground="#2C3E50"
+                                 CaretBrush="#E74C3C"
+                                 VerticalScrollBarVisibility="Auto" 
+                                 BorderThickness="0"
+                                 Padding="15"
+                                 Text="// 🚂 Analisando uma Máquina Térmica&#x0A;escreva(&quot;=== EFICIÊNCIA DE MOTOR TÉRMICO ===&quot;)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Dados do motor&#x0A;escreva(&quot;🔥 Motor recebe 2000 J de calor&quot;)&#x0A;escreva(&quot;⚙️ Motor realiza 500 J de trabalho&quot;)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Primeira Lei&#x0A;primeiraLei(Q: 2000, W: 500)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Eficiência real&#x0A;calcularEficiencia(trabalho: 500, calorQuente: 2000)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Eficiência de Carnot (Tquente=500K, Tfrio=300K)&#x0A;escreva(&quot;📊 Comparando com ciclo de Carnot:&quot;)&#x0A;eficienciaCarnot(Tquente: 500, Tfrio: 300)" />
+                    </Grid>
+                </Border>
+
+                <!-- Botões -->
+                <Grid Grid.Row="2" Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Content="EXECUTAR" Height="45" Style="{StaticResource ButtonStyle}" FontSize="14" Click="RunCode_Click"/>
+                    <Button Grid.Column="2" Content="LIMPAR" Height="45" Style="{StaticResource SecondaryButtonStyle}" FontSize="14" Click="ClearCode_Click"/>
+                </Grid>
+
+                <!-- Console -->
+                <Border Grid.Row="3" Background="White" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="8" Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#ECF0F1" CornerRadius="8,8,0,0" Padding="10,8">
+                            <TextBlock Text="Console de Saída" Foreground="#2C3E50" FontWeight="SemiBold" FontSize="13"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                            <TextBlock x:Name="ConsoleOutput" 
+                                     Foreground="#27AE60" 
+                                     FontFamily="Cascadia Code, Consolas"
+                                     FontSize="12"
+                                     TextWrapping="Wrap"
+                                     Text="&gt; Calculadora Termodinâmica iniciada.&#x0A;&gt; Digite seu código e clique em EXECUTAR.&#x0A;&gt; Explore as leis da termodinâmica!"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Botões Finais -->
+                <StackPanel Grid.Row="4" Margin="0,15,0,0">
+                    <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="6" Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="🎓 Recursos Adicionais" 
+                                     FontWeight="Bold" 
+                                     FontSize="13"
+                                     Foreground="#E74C3C"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" x:Name="ExercisesButton" Content="📝 Exercícios" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="ExercisesButton_Click"/>
+                                <Button Grid.Column="2" x:Name="QuizButton" Content="🧪 Quiz" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="QuizButton_Click"/>
+                            </Grid>
+
+                            <Button x:Name="BackButton" Content="← Voltar ao Menu" Style="{StaticResource SecondaryButtonStyle}" Height="35" FontSize="12" Margin="0,10,0,0" Click="BackButton_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

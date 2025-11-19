@@ -1,0 +1,786 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.Quantizacao"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1000"
+             Background="White">
+
+    <UserControl.Resources>
+        <!-- Cores do Tema -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#2C3E50"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#E74C3C"/>
+        <SolidColorBrush x:Key="SuccessColor" Color="#27AE60"/>
+        <SolidColorBrush x:Key="WarningColor" Color="#F39C12"/>
+        <SolidColorBrush x:Key="LightGray" Color="#ECF0F1"/>
+        <SolidColorBrush x:Key="DarkGray" Color="#7F8C8D"/>
+        <SolidColorBrush x:Key="ClassicalColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="QuantumColor" Color="#9B59B6"/>
+
+        <!-- Animação de Fade In -->
+        <Storyboard x:Key="FadeInAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                           From="0" To="1" Duration="0:0:0.8"/>
+        </Storyboard>
+
+        <!-- Estilo para Cards -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#BDC3C7" BlurRadius="15" ShadowDepth="3" Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para Botões de Simulação -->
+        <Style x:Key="SimulationButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2980B9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para Badge -->
+        <Style x:Key="BadgeStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="5,0"/>
+        </Style>
+
+        <!-- Estilos de Texto -->
+        <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="22"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                  HorizontalScrollBarVisibility="Disabled"
+                  Background="#FAFAFA">
+        <StackPanel MaxWidth="1200" Margin="40,30">
+
+            <!-- Header Principal -->
+            <Border Style="{StaticResource CardStyle}" 
+                    Background="White"
+                    Margin="0,0,0,20">
+                <StackPanel>
+                    <!-- Título com Ícone -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <Viewbox Width="50" Height="50" Margin="0,0,15,0">
+                            <Canvas Width="100" Height="100">
+                                <!-- Ícone: Escada (discreto) vs Rampa (contínuo) -->
+                                <Path Data="M 10,80 L 10,60 L 30,60 L 30,40 L 50,40 L 50,20" 
+                                      Stroke="#9B59B6" StrokeThickness="4" Fill="Transparent"/>
+                                <Path Data="M 60,80 Q 75,50 90,20" 
+                                      Stroke="#3498DB" StrokeThickness="4" Fill="Transparent" StrokeDashArray="3,2"/>
+                                <Ellipse Canvas.Left="8" Canvas.Top="58" Width="4" Height="4" Fill="#F39C12"/>
+                                <Ellipse Canvas.Left="28" Canvas.Top="38" Width="4" Height="4" Fill="#F39C12"/>
+                                <Ellipse Canvas.Left="48" Canvas.Top="18" Width="4" Height="4" Fill="#F39C12"/>
+                            </Canvas>
+                        </Viewbox>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="⚡ Quantização da Energia" 
+                                     Style="{StaticResource SectionTitleStyle}"
+                                     Margin="0"/>
+                            <TextBlock Text="A Transição do Contínuo para o Discreto" 
+                                     FontSize="16"
+                                     Foreground="{StaticResource DarkGray}"
+                                     FontStyle="Italic"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Badges -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,15">
+                        <Border Style="{StaticResource BadgeStyle}" Background="#E3F2FD">
+                            <TextBlock Text="🏛️ Contínuo" Foreground="#1976D2" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#F3E5F5">
+                            <TextBlock Text="⚛️ Discreto" Foreground="#7B1FA2" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#FFF3E0">
+                            <TextBlock Text="💡 Planck" Foreground="#E65100" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                    </StackPanel>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,15,0,20"/>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource ContentTextStyle}" FontSize="15">
+                        Durante séculos, acreditava-se que 
+                        <Run FontWeight="SemiBold" Foreground="#3498DB">a energia podia variar de forma contínua</Run>, 
+                        como uma rampa suave sem degraus. 
+                        A física clássica via o universo como algo fluido, previsível e contínuo.
+                        <LineBreak/><LineBreak/>
+                        Mas os experimentos do final do século XIX revelaram uma realidade mais profunda: 
+                        <Run FontWeight="SemiBold" Foreground="#9B59B6">a energia não é uma linha, é uma escada</Run> — 
+                        e só pode existir em 
+                        <Run FontWeight="Bold" Foreground="#E74C3C">níveis discretos</Run>.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Simulador Interativo Principal -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="🎮 Simulador Interativo: Rampa vs Escada" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,20"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <!-- Controles -->
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,20">
+                        <Button x:Name="BtnMostrarContinuo"
+                                Content="🏛️ Energia Contínua"
+                                Style="{StaticResource SimulationButtonStyle}"
+                                Click="BtnMostrarContinuo_Click"/>
+                        <Button x:Name="BtnMostrarDiscreto"
+                                Content="⚛️ Energia Quantizada"
+                                Style="{StaticResource SimulationButtonStyle}"
+                                Background="{StaticResource QuantumColor}"
+                                Click="BtnMostrarDiscreto_Click"/>
+                        <Button x:Name="BtnMostrarTransicao"
+                                Content="⚡ Ver Transição"
+                                Style="{StaticResource SimulationButtonStyle}"
+                                Background="{StaticResource SuccessColor}"
+                                Click="BtnMostrarTransicao_Click"/>
+                    </StackPanel>
+
+                    <!-- Área de Visualização -->
+                    <Border Background="#F8F9FA" 
+                            CornerRadius="10" 
+                            Padding="20"
+                            MinHeight="450">
+                        <Grid>
+                            <!-- Visão Contínua (Clássica) -->
+                            <StackPanel x:Name="PainelContinuo" Visibility="Collapsed">
+                                <TextBlock Text="🏛️ Modelo Clássico: Energia Contínua" 
+                                         FontSize="20" 
+                                         FontWeight="Bold"
+                                         Foreground="{StaticResource ClassicalColor}"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,20"/>
+
+                                <!-- Visualização de Rampa -->
+                                <Canvas Height="250" Margin="20">
+                                    <!-- Eixos -->
+                                    <Line X1="50" Y1="200" X2="550" Y2="200" 
+                                          Stroke="#2C3E50" StrokeThickness="2"/>
+                                    <Line X1="50" Y1="200" X2="50" Y2="20" 
+                                          Stroke="#2C3E50" StrokeThickness="2"/>
+
+                                    <!-- Labels dos Eixos -->
+                                    <TextBlock Text="Energia" Canvas.Left="10" Canvas.Top="80" 
+                                             FontWeight="Bold" FontSize="12">
+                                        <TextBlock.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                    <TextBlock Text="Frequência" Canvas.Left="270" Canvas.Top="210" 
+                                             FontWeight="Bold" FontSize="12"/>
+
+                                    <!-- Rampa Contínua -->
+                                    <Path Data="M 50,200 L 550,30" 
+                                          Stroke="#3498DB" StrokeThickness="4" Fill="Transparent"/>
+
+                                    <!-- Partícula deslizando -->
+                                    <Ellipse x:Name="ParticleContinua" 
+                                             Width="16" Height="16" 
+                                             Fill="#E74C3C"
+                                             Canvas.Left="200" Canvas.Top="120">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#E74C3C" BlurRadius="10" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+
+                                    <!-- Indicador de energia -->
+                                    <Border Canvas.Left="350" Canvas.Top="60"
+                                            Background="White"
+                                            BorderBrush="#3498DB"
+                                            BorderThickness="2"
+                                            CornerRadius="8"
+                                            Padding="10">
+                                        <TextBlock x:Name="TxtEnergiaContinua" 
+                                                 Text="E = qualquer valor"
+                                                 FontWeight="Bold"
+                                                 FontSize="13"
+                                                 Foreground="#3498DB"/>
+                                    </Border>
+                                </Canvas>
+
+                                <!-- Controle de Slider -->
+                                <StackPanel Margin="20,10">
+                                    <TextBlock Text="Ajuste a Frequência (Clássica):" 
+                                             FontWeight="SemiBold"
+                                             Margin="0,0,0,10"/>
+                                    <Slider x:Name="SliderContinuo"
+                                            Minimum="0" Maximum="100" Value="50"
+                                            Width="500"
+                                            ValueChanged="SliderContinuo_ValueChanged"/>
+                                    <TextBlock x:Name="TxtFreqContinuo"
+                                             Text="Frequência: 50%"
+                                             FontSize="12"
+                                             Foreground="{StaticResource DarkGray}"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+
+                                <!-- Explicação -->
+                                <Border Background="#E3F2FD" 
+                                        BorderBrush="#1976D2"
+                                        BorderThickness="2"
+                                        CornerRadius="8"
+                                        Padding="15"
+                                        Margin="20,20,20,0">
+                                    <StackPanel>
+                                        <TextBlock Text="📖 Comportamento Clássico" 
+                                                 FontWeight="Bold"
+                                                 FontSize="14"
+                                                 Foreground="#1976D2"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource ContentTextStyle}">
+                                            • A energia pode assumir <Run FontWeight="SemiBold">qualquer valor</Run> ao longo da rampa
+                                            <LineBreak/>
+                                            • Transição <Run FontWeight="SemiBold">suave e contínua</Run> entre estados
+                                            <LineBreak/>
+                                            • Não há restrições nos níveis energéticos
+                                            <LineBreak/>
+                                            • Modelo: "O mundo é fluido como água"
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- Visão Discreta (Quântica) -->
+                            <StackPanel x:Name="PainelDiscreto" Visibility="Collapsed">
+                                <TextBlock Text="⚛️ Modelo Quântico: Energia Quantizada" 
+                                         FontSize="20" 
+                                         FontWeight="Bold"
+                                         Foreground="{StaticResource QuantumColor}"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,20"/>
+
+                                <!-- Visualização de Escada -->
+                                <Canvas Height="250" Margin="20">
+                                    <!-- Eixos -->
+                                    <Line X1="50" Y1="200" X2="550" Y2="200" 
+                                          Stroke="#2C3E50" StrokeThickness="2"/>
+                                    <Line X1="50" Y1="200" X2="50" Y2="20" 
+                                          Stroke="#2C3E50" StrokeThickness="2"/>
+
+                                    <!-- Labels -->
+                                    <TextBlock Text="Energia" Canvas.Left="10" Canvas.Top="80" 
+                                             FontWeight="Bold" FontSize="12">
+                                        <TextBlock.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                    <TextBlock Text="Níveis Quânticos (n)" Canvas.Left="240" Canvas.Top="210" 
+                                             FontWeight="Bold" FontSize="12"/>
+
+                                    <!-- Níveis Discretos (Escada) -->
+                                    <Line X1="50" Y1="180" X2="150" Y2="180" Stroke="#9B59B6" StrokeThickness="3"/>
+                                    <Line X1="150" Y1="180" X2="150" Y2="140" Stroke="#9B59B6" StrokeThickness="3" StrokeDashArray="2,2"/>
+
+                                    <Line X1="150" Y1="140" X2="250" Y2="140" Stroke="#9B59B6" StrokeThickness="3"/>
+                                    <Line X1="250" Y1="140" X2="250" Y2="100" Stroke="#9B59B6" StrokeThickness="3" StrokeDashArray="2,2"/>
+
+                                    <Line X1="250" Y1="100" X2="350" Y2="100" Stroke="#9B59B6" StrokeThickness="3"/>
+                                    <Line X1="350" Y1="100" X2="350" Y2="60" Stroke="#9B59B6" StrokeThickness="3" StrokeDashArray="2,2"/>
+
+                                    <Line X1="350" Y1="60" X2="450" Y2="60" Stroke="#9B59B6" StrokeThickness="3"/>
+                                    <Line X1="450" Y1="60" X2="450" Y2="30" Stroke="#9B59B6" StrokeThickness="3" StrokeDashArray="2,2"/>
+
+                                    <Line X1="450" Y1="30" X2="550" Y2="30" Stroke="#9B59B6" StrokeThickness="3"/>
+
+                                    <!-- Partícula em nível quântico -->
+                                    <Ellipse x:Name="ParticleDiscreta" 
+                                             Width="18" Height="18" 
+                                             Fill="#F39C12"
+                                             Canvas.Left="92" Canvas.Top="171">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#F39C12" BlurRadius="12" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+
+                                    <!-- Labels de Energia -->
+                                    <TextBlock Text="E₀" Canvas.Left="20" Canvas.Top="175" FontWeight="Bold" FontSize="11"/>
+                                    <TextBlock Text="E₁" Canvas.Left="20" Canvas.Top="135" FontWeight="Bold" FontSize="11"/>
+                                    <TextBlock Text="E₂" Canvas.Left="20" Canvas.Top="95" FontWeight="Bold" FontSize="11"/>
+                                    <TextBlock Text="E₃" Canvas.Left="20" Canvas.Top="55" FontWeight="Bold" FontSize="11"/>
+
+                                    <!-- Fóton emitido -->
+                                    <Path x:Name="FotonEmitido" 
+                                          Data="M 0,0 Q 10,-5 20,0 T 40,0"
+                                          Stroke="#FFD700" StrokeThickness="2" 
+                                          Canvas.Left="110" Canvas.Top="145"
+                                          Visibility="Collapsed">
+                                        <Path.Effect>
+                                            <DropShadowEffect Color="#FFD700" BlurRadius="8" ShadowDepth="0"/>
+                                        </Path.Effect>
+                                    </Path>
+
+                                    <!-- Fórmula -->
+                                    <Border Canvas.Left="350" Canvas.Top="150"
+                                            Background="White"
+                                            BorderBrush="#9B59B6"
+                                            BorderThickness="2"
+                                            CornerRadius="8"
+                                            Padding="10">
+                                        <TextBlock FontWeight="Bold" FontSize="13" Foreground="#9B59B6">
+                                            <Run Text="E = n·h·f"/>
+                                            <LineBreak/>
+                                            <Run Text="n = 0, 1, 2, 3..." FontSize="10"/>
+                                        </TextBlock>
+                                    </Border>
+                                </Canvas>
+
+                                <!-- Controle de Nível Quântico -->
+                                <StackPanel Margin="20,10">
+                                    <TextBlock Text="Selecione o Nível Quântico (n):" 
+                                             FontWeight="SemiBold"
+                                             Margin="0,0,0,10"/>
+                                    <Slider x:Name="SliderDiscreto"
+                                            Minimum="0" Maximum="4" Value="1"
+                                            Width="500"
+                                            TickFrequency="1"
+                                            IsSnapToTickEnabled="True"
+                                            ValueChanged="SliderDiscreto_ValueChanged"/>
+                                    <TextBlock x:Name="TxtNivelQuantico"
+                                             Text="Nível: n = 1 | Energia: E₁ = h·f"
+                                             FontSize="12"
+                                             Foreground="{StaticResource DarkGray}"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+
+                                <!-- Explicação -->
+                                <Border Background="#F3E5F5" 
+                                        BorderBrush="#7B1FA2"
+                                        BorderThickness="2"
+                                        CornerRadius="8"
+                                        Padding="15"
+                                        Margin="20,20,20,0">
+                                    <StackPanel>
+                                        <TextBlock Text="📖 Comportamento Quântico" 
+                                                 FontWeight="Bold"
+                                                 FontSize="14"
+                                                 Foreground="#7B1FA2"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource ContentTextStyle}">
+                                            • A energia só existe em <Run FontWeight="SemiBold">níveis discretos</Run> (degraus)
+                                            <LineBreak/>
+                                            • Transição <Run FontWeight="SemiBold">instantânea</Run> entre níveis (salto quântico)
+                                            <LineBreak/>
+                                            • Cada salto emite ou absorve um <Run FontWeight="SemiBold">fóton</Run>
+                                            <LineBreak/>
+                                            • Modelo: "O mundo é granular como pixels"
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- Visão de Transição -->
+                            <StackPanel x:Name="PainelTransicao" Visibility="Collapsed">
+                                <TextBlock Text="⚡ A Grande Transição: Contínuo → Discreto" 
+                                         FontSize="20" 
+                                         FontWeight="Bold"
+                                         Foreground="{StaticResource SuccessColor}"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,20"/>
+
+                                <Grid Margin="20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Lado Clássico -->
+                                    <Border Grid.Column="0" 
+                                            Background="#E3F2FD"
+                                            CornerRadius="10"
+                                            Padding="20">
+                                        <StackPanel>
+                                            <TextBlock Text="🏛️ Clássico" 
+                                                     FontSize="18"
+                                                     FontWeight="Bold"
+                                                     Foreground="#1976D2"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="0,0,0,15"/>
+
+                                            <!-- Rampa Visual -->
+                                            <Canvas Height="150" Width="200">
+                                                <Path Data="M 20,130 L 180,20" 
+                                                      Stroke="#1976D2" StrokeThickness="3" Fill="Transparent"/>
+                                                <Ellipse Canvas.Left="50" Canvas.Top="100" Width="12" Height="12" Fill="#E74C3C"/>
+                                                <Ellipse Canvas.Left="90" Canvas.Top="70" Width="12" Height="12" Fill="#E74C3C"/>
+                                                <Ellipse Canvas.Left="130" Canvas.Top="40" Width="12" Height="12" Fill="#E74C3C"/>
+                                            </Canvas>
+
+                                            <TextBlock FontSize="13" TextAlignment="Center" Margin="0,10,0,0">
+                                                <Run FontWeight="Bold">Energia Contínua</Run>
+                                                <LineBreak/>
+                                                Qualquer valor possível
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Seta -->
+                                    <StackPanel Grid.Column="1" 
+                                              VerticalAlignment="Center"
+                                              Margin="15,0">
+                                        <TextBlock Text="→" 
+                                                 FontSize="40"
+                                                 FontWeight="Bold"
+                                                 Foreground="{StaticResource SuccessColor}"/>
+                                        <TextBlock Text="Planck\n1900" 
+                                                 FontSize="10"
+                                                 FontWeight="Bold"
+                                                 TextAlignment="Center"
+                                                 Foreground="{StaticResource WarningColor}"/>
+                                    </StackPanel>
+
+                                    <!-- Lado Quântico -->
+                                    <Border Grid.Column="2" 
+                                            Background="#F3E5F5"
+                                            CornerRadius="10"
+                                            Padding="20">
+                                        <StackPanel>
+                                            <TextBlock Text="⚛️ Quântico" 
+                                                     FontSize="18"
+                                                     FontWeight="Bold"
+                                                     Foreground="#7B1FA2"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="0,0,0,15"/>
+
+                                            <!-- Escada Visual -->
+                                            <Canvas Height="150" Width="200">
+                                                <Path Data="M 20,130 L 60,130 L 60,95 L 100,95 L 100,60 L 140,60 L 140,25 L 180,25" 
+                                                      Stroke="#7B1FA2" StrokeThickness="3" Fill="Transparent"/>
+                                                <Ellipse Canvas.Left="35" Canvas.Top="124" Width="12" Height="12" Fill="#F39C12"/>
+                                                <Ellipse Canvas.Left="75" Canvas.Top="89" Width="12" Height="12" Fill="#F39C12"/>
+                                                <Ellipse Canvas.Left="115" Canvas.Top="54" Width="12" Height="12" Fill="#F39C12"/>
+                                                <Ellipse Canvas.Left="155" Canvas.Top="19" Width="12" Height="12" Fill="#F39C12"/>
+                                            </Canvas>
+
+                                            <TextBlock FontSize="13" TextAlignment="Center" Margin="0,10,0,0">
+                                                <Run FontWeight="Bold">Energia Quantizada</Run>
+                                                <LineBreak/>
+                                                Apenas valores discretos
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Explicação da Transição -->
+                                <Border Background="#FFF3E0" 
+                                        BorderBrush="#F57C00"
+                                        BorderThickness="2"
+                                        CornerRadius="8"
+                                        Padding="20"
+                                        Margin="20,20,20,0">
+                                    <StackPanel>
+                                        <TextBlock Text="💡 O Momento Decisivo" 
+                                                 FontSize="16"
+                                                 FontWeight="Bold"
+                                                 Foreground="#E65100"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource ContentTextStyle}">
+                                            Em 1900, <Run FontWeight="SemiBold">Max Planck</Run> enfrentou o problema da 
+                                            <Run FontWeight="SemiBold" Foreground="#E74C3C">radiação do corpo negro</Run>. 
+                                            As equações clássicas previam energia infinita em altas frequências — um absurdo físico!
+                                            <LineBreak/><LineBreak/>
+                                            Sua solução revolucionária: a energia só pode ser emitida em 
+                                            <Run FontWeight="Bold" Foreground="#9B59B6">pacotes discretos</Run> de tamanho E = hf, 
+                                            onde <Run FontStyle="Italic">h</Run> é a constante de Planck.
+                                            <LineBreak/><LineBreak/>
+                                            Essa simples hipótese salvou a física experimental e abriu a porta para o mundo quântico!
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Tabela Comparativa -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="⚖️ Comparação: Clássico vs Quântico" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,15"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <!-- Header -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="{StaticResource LightGray}" 
+                                Padding="12" CornerRadius="8,0,0,0">
+                            <TextBlock Text="Conceito" FontWeight="Bold" FontSize="14"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="#E3F2FD" Padding="12">
+                            <TextBlock Text="🏛️ Física Clássica" FontWeight="Bold" FontSize="14" Foreground="#1976D2"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="#F3E5F5" 
+                                Padding="12" CornerRadius="0,8,0,0">
+                            <TextBlock Text="⚛️ Física Quântica" FontWeight="Bold" FontSize="14" Foreground="#7B1FA2"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Linhas -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Natureza da Energia" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Contínua — pode assumir qualquer valor" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Discreta — múltiplos de E = hf" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Modelo Físico" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Osciladores vibram livremente" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Apenas certos valores são permitidos" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Emissão de Luz" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Aumenta gradualmente" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Emitida em pacotes (fótons)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Corpo Negro" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Previsão de energia infinita (falha)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Curva experimental ajustada perfeitamente" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1" CornerRadius="0,0,0,8">
+                            <TextBlock Text="Interpretação" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="O mundo é contínuo" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1" CornerRadius="0,0,8,0">
+                            <TextBlock Text="O mundo é granular e quantizado" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Aplicações Práticas -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="💻 Da Teoria à Computação Quântica" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource WarningColor}"
+                             Margin="0,0,0,15"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <TextBlock Style="{StaticResource ContentTextStyle}" FontSize="15">
+                        A quantização da energia não é apenas uma curiosidade da física — 
+                        ela é <Run FontWeight="SemiBold" Foreground="#27AE60">a base da informação discreta no universo</Run>.
+                    </TextBlock>
+
+                    <UniformGrid Columns="2" Rows="1" Margin="0,20,0,0">
+                        <!-- Bit Clássico -->
+                        <Border Background="#E3F2FD" 
+                                CornerRadius="10" 
+                                Padding="20" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="💾 Bit Clássico" 
+                                         FontSize="18"
+                                         FontWeight="Bold"
+                                         Foreground="#1976D2"
+                                         Margin="0,0,0,15"/>
+                                <TextBlock Style="{StaticResource ContentTextStyle}">
+                                    Representa <Run FontWeight="SemiBold">dois estados de energia</Run> possíveis:
+                                    <LineBreak/>
+                                    • 0 = Nível baixo
+                                    <LineBreak/>
+                                    • 1 = Nível alto
+                                    <LineBreak/><LineBreak/>
+                                    Baseado em <Run FontWeight="SemiBold">níveis discretos</Run> de tensão elétrica.
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Qubit -->
+                        <Border Background="#F3E5F5" 
+                                CornerRadius="10" 
+                                Padding="20" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="⚛️ Qubit" 
+                                         FontSize="18"
+                                         FontWeight="Bold"
+                                         Foreground="#7B1FA2"
+                                         Margin="0,0,0,15"/>
+                                <TextBlock Style="{StaticResource ContentTextStyle}">
+                                    Representa uma <Run FontWeight="SemiBold">superposição quântica</Run> de múltiplos níveis energéticos.
+                                    <LineBreak/><LineBreak/>
+                                    Sem a ideia de Planck, <Run FontWeight="SemiBold">não existiria base física</Run> 
+                                    para representar um qubit!
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </StackPanel>
+            </Border>
+
+            <!-- Conclusão Filosófica -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,40">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#E3F2FD" Offset="0"/>
+                        <GradientStop Color="#F3E5F5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel>
+                    <TextBlock Text="💭 Reflexão Final" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,20"/>
+
+                    <Border Background="White" 
+                            CornerRadius="10" 
+                            Padding="25"
+                            BorderBrush="{StaticResource QuantumColor}"
+                            BorderThickness="2">
+                        <TextBlock TextWrapping="Wrap" 
+                                 TextAlignment="Center"
+                                 LineHeight="28"
+                                 FontSize="16"
+                                 Foreground="{StaticResource SecondaryColor}">
+                            <Run FontSize="20" Text="✨" />
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#3498DB">
+                                A Física Clássica vê o universo como um fluxo suave.
+                            </Run>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#9B59B6">
+                                A Física Quântica o vê como uma sinfonia de notas discretas —
+                            </Run>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#9B59B6">
+                                cada uma tocada com a frequência exata do cosmos.
+                            </Run>
+                            <LineBreak/><LineBreak/>
+                            <Run FontStyle="Italic" Foreground="{StaticResource DarkGray}">
+                                "A natureza não é uma linha contínua, mas uma sequência de saltos finitos — 
+                                e cada salto contém informação, energia e estrutura."
+                            </Run>
+                            <LineBreak/>
+                            <Run FontSize="20" Text="✨" />
+                        </TextBlock>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

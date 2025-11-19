@@ -1,0 +1,690 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica.CaosSistemasDinamicosWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica"
+        mc:Ignorable="d"
+        Title="Teoria do Caos e Sistemas Dinâmicos - Quantum Forge" 
+        Height="800" Width="1200"
+        Background="#ECF0F1" 
+        WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E67E22"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#D35400"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#FEF5E7"/>
+            <Setter Property="BorderBrush" Value="#E67E22"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="EquationBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E67E22"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Teoria do Caos" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="Quando a Ordem Encontra a Imprevisibilidade"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#E67E22" FontWeight="Bold">Teoria do Caos</Run> estuda sistemas determinísticos 
+                        que exibem comportamento imprevisível. Mesmo conhecendo todas as leis e condições iniciais, 
+                        pequenas diferenças levam a <Run FontWeight="Bold">resultados drasticamente diferentes</Run>. 
+                        Esta é a essência do famoso <Run FontWeight="Bold">Efeito Borboleta</Run>!
+                    </TextBlock>
+
+                    <!-- Conceitos Fundamentais -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Conceitos Fundamentais
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#E67E22"
+                                     Margin="0,0,0,10">
+                                🦋 O Paradoxo do Caos
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#E67E22" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Determinístico:</Run> As equações são conhecidas e bem definidas
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Não-Linear:</Run> Pequenas causas podem ter grandes efeitos
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Sensível:</Run> Condições iniciais minimamente diferentes divergem exponencialmente
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Imprevisível:</Run> Impossível prever o comportamento a longo prazo
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Efeito Borboleta -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        1. O Efeito Borboleta
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#FEF5E7" BorderBrush="#E67E22">
+                        <StackPanel>
+                            <TextBlock Text="🦋 Sensibilidade às Condições Iniciais" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D35400" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Edward Lorenz descobriu em 1961 que em sistemas meteorológicos, uma pequena perturbação 
+                                (como o bater de asas de uma borboleta no Brasil) poderia, teoricamente, causar um 
+                                tornado no Texas semanas depois!
+                            </TextBlock>
+
+                            <Border Background="#FAD7A0" BorderBrush="#D35400" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Δx(t) ≈ Δx₀ · eλt" 
+                                             FontSize="22" 
+                                             FontWeight="Bold" 
+                                             Foreground="#BA4A00"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="Crescimento exponencial da diferença | λ = Expoente de Lyapunov" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                💡 Se λ > 0: Sistema caótico (divergência exponencial)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                💡 Se λ = 0: Sistema na fronteira do caos
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                💡 Se λ &lt; 0: Sistema estável (perturbações diminuem)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Atratores Estranhos -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        2. Atratores Estranhos
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#E8F8F5" BorderBrush="#16A085" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🌀 Estruturas Fractais no Espaço de Fase" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#138D75"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Um <Run FontWeight="Bold">atrator</Run> é uma região do espaço de fase para onde 
+                                o sistema tende. Um <Run FontWeight="Bold">atrator estranho</Run> possui estrutura 
+                                fractal e representa o comportamento caótico.
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#16A085" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="🌊 Atrator de Lorenz" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             Margin="0,3"/>
+                                    <TextBlock Text="dx/dt = σ(y - x)" 
+                                             FontSize="11" 
+                                             Foreground="#2C3E50"
+                                             Margin="5,2,0,0"/>
+                                    <TextBlock Text="dy/dt = x(ρ - z) - y" 
+                                             FontSize="11" 
+                                             Foreground="#2C3E50"
+                                             Margin="5,2,0,0"/>
+                                    <TextBlock Text="dz/dt = xy - βz" 
+                                             FontSize="11" 
+                                             Foreground="#2C3E50"
+                                             Margin="5,2,0,5"/>
+                                    <TextBlock Text="Forma de 'borboleta' no espaço 3D" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             FontStyle="Italic"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Mapa Logístico -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        3. Mapa Logístico
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#FDEDEC" BorderBrush="#E74C3C" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="📊 A Rota para o Caos" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#C0392B" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Uma das equações mais simples que exibe comportamento caótico. Modela crescimento 
+                                populacional com limitação de recursos.
+                            </TextBlock>
+
+                            <Border Background="#FADBD8" BorderBrush="#943126" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="xₙ₊₁ = r·xₙ(1 - xₙ)" 
+                                             FontSize="24" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="0 ≤ x ≤ 1 | r = parâmetro de crescimento" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,5" FontWeight="SemiBold">
+                                📈 Comportamento conforme r aumenta:
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>r &lt; 1:</Bold> População morre (atrator em x = 0)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>1 &lt; r &lt; 3:</Bold> População estabiliza (ponto fixo)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>3 &lt; r &lt; 3.57:</Bold> Oscilações periódicas (bifurcações)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>r &gt; 3.57:</Bold> CAOS! (comportamento aperiódico)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Bifurcações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        4. Bifurcações e Transições
+                    </TextBlock>
+
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🌳 Diagrama de Bifurcação" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,0,0,10">
+                                Uma <Run FontWeight="Bold">bifurcação</Run> ocorre quando uma pequena mudança em um 
+                                parâmetro causa uma mudança qualitativa no comportamento do sistema.
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Período-1 → Período-2 → Período-4 → ... → CAOS" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#6C3483"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3"/>
+                                    <TextBlock Text="(Cascata de duplicação de período)" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,10,0,0">
+                                🔢 <Run FontWeight="Bold">Constante de Feigenbaum:</Run> δ ≈ 4.669... (universal!)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Fractais -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        5. Fractais e Dimensão Fractal
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#E67E22"
+                                     Margin="0,0,0,10">
+                                🔺 Estruturas Autossimilares
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                <Run FontWeight="Bold">Fractais</Run> são padrões que se repetem em diferentes escalas. 
+                                Atratores caóticos geralmente possuem estrutura fractal.
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,10,0,10">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Conjunto de Mandelbrot:</Run> zₙ₊₁ = zₙ² + c
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Conjunto de Julia:</Run> Variações do Mandelbrot
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Triângulo de Sierpinski:</Run> Fractal geométrico
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Curva de Koch:</Run> Perímetro infinito, área finita
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,5,0,0">
+                                📏 <Run FontWeight="Bold">Dimensão Fractal:</Run> D = log(N)/log(1/r) (pode ser não-inteira!)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exemplos de Sistemas Caóticos -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Exemplos de Sistemas Caóticos
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌪️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Clima e Meteorologia:</Run> Previsão limitada a ~2 semanas
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🎱" FontSize="16"/> 
+                                <Run FontWeight="Bold">Pêndulo Duplo:</Run> Movimento altamente imprevisível
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="💧" FontSize="16"/> 
+                                <Run FontWeight="Bold">Turbulência em Fluidos:</Run> Vórtices caóticos
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌌" FontSize="16"/> 
+                                <Run FontWeight="Bold">Órbitas Planetárias:</Run> Sistema de 3+ corpos
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="💓" FontSize="16"/> 
+                                <Run FontWeight="Bold">Batimentos Cardíacos:</Run> Variabilidade caótica saudável
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="📈" FontSize="16"/> 
+                                <Run FontWeight="Bold">Mercados Financeiros:</Run> Flutuações imprevisíveis
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Curiosidade -->
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Curiosidade: Caos ≠ Aleatoriedade" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12">
+                                Sistemas caóticos são completamente determinísticos! Se conhecêssemos as condições iniciais 
+                                com precisão infinita, poderíamos prever tudo. O problema é que na prática, sempre há incerteza 
+                                nas medições. Uma diferença de 0.000001 pode mudar completamente o resultado após algumas iterações. 
+                                Já sistemas aleatórios (como decaimento radioativo) são fundamentalmente imprevisíveis - mesmo 
+                                conhecendo tudo perfeitamente, não podemos prever. O caos é o meio-termo fascinante entre ordem e 
+                                aleatoriedade!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: SIMULADOR VISUAL DE CAOS -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Simulador de Caos" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Visualize o comportamento caótico!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- Área de Visualização -->
+                <Border Grid.Row="1" Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="8" Padding="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Seletor de Simulação -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                            <TextBlock Text="Escolha uma Simulação:" FontWeight="SemiBold" FontSize="13" Margin="0,0,0,8"/>
+                            <ComboBox x:Name="ChaosSelector" 
+                                    FontSize="12" 
+                                    SelectionChanged="ChaosSelector_Changed"
+                                    Padding="8">
+                                <ComboBoxItem Content="📊 Mapa Logístico (Bifurcação)" IsSelected="True"/>
+                                <ComboBoxItem Content="🌀 Atrator de Lorenz"/>
+                                <ComboBoxItem Content="🦋 Efeito Borboleta (2 Trajetórias)"/>
+                                <ComboBoxItem Content="🔺 Conjunto de Mandelbrot"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Canvas de Visualização -->
+                        <Border Grid.Row="1" Background="White" BorderBrush="#E67E22" BorderThickness="2" CornerRadius="6" Margin="0,10">
+                            <Canvas x:Name="ChaosCanvas" Background="White" />
+                        </Border>
+                        <!-- Controles -->
+                        <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                            <TextBlock Text="Parâmetros:" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8"/>
+
+                            <!-- Parâmetro R (Mapa Logístico) -->
+                            <StackPanel x:Name="ParameterRPanel" Margin="0,5">
+                                <TextBlock Text="Parâmetro r:" FontSize="11" Foreground="#7F8C8D"/>
+                                <Slider x:Name="ParameterR" 
+                Width="200" 
+                Minimum="0" 
+                Maximum="4" 
+                Value="3.5"
+                TickFrequency="0.1"
+                ValueChanged="Parameter_Changed"/>
+                                <TextBlock x:Name="ParameterRValue" 
+                    Text="3.5" 
+                    Margin="10,0,0,0" 
+                    FontWeight="Bold"
+                    Foreground="#E67E22"/>
+                            </StackPanel>
+
+                            <!-- Condição Inicial -->
+                            <StackPanel x:Name="InitialConditionPanel" Margin="0,5">
+                                <TextBlock Text="Condição Inicial (x₀):" FontSize="11" Foreground="#7F8C8D"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <Slider x:Name="InitialCondition" 
+                    Width="200" 
+                    Minimum="0.01" 
+                    Maximum="0.99" 
+                    Value="0.5"
+                    TickFrequency="0.01"
+                    ValueChanged="Parameter_Changed"/>
+                                    <TextBlock x:Name="InitialConditionValue" 
+                        Text="0.50" 
+                        Margin="10,0,0,0" 
+                        FontWeight="Bold"
+                        Foreground="#E67E22"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Botões de Controle -->
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" Content="▶ SIMULAR" Height="35" Style="{StaticResource ButtonStyle}" FontSize="12" Click="Simulate_Click"/>
+                                <Button Grid.Column="2" Content="🔄 LIMPAR" Height="35" Style="{StaticResource SecondaryButtonStyle}" FontSize="12" Click="Clear_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Informações e Interpretação -->
+                <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                    <Border Background="#FEF5E7" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="📊 Sobre a Simulação Atual" 
+                                     FontWeight="Bold" 
+                                     FontSize="12"
+                                     Foreground="#D35400"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock x:Name="CurrentSimulationInfo" 
+                                     FontSize="11"
+                                     Foreground="#2C3E50"
+                                     TextWrapping="Wrap"
+                                     Text="Mapa Logístico: xₙ₊₁ = r·xₙ(1-xₙ)&#x0A;Diagrama de bifurcação mostra como o comportamento muda com r.&#x0A;Para r > 3.57: comportamento caótico!"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#E8F8F5" BorderBrush="#16A085" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="💡 O que Observar" 
+                                     FontWeight="Bold" 
+                                     FontSize="11"
+                                     Foreground="#138D75"
+                                     Margin="0,0,0,5"/>
+                            <TextBlock x:Name="ObservationText" 
+                                     FontSize="10"
+                                     Foreground="#2C3E50"
+                                     TextWrapping="Wrap"
+                                     Text="Observe como pequenas mudanças no parâmetro r causam grandes mudanças no comportamento. A transição de ordem para caos é gradual através de bifurcações."/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exemplos Práticos -->
+                    <Expander Header="📚 Valores Interessantes" 
+                            IsExpanded="False" 
+                            Margin="0,10,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            FontSize="11"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Mapa Logístico - Valores de r:" 
+                                             Foreground="#D35400" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="r = 2.5 → Ponto fixo estável" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="r = 3.2 → Período-2 (oscilação)" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="r = 3.5 → Período-4" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="r = 3.8 → CAOS total!" 
+                                             Foreground="#E74C3C" FontSize="10" FontWeight="Bold" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Atrator de Lorenz - Parâmetros:" 
+                                             Foreground="#D35400" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="σ = 10, ρ = 28, β = 8/3 → Caos clássico" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="Forma de borboleta 3D" 
+                                             Foreground="#7F8C8D" FontSize="9" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Efeito Borboleta:" 
+                                             Foreground="#D35400" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Diferença inicial de 0.000001 diverge exponencialmente" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="Depois de ~50 iterações: completamente diferente" 
+                                             Foreground="#7F8C8D" FontSize="9" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+
+                    <!-- Botões Finais -->
+                    <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="6" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🎓 Recursos Adicionais" 
+                                     FontWeight="Bold" 
+                                     FontSize="13"
+                                     Foreground="#E67E22"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" x:Name="ExercisesButton" Content="📝 Exercícios" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="ExercisesButton_Click"/>
+                                <Button Grid.Column="2" x:Name="QuizButton" Content="🧪 Quiz" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="QuizButton_Click"/>
+                            </Grid>
+
+                            <Button x:Name="BackButton" Content="← Voltar ao Menu" Style="{StaticResource SecondaryButtonStyle}" Height="35" FontSize="12" Margin="0,10,0,0" Click="BackButton_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

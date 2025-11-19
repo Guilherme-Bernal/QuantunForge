@@ -1,0 +1,650 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.LimitesClassicos"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1000"
+             Background="White">
+
+    <UserControl.Resources>
+        <!-- Cores do Tema -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#2C3E50"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#E74C3C"/>
+        <SolidColorBrush x:Key="SuccessColor" Color="#27AE60"/>
+        <SolidColorBrush x:Key="WarningColor" Color="#F39C12"/>
+        <SolidColorBrush x:Key="LightGray" Color="#ECF0F1"/>
+        <SolidColorBrush x:Key="DarkGray" Color="#7F8C8D"/>
+        <SolidColorBrush x:Key="ClassicalColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="QuantumColor" Color="#9B59B6"/>
+
+        <!-- Animação de Fade In -->
+        <Storyboard x:Key="FadeInAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                           From="0" To="1" Duration="0:0:0.8"/>
+        </Storyboard>
+
+        <!-- Estilo para Cards -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#BDC3C7" BlurRadius="15" ShadowDepth="3" Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para Títulos de Seção -->
+        <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <!-- Estilo para Subtítulos -->
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkGray}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="24"/>
+        </Style>
+
+        <!-- Estilo para Headers de Card -->
+        <Style x:Key="CardHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+
+        <!-- Estilo para Texto de Conteúdo -->
+        <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="22"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <!-- Estilo para Badge -->
+        <Style x:Key="BadgeStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="5,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                  HorizontalScrollBarVisibility="Disabled"
+                  Background="#FAFAFA">
+        <StackPanel MaxWidth="1200" Margin="40,30">
+            <!-- Header Principal -->
+            <Border Style="{StaticResource CardStyle}" 
+                    Background="White"
+                    Margin="0,0,0,20">
+                <StackPanel>
+                    <!-- Título com Ícone -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <Viewbox Width="50" Height="50" Margin="0,0,15,0">
+                            <Canvas Width="100" Height="100">
+                                <!-- Ícone de Limite/Barreira -->
+                                <Path Data="M 20,50 L 40,50 M 60,50 L 80,50" 
+                                      Stroke="#E74C3C" StrokeThickness="8" StrokeDashArray="2,2"/>
+                                <Ellipse Canvas.Left="20" Canvas.Top="20" Width="60" Height="60"
+                                         Stroke="#3498DB" StrokeThickness="4" Fill="Transparent"/>
+                                <Path Data="M 30,50 L 50,30 L 70,50" 
+                                      Stroke="#F39C12" StrokeThickness="6" Fill="Transparent"/>
+                            </Canvas>
+                        </Viewbox>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="📉 Limites da Física Clássica" 
+                                     Style="{StaticResource SectionTitleStyle}"
+                                     Margin="0"/>
+                            <TextBlock Text="Quando o Determinismo Encontra Seus Limites" 
+                                     FontSize="16"
+                                     Foreground="{StaticResource DarkGray}"
+                                     FontStyle="Italic"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Badges de Contexto -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,15">
+                        <Border Style="{StaticResource BadgeStyle}" Background="#E3F2FD">
+                            <TextBlock Text="🏛️ Física Clássica" Foreground="#1976D2" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#F3E5F5">
+                            <TextBlock Text="⚛️ Física Quântica" Foreground="#7B1FA2" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#FFF3E0">
+                            <TextBlock Text="🔬 Transição" Foreground="#E65100" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                    </StackPanel>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,15,0,20"/>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        <Run FontWeight="SemiBold">A Física Clássica</Run> construiu um universo previsível e determinístico. 
+                        De Newton a Maxwell, acreditávamos que conhecendo as condições iniciais de um sistema, 
+                        poderíamos prever seu futuro com precisão absoluta. 
+                        <LineBreak/><LineBreak/>
+                        Mas no final do século XIX, experimentos começaram a revelar 
+                        <Run Foreground="#E74C3C" FontWeight="SemiBold">fenômenos inexplicáveis</Run> 
+                        pelas leis clássicas. A natureza guardava segredos que exigiam uma nova física — 
+                        <Run Foreground="#9B59B6" FontWeight="SemiBold">a Física Quântica</Run>.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Grid Comparativo Principal -->
+            <Grid Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Card: Física Clássica -->
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <!-- Header -->
+                        <Border Background="#E3F2FD" 
+                                CornerRadius="8" 
+                                Padding="15,10" 
+                                Margin="0,0,0,20">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🏛️" FontSize="24" Margin="0,0,10,0"/>
+                                <TextBlock Text="Física Clássica" 
+                                         Style="{StaticResource CardHeaderStyle}"
+                                         Foreground="#1976D2"
+                                         Margin="0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Características -->
+                        <TextBlock Text="✓ Características" 
+                                 FontSize="16" 
+                                 FontWeight="Bold" 
+                                 Foreground="{StaticResource ClassicalColor}"
+                                 Margin="0,0,0,10"/>
+
+                        <StackPanel Margin="10,0,0,15">
+                            <TextBlock Style="{StaticResource ContentTextStyle}">
+                                <Run Text="•" FontWeight="Bold" Foreground="#3498DB"/> 
+                                <Run FontWeight="SemiBold">Determinística:</Run> Futuro previsível
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource ContentTextStyle}">
+                                <Run Text="•" FontWeight="Bold" Foreground="#3498DB"/> 
+                                <Run FontWeight="SemiBold">Contínua:</Run> Energia varia suavemente
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource ContentTextStyle}">
+                                <Run Text="•" FontWeight="Bold" Foreground="#3498DB"/> 
+                                <Run FontWeight="SemiBold">Localizada:</Run> Objetos têm posição definida
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource ContentTextStyle}">
+                                <Run Text="•" FontWeight="Bold" Foreground="#3498DB"/> 
+                                <Run FontWeight="SemiBold">Separável:</Run> Onda OU partícula
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Exemplos -->
+                        <TextBlock Text="📊 Funciona Bem Para:" 
+                                 FontSize="16" 
+                                 FontWeight="Bold" 
+                                 Foreground="{StaticResource ClassicalColor}"
+                                 Margin="0,10,0,10"/>
+
+                        <Border Background="#F8F9FA" 
+                                CornerRadius="8" 
+                                Padding="12"
+                                Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,3">
+                                    <Run Text="🌍" FontSize="16"/> Movimento de planetas
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,3">
+                                    <Run Text="⚽" FontSize="16"/> Objetos macroscópicos
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,3">
+                                    <Run Text="🌊" FontSize="16"/> Ondas mecânicas
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,3">
+                                    <Run Text="⚡" FontSize="16"/> Circuitos elétricos
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card: Física Quântica -->
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <!-- Header -->
+                        <Border Background="#F3E5F5" 
+                                CornerRadius="8" 
+                                Padding="15,10" 
+                                Margin="0,0,0,20">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⚛️" FontSize="24" Margin="0,0,10,0"/>
+                                <TextBlock Text="Física Quântica" 
+                                         Style="{StaticResource CardHeaderStyle}"
+                                         Foreground="#7B1FA2"
+                                         Margin="0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Características -->
+                        <TextBlock Text="✓ Características" 
+                                 FontSize="16" 
+                                 FontWeight="Bold" 
+                                 Foreground="{StaticResource QuantumColor}"
+                                 Margin="0,0,0,10"/>
+
+                        <StackPanel Margin="10,0,0,15">
+                            <TextBlock Style="{StaticResource ContentTextStyle}">
+                                <Run Text="•" FontWeight="Bold" Foreground="#9B59B6"/> 
+                                <Run FontWeight="SemiBold">Probabilística:</Run> Apenas probabilidades
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource ContentTextStyle}">
+                                <Run Text="•" FontWeight="Bold" Foreground="#9B59B6"/> 
+                                <Run FontWeight="SemiBold">Quantizada:</Run> Energia em "pacotes"
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource ContentTextStyle}">
+                                <Run Text="•" FontWeight="Bold" Foreground="#9B59B6"/> 
+                                <Run FontWeight="SemiBold">Não-localizada:</Run> Superposição de estados
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource ContentTextStyle}">
+                                <Run Text="•" FontWeight="Bold" Foreground="#9B59B6"/> 
+                                <Run FontWeight="SemiBold">Dual:</Run> Onda E partícula
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Exemplos -->
+                        <TextBlock Text="📊 Necessária Para:" 
+                                 FontSize="16" 
+                                 FontWeight="Bold" 
+                                 Foreground="{StaticResource QuantumColor}"
+                                 Margin="0,10,0,10"/>
+
+                        <Border Background="#F8F9FA" 
+                                CornerRadius="8" 
+                                Padding="12"
+                                Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,3">
+                                    <Run Text="💡" FontSize="16"/> Emissão de luz atômica
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,3">
+                                    <Run Text="🔬" FontSize="16"/> Comportamento de elétrons
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,3">
+                                    <Run Text="🌡️" FontSize="16"/> Radiação de corpo negro
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,3">
+                                    <Run Text="💻" FontSize="16"/> Semicondutores e transistores
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Seção: Experimentos-Chave -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,30,0,0">
+                <StackPanel>
+                    <TextBlock Text="🔬 Experimentos que Revelaram os Limites" 
+                             Style="{StaticResource CardHeaderStyle}"
+                             Foreground="{StaticResource AccentColor}"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <!-- Grid de Experimentos -->
+                    <UniformGrid Columns="3" Rows="1">
+                        <!-- Experimento 1: Corpo Negro -->
+                        <Border Background="#FFF3E0" 
+                                CornerRadius="10" 
+                                Padding="15" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="⚫" FontSize="32" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                <TextBlock Text="Corpo Negro" 
+                                         FontSize="16" 
+                                         FontWeight="Bold" 
+                                         HorizontalAlignment="Center"
+                                         Foreground="#E65100"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Text="A física clássica previa a 'catástrofe ultravioleta'. Planck resolveu propondo energia quantizada: E = nhf"
+                                         Style="{StaticResource ContentTextStyle}"
+                                         TextAlignment="Center"
+                                         FontSize="13"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Experimento 2: Efeito Fotoelétrico -->
+                        <Border Background="#E3F2FD" 
+                                CornerRadius="10" 
+                                Padding="15" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="💡" FontSize="32" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                <TextBlock Text="Efeito Fotoelétrico" 
+                                         FontSize="16" 
+                                         FontWeight="Bold" 
+                                         HorizontalAlignment="Center"
+                                         Foreground="#1976D2"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Text="Luz intensa não arrancava elétrons, mas luz de alta frequência sim. Einstein provou: luz são fótons!"
+                                         Style="{StaticResource ContentTextStyle}"
+                                         TextAlignment="Center"
+                                         FontSize="13"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Experimento 3: Espectros Atômicos -->
+                        <Border Background="#F3E5F5" 
+                                CornerRadius="10" 
+                                Padding="15" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="🌈" FontSize="32" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                <TextBlock Text="Espectros Atômicos" 
+                                         FontSize="16" 
+                                         FontWeight="Bold" 
+                                         HorizontalAlignment="Center"
+                                         Foreground="#7B1FA2"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Text="Átomos emitem linhas específicas, não um espectro contínuo. Bohr mostrou: órbitas quantizadas!"
+                                         Style="{StaticResource ContentTextStyle}"
+                                         TextAlignment="Center"
+                                         FontSize="13"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </StackPanel>
+            </Border>
+
+            <!-- Tabela Comparativa Detalhada -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,30,0,0">
+                <StackPanel>
+                    <TextBlock Text="⚖️ Comparação Conceitual" 
+                             Style="{StaticResource CardHeaderStyle}"
+                             Foreground="{StaticResource SecondaryColor}"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <!-- Header da Tabela -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="{StaticResource LightGray}" 
+                                Padding="12" CornerRadius="8,0,0,0">
+                            <TextBlock Text="Conceito" FontWeight="Bold" FontSize="14"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="#E3F2FD" Padding="12">
+                            <TextBlock Text="🏛️ Física Clássica" FontWeight="Bold" FontSize="14" Foreground="#1976D2"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="#F3E5F5" 
+                                Padding="12" CornerRadius="0,8,0,0">
+                            <TextBlock Text="⚛️ Física Quântica" FontWeight="Bold" FontSize="14" Foreground="#7B1FA2"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Linhas da Tabela -->
+                    <!-- Linha 1: Energia -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Energia" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Contínua - qualquer valor" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Quantizada - valores discretos (E=hf)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Linha 2: Posição -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Posição" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Definida e mensurável" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Probabilística (Princípio da Incerteza)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Linha 3: Natureza da Luz -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Natureza da Luz" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Apenas onda (Maxwell)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Onda E partícula (fóton)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Linha 4: Previsibilidade -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Previsibilidade" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Determinística (Laplace)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Probabilística (Função de onda)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Linha 5: Escala -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" 
+                                BorderBrush="{StaticResource LightGray}" BorderThickness="1"
+                                CornerRadius="0,0,0,8">
+                            <TextBlock Text="Escala de Aplicação" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Macroscópica (mundo visível)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" 
+                                BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1"
+                                CornerRadius="0,0,8,0">
+                            <TextBlock Text="Microscópica (átomos, elétrons)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Seção: O Que Muda na Visão de Mundo -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,30,0,0">
+                <StackPanel>
+                    <TextBlock Text="🌍 O Que Muda na Visão de Mundo" 
+                             Style="{StaticResource CardHeaderStyle}"
+                             Foreground="{StaticResource WarningColor}"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <!-- Cards de Mudanças -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Mudança 1 -->
+                        <Border Grid.Row="0" Grid.Column="0" 
+                                Background="#FFF9C4" 
+                                CornerRadius="10" 
+                                Padding="20" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="🎯 Do Determinismo ao Probabilismo" 
+                                         FontSize="16" 
+                                         FontWeight="Bold"
+                                         Foreground="#F57F17"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Style="{StaticResource ContentTextStyle}">
+                                    Não podemos mais prever com certeza, apenas calcular probabilidades. 
+                                    A natureza é fundamentalmente incerta.
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Mudança 2 -->
+                        <Border Grid.Row="0" Grid.Column="1" 
+                                Background="#E1F5FE" 
+                                CornerRadius="10" 
+                                Padding="20" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="📊 Do Contínuo ao Discreto" 
+                                         FontSize="16" 
+                                         FontWeight="Bold"
+                                         Foreground="#0277BD"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Style="{StaticResource ContentTextStyle}">
+                                    Energia não varia suavemente, mas em "degraus" (quanta). 
+                                    A realidade é granular, não lisa.
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Mudança 3 -->
+                        <Border Grid.Row="1" Grid.Column="0" 
+                                Background="#F3E5F5" 
+                                CornerRadius="10" 
+                                Padding="20" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="🌊 Da Localização à Superposição" 
+                                         FontSize="16" 
+                                         FontWeight="Bold"
+                                         Foreground="#6A1B9A"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Style="{StaticResource ContentTextStyle}">
+                                    Partículas podem estar em múltiplos estados simultaneamente 
+                                    até serem observadas.
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Mudança 4 -->
+                        <Border Grid.Row="1" Grid.Column="1" 
+                                Background="#FCE4EC" 
+                                CornerRadius="10" 
+                                Padding="20" 
+                                Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="🔗 Da Separação ao Emaranhamento" 
+                                         FontSize="16" 
+                                         FontWeight="Bold"
+                                         Foreground="#C2185B"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Style="{StaticResource ContentTextStyle}">
+                                    Partículas podem estar correlacionadas instantaneamente, 
+                                    independente da distância.
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Conclusão Filosófica -->
+            <Border Style="{StaticResource CardStyle}" 
+                    Margin="0,30,0,40">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#E3F2FD" Offset="0"/>
+                        <GradientStop Color="#F3E5F5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel>
+                    <TextBlock Text="💭 Reflexão Final" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,20"/>
+
+                    <Border Background="White" 
+                            CornerRadius="10" 
+                            Padding="25"
+                            BorderBrush="{StaticResource PrimaryColor}"
+                            BorderThickness="2">
+                        <TextBlock TextWrapping="Wrap" 
+                                 TextAlignment="Center"
+                                 LineHeight="28"
+                                 FontSize="16"
+                                 Foreground="{StaticResource SecondaryColor}">
+                            <Run FontSize="20" Text="✨" />
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#2C3E50">
+                                A Física Clássica explica o que vemos.
+                            </Run>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#7B1FA2">
+                                A Física Quântica explica por que vemos dessa forma.
+                            </Run>
+                            <LineBreak/><LineBreak/>
+                            <Run FontStyle="Italic" Foreground="{StaticResource DarkGray}">
+                                "Os limites da física clássica não são fracassos, 
+                                mas portais para uma compreensão mais profunda da natureza."
+                            </Run>
+                            <LineBreak/>
+                            <Run FontSize="20" Text="✨" />
+                        </TextBlock>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,740 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica.LeisdeNewtonWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica"
+        mc:Ignorable="d"
+        Title="Leis de Newton - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#EBF5FB"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="LawBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="As Três Leis de Newton" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="Os Fundamentos que Explicam Todo Movimento"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#3498DB" FontWeight="Bold">Isaac Newton</Run> revolucionou a ciência 
+                        ao descobrir três leis simples que explicam todos os movimentos: desde uma bola caindo 
+                        até planetas orbitando o Sol! Essas leis são tão fundamentais que engenheiros as usam 
+                        diariamente para projetar carros, aviões, foguetes e prever o movimento de asteroides.
+                    </TextBlock>
+
+                    <!-- Primeira Lei -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        1ª Lei - Lei da Inércia
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}" Background="#E8F6F3" BorderBrush="#16A085">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,10">
+                                🎬 A Lei da "Preguiça" dos Objetos
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                <Bold>Em linguagem simples:</Bold> Um objeto parado quer continuar parado. 
+                                Um objeto em movimento quer continuar se movendo na mesma velocidade e direção 
+                                — a menos que algo o force a mudar!
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="📐 Em termos técnicos:" 
+                                             FontSize="11" 
+                                             FontWeight="Bold" 
+                                             Foreground="#16A085"
+                                             Margin="0,0,0,5"/>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0">
+                                        Se a força resultante é zero (ΣF = 0), então a aceleração é zero (a = 0)
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exemplos da 1ª Lei -->
+                    <StackPanel Margin="0,10,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🚗" FontSize="16"/> 
+                                <Run FontWeight="Bold">Freada brusca:</Run> Você está no carro em movimento. 
+                                Quando freia, seu corpo "quer" continuar e você é jogado para frente!
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🏒" FontSize="16"/> 
+                                <Run FontWeight="Bold">Disco de hockey:</Run> Desliza muito no gelo porque 
+                                quase não há atrito parando ele. No chão áspero, pararia rápido!
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🛏️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Truque da toalha:</Run> Puxe rápido a toalha de uma mesa 
+                                e os pratos ficam lá! Eles "querem" continuar parados.
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Segunda Lei -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        2ª Lei - Princípio Fundamental da Dinâmica
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#3498DB"
+                                     Margin="0,0,0,10">
+                                ⚡ A Lei que Relaciona Força, Massa e Aceleração
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                <Bold>Em linguagem simples:</Bold> A aceleração de um objeto depende de: 
+                                1) Quanta força você aplica e 2) Quão pesado (massa) é o objeto. 
+                                Mais força = mais aceleração. Mais massa = menos aceleração.
+                            </TextBlock>
+
+                            <Border Background="#D6EAF8" 
+                                    BorderBrush="#2874A6" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🎯 A Fórmula Mais Famosa da Física:" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#1F618D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Text="F = m × a" 
+                                             FontSize="24" 
+                                             FontWeight="Bold" 
+                                             Foreground="#2874A6"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,8"/>
+                                    <TextBlock FontSize="11" Foreground="#5D6D7E" HorizontalAlignment="Center">
+                                        F = Força (N) | m = massa (kg) | a = aceleração (m/s²)
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exemplos da 2ª Lei -->
+                    <StackPanel Margin="0,10,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🛒" FontSize="16"/> 
+                                <Run FontWeight="Bold">Carrinho de supermercado:</Run> Vazio é fácil de empurrar 
+                                e acelera rápido. Cheio precisa de mais força para acelerar!
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🚀" FontSize="16"/> 
+                                <Run FontWeight="Bold">Foguetes espaciais:</Run> Precisam de MUITA força 
+                                (motores gigantes) porque têm muita massa. Quanto mais combustível queimam, 
+                                mais rápido aceleram!
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⚽" FontSize="16"/> 
+                                <Run FontWeight="Bold">Chutar uma bola:</Run> Mesma força: bola de futebol vai longe, 
+                                bola de boliche mal sai do lugar. Por quê? Massa diferente!
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Exemplo de Cálculo -->
+                    <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🧮 Exemplo de Cálculo:" 
+                                     FontSize="12" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,5"/>
+                            <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,3">
+                                Um carro de 1000 kg acelera a 2 m/s². Qual a força do motor?
+                            </TextBlock>
+                            <TextBlock FontSize="11" Foreground="#27AE60" FontWeight="SemiBold" Margin="0,4,0,0">
+                                F = 1000 kg × 2 m/s² = 2000 N (Newtons)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Terceira Lei -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        3ª Lei - Ação e Reação
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}" Background="#FDEDEC" BorderBrush="#E74C3C">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#C0392B"
+                                     Margin="0,0,0,10">
+                                ↔️ A Lei das Forças Pareadas
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                <Bold>Em linguagem simples:</Bold> Para toda ação existe uma reação de mesma 
+                                intensidade, mas em sentido contrário. Quando você empurra algo, esse algo 
+                                empurra você de volta com a mesma força!
+                            </TextBlock>
+
+                            <Border Background="#FADBD8" 
+                                    BorderBrush="#943126" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="📐 A Regra de Ouro:" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,0,0,5"/>
+                                    <TextBlock Text="F₁₂ = -F₂₁" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#C0392B"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,6"/>
+                                    <TextBlock Text="(A força que 1 faz em 2 = força que 2 faz em 1, mas sentido oposto)"
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             FontStyle="Italic"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exemplos da 3ª Lei -->
+                    <StackPanel Margin="0,10,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🚁" FontSize="16"/> 
+                                <Run FontWeight="Bold">Helicóptero:</Run> Hélices empurram ar para baixo (ação). 
+                                O ar empurra o helicóptero para cima (reação)!
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🚶" FontSize="16"/> 
+                                <Run FontWeight="Bold">Andar:</Run> Você empurra o chão para trás. 
+                                O chão empurra você para frente. É assim que andamos!
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🎈" FontSize="16"/> 
+                                <Run FontWeight="Bold">Balão de festa:</Run> Ar sai por trás (ação), 
+                                balão voa para frente (reação)!
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🚀" FontSize="16"/> 
+                                <Run FontWeight="Bold">Foguetes:</Run> Expelem gases para trás, 
+                                a reação empurra o foguete para frente. Funciona até no vácuo!
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Pergunta Comum -->
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🤔 Pergunta Comum:" 
+                                     FontSize="12" 
+                                     FontWeight="Bold" 
+                                     Foreground="#6C3483"
+                                     Margin="0,0,0,5"/>
+                            <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,3">
+                                "Se as forças são iguais, por que um cavalo consegue puxar uma carroça?"
+                            </TextBlock>
+                            <TextBlock FontSize="11" Foreground="#27AE60" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,4,0,0">
+                                Resposta: As forças entre cavalo e carroça são iguais, MAS o cavalo empurra o chão 
+                                para trás com mais força do que o atrito da carroça! Por isso o sistema se move.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Resumo Visual -->
+                    <Border Background="#F4ECF7" BorderBrush="#9B59B6" BorderThickness="3" CornerRadius="10" Padding="20" Margin="0,20,0,0">
+                        <StackPanel>
+                            <TextBlock Text="📚 Resumo das Três Leis" 
+                                     FontSize="16" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,15"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" Background="White" BorderBrush="#16A085" BorderThickness="2" CornerRadius="8" Padding="12">
+                                    <StackPanel>
+                                        <TextBlock Text="1ª Lei" FontSize="14" FontWeight="Bold" Foreground="#16A085" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="INÉRCIA" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,4"/>
+                                        <TextBlock Text="Objetos resistem a mudanças" FontSize="10" Foreground="#7F8C8D" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="2" Background="White" BorderBrush="#2980B9" BorderThickness="2" CornerRadius="8" Padding="12">
+                                    <StackPanel>
+                                        <TextBlock Text="2ª Lei" FontSize="14" FontWeight="Bold" Foreground="#2980B9" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="F = m × a" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,4"/>
+                                        <TextBlock Text="Força causa aceleração" FontSize="10" Foreground="#7F8C8D" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="4" Background="White" BorderBrush="#C0392B" BorderThickness="2" CornerRadius="8" Padding="12">
+                                    <StackPanel>
+                                        <TextBlock Text="3ª Lei" FontSize="14" FontWeight="Bold" Foreground="#C0392B" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="AÇÃO ↔️ REAÇÃO" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,4"/>
+                                        <TextBlock Text="Forças vêm em pares" FontSize="10" Foreground="#7F8C8D" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Curiosidade -->
+                    <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Curiosidade Histórica" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12">
+                                Isaac Newton publicou essas leis em 1687 no livro "Philosophiæ Naturalis Principia Mathematica". 
+                                Ele tinha apenas 23 anos quando desenvolveu as ideias básicas! Essas três leis simples 
+                                revolucionaram a ciência e permitiram a Revolução Industrial, viagens espaciais e toda a tecnologia moderna.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: SIMULADOR -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" MinHeight="200"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título do Simulador -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Simulador de Física" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Experimente as Leis de Newton!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+
+                    <!-- Comandos Disponíveis -->
+                    <Expander Header="Comandos Disponíveis" 
+                            IsExpanded="False" 
+                            Margin="0,15,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="objeto(massa: 10, velocidade: 0)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Cria um objeto físico com massa (kg) e velocidade inicial (m/s)" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="aplicarForca(obj, forca: 50)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Aplica uma força em Newtons ao objeto (F = m × a)" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularAceleracao(obj)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula a aceleração do objeto (a = F / m)" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="simularColisao(obj1, obj2)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Simula colisão entre dois objetos (ação e reação)" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="escreva(&quot;mensagem&quot;)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Exibe mensagens no console" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="10" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+
+                <!-- Editor de Código -->
+                <Border Grid.Row="1" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="Editor de Código" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <TextBox x:Name="CodeEditor" 
+                                 Grid.Row="1"
+                                 AcceptsReturn="True" 
+                                 AcceptsTab="True" 
+                                 FontFamily="Cascadia Code, Consolas"
+                                 FontSize="13"
+                                 Background="White"
+                                 Foreground="#2C3E50"
+                                 CaretBrush="#3498DB"
+                                 VerticalScrollBarVisibility="Auto" 
+                                 BorderThickness="0"
+                                 Padding="15"
+                                 Text="// 🎯 Demonstração da Segunda Lei de Newton (F = m × a)&#x0A;escreva(&quot;=== SIMULAÇÃO: SEGUNDA LEI ===&quot;)&#x0A;&#x0A;// Criando um carro de 1000 kg&#x0A;escreva(&quot;🚗 Criando carro de 1000 kg...&quot;)&#x0A;var carro = objeto(massa: 1000, velocidade: 0)&#x0A;&#x0A;// Aplicando força do motor&#x0A;escreva(&quot;⚡ Aplicando 2000 N de força...&quot;)&#x0A;aplicarForca(carro, forca: 2000)&#x0A;&#x0A;// Calculando aceleração&#x0A;escreva(&quot;🔢 Calculando aceleração...&quot;)&#x0A;calcularAceleracao(carro)&#x0A;&#x0A;escreva(&quot;✅ Resultado: a = F/m = 2000/1000 = 2 m/s²&quot;)" />
+                    </Grid>
+                </Border>
+
+                <!-- Botões de Ação -->
+                <Grid Grid.Row="2" Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" 
+                            Content="EXECUTAR" 
+                            Height="45" 
+                            Style="{StaticResource ButtonStyle}"
+                            FontSize="14" 
+                            Click="RunCode_Click"/>
+
+                    <Button Grid.Column="2" 
+                            Content="LIMPAR" 
+                            Height="45"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            FontSize="14"
+                            Click="ClearCode_Click"/>
+                </Grid>
+
+                <!-- Console de Saída -->
+                <Border Grid.Row="3" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="Console de Saída" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" 
+                                    VerticalScrollBarVisibility="Auto" 
+                                    Padding="15">
+                            <TextBlock x:Name="ConsoleOutput" 
+                                     Foreground="#27AE60" 
+                                     FontFamily="Cascadia Code, Consolas"
+                                     FontSize="12"
+                                     TextWrapping="Wrap"
+                                     Text="&gt; Simulador de Física iniciado.&#x0A;&gt; Digite seu código e clique em EXECUTAR.&#x0A;&gt; Explore as Leis de Newton!"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Botões Finais -->
+                <StackPanel Grid.Row="4" Margin="0,15,0,0">
+                    <Border Background="#F8F9FA" 
+                            BorderBrush="#BDC3C7" 
+                            BorderThickness="1" 
+                            CornerRadius="6" 
+                            Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="🎓 Recursos Adicionais" 
+                                     FontWeight="Bold" 
+                                     FontSize="13"
+                                     Foreground="#3498DB"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" 
+                                        x:Name="ExercisesButton"
+                                        Content="📝 Exercícios" 
+                                        Style="{StaticResource ButtonStyle}"
+                                        Height="35"
+                                        FontSize="12"
+                                        Click="ExercisesButton_Click"/>
+
+                                <Button Grid.Column="2" 
+                                        x:Name="QuizButton"
+                                        Content="🧪 Quiz" 
+                                        Style="{StaticResource ButtonStyle}"
+                                        Height="35"
+                                        FontSize="12"
+                                        Click="QuizButton_Click"/>
+                            </Grid>
+
+                            <Button x:Name="BackButton"
+                                    Content="← Voltar ao Menu" 
+                                    Style="{StaticResource SecondaryButtonStyle}"
+                                    Height="35"
+                                    FontSize="12"
+                                    Margin="0,10,0,0"
+                                    Click="BackButton_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,720 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.FisicaQuantica.Schrodinger1D"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Quantun_Forge.src.views.FisicaQuantica"
+             mc:Ignorable="d" 
+             d:DesignHeight="700"
+             d:DesignWidth="1200"
+             Background="#F5F5F5">
+
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#F72585"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F72585"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF4DA6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Coluna Principal -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="🌊 Equação de Schrödinger (1D)" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="A equação fundamental da mecânica quântica - descreve como partículas evoluem no tempo" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
+
+                <!-- Visualização da Função de Onda -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Função de Onda ψ(x,t)" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Canvas Principal -->
+                        <Border Background="#1A1A2E" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="400"
+                                Margin="0,0,0,15">
+                            <Canvas x:Name="WaveFunctionCanvas" ClipToBounds="True">
+                                <!-- Grid de fundo -->
+                                <Canvas x:Name="GridCanvas"/>
+
+                                <!-- Potencial V(x) -->
+                                <Canvas x:Name="PotentialCanvas"/>
+
+                                <!-- Função de onda |ψ|² -->
+                                <Canvas x:Name="ProbabilityCanvas"/>
+
+                                <!-- Parte real de ψ -->
+                                <Canvas x:Name="RealPartCanvas"/>
+
+                                <!-- Parte imaginária de ψ -->
+                                <Canvas x:Name="ImaginaryPartCanvas"/>
+
+                                <!-- Labels -->
+                                <TextBlock Text="x" 
+                                          Canvas.Left="760" 
+                                          Canvas.Top="380"
+                                          Foreground="White"
+                                          FontSize="14"
+                                          FontWeight="Bold"/>
+
+                                <TextBlock Text="V(x)" 
+                                          Canvas.Left="10" 
+                                          Canvas.Top="10"
+                                          Foreground="#F39C12"
+                                          FontSize="12"
+                                          FontWeight="Bold"/>
+
+                                <TextBlock Text="|ψ|²" 
+                                          Canvas.Left="10" 
+                                          Canvas.Top="30"
+                                          Foreground="#E74C3C"
+                                          FontSize="12"
+                                          FontWeight="Bold"/>
+
+                                <TextBlock Text="Re(ψ)" 
+                                          Canvas.Left="10" 
+                                          Canvas.Top="50"
+                                          Foreground="#3498DB"
+                                          FontSize="12"
+                                          FontWeight="Bold"/>
+
+                                <TextBlock Text="Im(ψ)" 
+                                          Canvas.Left="10" 
+                                          Canvas.Top="70"
+                                          Foreground="#2ECC71"
+                                          FontSize="12"
+                                          FontWeight="Bold"/>
+
+                                <!-- Nível de energia -->
+                                <Line x:Name="EnergyLevelLine"
+                                     X1="50" Y1="200" X2="750" Y2="200"
+                                     Stroke="#9B59B6"
+                                     StrokeThickness="2"
+                                     StrokeDashArray="5,3"
+                                     Visibility="Collapsed"/>
+
+                                <Border x:Name="EnergyLabel"
+                                       Canvas.Left="760" 
+                                       Canvas.Top="190"
+                                       Background="#9B59B6"
+                                       CornerRadius="3"
+                                       Padding="5"
+                                       Visibility="Collapsed">
+                                    <TextBlock x:Name="TxtEnergyLevel" 
+                                              Text="E"
+                                              Foreground="White"
+                                              FontSize="10"
+                                              FontWeight="Bold"/>
+                                </Border>
+                            </Canvas>
+                        </Border>
+
+                        <!-- Informações da Simulação -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Background="#E8F4F8" 
+                                   BorderBrush="#3498DB" 
+                                   BorderThickness="2" 
+                                   CornerRadius="8" 
+                                   Padding="10"
+                                   Margin="0,0,3,0">
+                                <StackPanel>
+                                    <TextBlock Text="⚛️ n" 
+                                              FontSize="10" 
+                                              FontWeight="Bold" 
+                                              Foreground="#2C3E50"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,5"/>
+                                    <TextBlock x:Name="TxtQuantumNumber" 
+                                              Text="1"
+                                              FontSize="16"
+                                              FontWeight="Bold"
+                                              Foreground="#3498DB"
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" 
+                                   Background="#FFF3E0" 
+                                   BorderBrush="#F39C12" 
+                                   BorderThickness="2" 
+                                   CornerRadius="8" 
+                                   Padding="10"
+                                   Margin="3,0">
+                                <StackPanel>
+                                    <TextBlock Text="⚡ E" 
+                                              FontSize="10" 
+                                              FontWeight="Bold" 
+                                              Foreground="#2C3E50"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,5"/>
+                                    <TextBlock x:Name="TxtEnergy" 
+                                              Text="0.0 eV"
+                                              FontSize="14"
+                                              FontWeight="Bold"
+                                              Foreground="#F39C12"
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="2" 
+                                   Background="#EBFAF5" 
+                                   BorderBrush="#2ECC71" 
+                                   BorderThickness="2" 
+                                   CornerRadius="8" 
+                                   Padding="10"
+                                   Margin="3,0">
+                                <StackPanel>
+                                    <TextBlock Text="📏 λ" 
+                                              FontSize="10" 
+                                              FontWeight="Bold" 
+                                              Foreground="#2C3E50"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,5"/>
+                                    <TextBlock x:Name="TxtWavelength" 
+                                              Text="0.0 nm"
+                                              FontSize="14"
+                                              FontWeight="Bold"
+                                              Foreground="#2ECC71"
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="3" 
+                                   Background="#FADBD8" 
+                                   BorderBrush="#E74C3C" 
+                                   BorderThickness="2" 
+                                   CornerRadius="8" 
+                                   Padding="10"
+                                   Margin="3,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🎯 Nós" 
+                                              FontSize="10" 
+                                              FontWeight="Bold" 
+                                              Foreground="#2C3E50"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,5"/>
+                                    <TextBlock x:Name="TxtNodes" 
+                                              Text="0"
+                                              FontSize="16"
+                                              FontWeight="Bold"
+                                              Foreground="#E74C3C"
+                                              HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Equação de Schrödinger -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📐 A Equação de Schrödinger" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Dependente do Tempo -->
+                            <Border Background="#E8F4F8" 
+                                   BorderBrush="#3498DB" 
+                                   BorderThickness="3" 
+                                   CornerRadius="10" 
+                                   Padding="20">
+                                <StackPanel>
+                                    <TextBlock Text="⏱️ Dependente do Tempo" 
+                                              FontSize="13" 
+                                              FontWeight="Bold" 
+                                              Foreground="#2C3E50"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,10"/>
+
+                                    <TextBlock Text="iℏ ∂ψ/∂t = Ĥψ" 
+                                              FontSize="24" 
+                                              FontWeight="Bold" 
+                                              FontFamily="Cambria Math"
+                                              Foreground="#2980B9" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,15"/>
+
+                                    <TextBlock FontSize="10" Foreground="#34495E" TextWrapping="Wrap" TextAlignment="Center">
+                                        <Run Text="Ĥ = -ℏ²/2m · ∂²/∂x² + V(x)" FontFamily="Consolas"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="Descreve evolução temporal"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Independente do Tempo -->
+                            <Border Grid.Column="2" 
+                                   Background="#FFF3E0" 
+                                   BorderBrush="#F39C12" 
+                                   BorderThickness="3" 
+                                   CornerRadius="10" 
+                                   Padding="20">
+                                <StackPanel>
+                                    <TextBlock Text="🔒 Independente do Tempo" 
+                                              FontSize="13" 
+                                              FontWeight="Bold" 
+                                              Foreground="#2C3E50"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,10"/>
+
+                                    <TextBlock Text="Ĥψ = Eψ" 
+                                              FontSize="24" 
+                                              FontWeight="Bold" 
+                                              FontFamily="Cambria Math"
+                                              Foreground="#E67E22" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,15"/>
+
+                                    <TextBlock FontSize="10" Foreground="#34495E" TextWrapping="Wrap" TextAlignment="Center">
+                                        <Run Text="-ℏ²/2m · d²ψ/dx² + V(x)ψ = Eψ" FontFamily="Consolas"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="Estados estacionários"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Potenciais Clássicos -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔧 Soluções Analíticas Famosas" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Poço Infinito -->
+                            <Border Background="White" 
+                                   BorderBrush="#E74C3C" 
+                                   BorderThickness="2" 
+                                   CornerRadius="8" 
+                                   Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="📦 Poço Infinito" 
+                                              FontSize="13" 
+                                              FontWeight="Bold" 
+                                              Foreground="#E74C3C" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,10"/>
+
+                                    <Border Background="#F8F9FA" 
+                                           BorderBrush="#BDC3C7" 
+                                           BorderThickness="1" 
+                                           Height="100" 
+                                           Margin="0,0,0,10">
+                                        <Canvas x:Name="InfiniteWellCanvas"/>
+                                    </Border>
+
+                                    <TextBlock FontSize="10" Foreground="#495057" TextWrapping="Wrap">
+                                        <Run Text="V(x) = 0" FontWeight="Bold" FontFamily="Consolas"/> 
+                                        <Run Text=" para 0 &lt; x &lt; L"/>
+                                        <LineBreak/>
+                                        <Run Text="V(x) = ∞" FontWeight="Bold" FontFamily="Consolas"/> 
+                                        <Run Text=" caso contrário"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="Eₙ = n²π²ℏ²/(2mL²)" FontFamily="Consolas"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Oscilador Harmônico -->
+                            <Border Grid.Column="2" 
+                                   Background="White" 
+                                   BorderBrush="#3498DB" 
+                                   BorderThickness="2" 
+                                   CornerRadius="8" 
+                                   Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="〰️ Oscilador Harmônico" 
+                                              FontSize="13" 
+                                              FontWeight="Bold" 
+                                              Foreground="#3498DB" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,10"/>
+
+                                    <Border Background="#F8F9FA" 
+                                           BorderBrush="#BDC3C7" 
+                                           BorderThickness="1" 
+                                           Height="100" 
+                                           Margin="0,0,0,10">
+                                        <Canvas x:Name="HarmonicCanvas"/>
+                                    </Border>
+
+                                    <TextBlock FontSize="10" Foreground="#495057" TextWrapping="Wrap">
+                                        <Run Text="V(x) = ½kx²" FontWeight="Bold" FontFamily="Consolas"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="Eₙ = ℏω(n + ½)" FontFamily="Consolas"/>
+                                        <LineBreak/>
+                                        <Run Text="ω = √(k/m)" FontFamily="Consolas"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Interpretação Probabilística -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎲 Interpretação de Born (Probabilística)" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Border Background="#F3E5F5" 
+                               BorderBrush="#9C27B0" 
+                               BorderThickness="2" 
+                               CornerRadius="8" 
+                               Padding="20">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="P(x)dx = |ψ(x)|² dx" 
+                                          FontSize="22" 
+                                          FontWeight="Bold" 
+                                          FontFamily="Cambria Math"
+                                          Foreground="#6A1B9A"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,20,0"/>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontSize="11" Foreground="#495057" TextWrapping="Wrap" Margin="0,0,0,8">
+                                        <Run Text="• |ψ(x)|² é a densidade de probabilidade" FontWeight="Bold"/>
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="11" Foreground="#495057" TextWrapping="Wrap" Margin="0,0,0,8">
+                                        <Run Text="• A partícula está em algum lugar: ∫|ψ|²dx = 1" FontWeight="Bold"/>
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="11" Foreground="#495057" TextWrapping="Wrap">
+                                        <Run Text="• ψ é complexa, mas |ψ|² é real e positiva"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Conceitos Fundamentais -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📚 Conceitos Fundamentais" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock FontSize="12" Foreground="#34495E" TextWrapping="Wrap" Margin="0,0,0,10" LineHeight="20">
+                            <Run Text="• Quantização de Energia:" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  Em potenciais confinados, apenas certos valores de energia (autovalores) são permitidos."/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="12" Foreground="#34495E" TextWrapping="Wrap" Margin="0,0,0,10" LineHeight="20">
+                            <Run Text="• Nós da Função de Onda:" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  Pontos onde ψ=0. O estado n tem (n-1) nós internos."/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="12" Foreground="#34495E" TextWrapping="Wrap" Margin="0,0,0,10" LineHeight="20">
+                            <Run Text="• Energia de Ponto Zero:" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  Estado fundamental (n=1) tem E > 0. Partícula nunca está completamente em repouso!"/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="12" Foreground="#34495E" TextWrapping="Wrap" LineHeight="20">
+                            <Run Text="• Tunelamento Quântico:" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  Partícula pode 'atravessar' barreiras classicamente proibidas onde E &lt; V."/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Coluna Lateral - Controles -->
+            <StackPanel Grid.Column="2">
+                <!-- Seleção de Potencial -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔧 Tipo de Potencial" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Button Content="📦 Poço Infinito" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#E74C3C"
+                               Click="PocoinFinito_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+
+                        <Button Content="🎯 Poço Finito" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#E67E22"
+                               Click="PocoFinito_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+
+                        <Button Content="〰️ Oscilador Harmônico" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#3498DB"
+                               Click="OsciladorHarmonico_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+
+                        <Button Content="⛰️ Barreira de Potencial" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#95A5A6"
+                               Click="Barreira_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+
+                        <Button Content="🌊 Partícula Livre" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#2ECC71"
+                               Click="ParticulaLivre_Click"
+                               FontSize="11"
+                               Padding="10,8"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Controle de Estado Quântico -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚛️ Número Quântico (n)" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Slider x:Name="SliderQuantumNumber"
+                               Minimum="1"
+                               Maximum="10"
+                               Value="1"
+                               TickFrequency="1"
+                               IsSnapToTickEnabled="True"
+                               ValueChanged="SliderQuantumNumber_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtSliderN" 
+                                  Text="n = 1 (Estado Fundamental)" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  TextWrapping="Wrap"
+                                  Margin="0,0,0,15"/>
+
+                        <Button Content="▶️ Animar Evolução Temporal" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Click="AnimarEvolucao_Click"/>
+
+                        <Button Content="⏸️ Pausar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Background="#F39C12"
+                               Click="Pausar_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Visualização -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="👁️ Visualizar" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <CheckBox x:Name="ChkMostrarPotencial" 
+                                 Content="Potencial V(x)" 
+                                 IsChecked="True"
+                                 Foreground="#F39C12"
+                                 FontSize="11"
+                                 FontWeight="Bold"
+                                 Margin="0,0,0,8"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+
+                        <CheckBox x:Name="ChkMostrarProbabilidade" 
+                                 Content="Densidade |ψ|²" 
+                                 IsChecked="True"
+                                 Foreground="#E74C3C"
+                                 FontSize="11"
+                                 FontWeight="Bold"
+                                 Margin="0,0,0,8"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+
+                        <CheckBox x:Name="ChkMostrarReal" 
+                                 Content="Parte Real Re(ψ)" 
+                                 IsChecked="True"
+                                 Foreground="#3498DB"
+                                 FontSize="11"
+                                 Margin="0,0,0,8"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+
+                        <CheckBox x:Name="ChkMostrarImaginaria" 
+                                 Content="Parte Imaginária Im(ψ)" 
+                                 IsChecked="False"
+                                 Foreground="#2ECC71"
+                                 FontSize="11"
+                                 Margin="0,0,0,8"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+
+                        <CheckBox x:Name="ChkMostrarNivelEnergia" 
+                                 Content="Nível de Energia E" 
+                                 IsChecked="True"
+                                 Foreground="#9B59B6"
+                                 FontSize="11"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Parâmetros -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Parâmetros" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <Border Background="#F8F9FA" 
+                               BorderBrush="#DEE2E6" 
+                               BorderThickness="1" 
+                               CornerRadius="5" 
+                               Padding="10">
+                            <StackPanel>
+                                <TextBlock FontSize="10" Foreground="#495057" Margin="0,0,0,5">
+                                    <Run Text="Massa:" FontWeight="Bold"/>
+                                    <LineBreak/>
+                                    <Run x:Name="TxtMassa" Text="9.11×10⁻³¹ kg (elétron)"/>
+                                </TextBlock>
+
+                                <TextBlock FontSize="10" Foreground="#495057" Margin="0,5,0,5">
+                                    <Run Text="Largura do Poço:" FontWeight="Bold"/>
+                                    <LineBreak/>
+                                    <Run x:Name="TxtLargura" Text="1.0×10⁻¹⁰ m (1 Å)"/>
+                                </TextBlock>
+
+                                <TextBlock FontSize="10" Foreground="#495057" Margin="0,5,0,0">
+                                    <Run Text="ℏ = h/2π:" FontWeight="Bold"/>
+                                    <LineBreak/>
+                                    <Run Text="1.055×10⁻³⁴ J·s"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Info -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Curiosidade" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F39C12" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock Text="Erwin Schrödinger publicou sua equação em 1926. Ele ganhou o Nobel em 1933. A equação é tão fundamental quanto F=ma na física clássica!" 
+                                   FontSize="11" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"
+                                   LineHeight="18"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

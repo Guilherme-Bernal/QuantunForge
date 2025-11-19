@@ -1,0 +1,759 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.Introducao"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800"
+             Background="#ECF0F1">
+
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,20,0,10"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,8"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#EBF5FB"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,12"/>
+        </Style>
+
+        <Style x:Key="ConceptCard" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+
+        <!-- TabControl Moderno -->
+        <Style x:Key="ModernTabControl" TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+
+        <Style x:Key="ModernTabItem" TargetType="TabItem">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#7F8C8D"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8,8,0,0"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="#BDC3C7"
+                                BorderThickness="1,1,1,0">
+                            <ContentPresenter ContentSource="Header"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#3498DB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#3498DB"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#ECF0F1"/>
+                                <Setter Property="Foreground" Value="#2C3E50"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Timeline -->
+        <Style x:Key="TimelineDot" TargetType="Ellipse">
+            <Setter Property="Width" Value="12"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="Fill" Value="#3498DB"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="0,5,15,0"/>
+        </Style>
+
+        <Style x:Key="TimelineText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,25"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="Transparent">
+        <StackPanel Margin="40" MaxWidth="900">
+
+            <!-- Cabeçalho -->
+            <StackPanel Margin="0,0,0,30">
+                <TextBlock Text="Introdução ao FromBit To Quibit"
+                           Style="{StaticResource TitleStyle}"/>
+                <TextBlock Text="Explore os fundamentos da Computação Clássica e Quântica"
+                           FontSize="14"
+                           Foreground="#7F8C8D"
+                           HorizontalAlignment="Center"
+                           Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <!-- Banner de Boas-vindas -->
+            <Border Background="#E8F8F5"
+                    BorderBrush="#1ABC9C"
+                    BorderThickness="2"
+                    CornerRadius="8"
+                    Padding="20"
+                    Margin="0,0,0,30">
+                <StackPanel>
+                    <TextBlock Text="🎓 Bem-vindo ao FromBit To Quibit!"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#16A085"
+                               Margin="0,0,0,10"/>
+                    <TextBlock Text="Esta plataforma educacional foi desenvolvida para guiá-lo através dos conceitos fundamentais de computação clássica, computação quântica e física. Explore cada seção para aprofundar seu conhecimento!"
+                               FontSize="13"
+                               Foreground="#2C3E50"
+                               TextWrapping="Wrap"
+                               LineHeight="22"/>
+                </StackPanel>
+            </Border>
+
+            <!-- TabControl Principal -->
+            <Border Background="White"
+                    BorderBrush="#BDC3C7"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="0"
+                    Margin="0,0,0,20">
+                <TabControl Style="{StaticResource ModernTabControl}">
+
+                    <!-- Tab 1: Computação -->
+                    <TabItem Header="💻 Computação" Style="{StaticResource ModernTabItem}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                                    Background="Transparent" 
+                                    Padding="25">
+                            <StackPanel>
+
+                                <!-- Computação Clássica -->
+                                <TextBlock Text="💻 Computação Clássica"
+                                         Style="{StaticResource SubtitleStyle}"/>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="📌 Fundamentos"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#3498DB"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            A computação clássica utiliza <Run FontWeight="Bold">BITS</Run>, que podem assumir valores 0 ou 1. Cada bit representa a menor unidade de informação. Sequências de bits formam dados complexos: números, texto, imagens e sinais de áudio.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource HighlightBox}">
+                                    <StackPanel>
+                                        <TextBlock Text="🔌 Portas Lógicas"
+                                                 FontSize="14"
+                                                 FontWeight="Bold"
+                                                 Foreground="#2980B9"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">• AND:</Run> Retorna 1 somente se todas as entradas forem 1<LineBreak/>
+                                            <Run FontWeight="Bold">• OR:</Run> Retorna 1 se pelo menos uma entrada for 1<LineBreak/>
+                                            <Run FontWeight="Bold">• NOT:</Run> Inverte o valor do bit<LineBreak/>
+                                            <Run FontWeight="Bold">• XOR:</Run> Retorna 1 quando as entradas são diferentes
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="🏛️ Arquitetura Von Neumann (1945)"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#3498DB"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">1. CPU:</Run> Unidade de Processamento (registradores + ALU)<LineBreak/>
+                                            <Run FontWeight="Bold">2. Memória RAM:</Run> Armazena instruções e dados<LineBreak/>
+                                            <Run FontWeight="Bold">3. I/O:</Run> Dispositivos de Entrada/Saída<LineBreak/>
+                                            <Run FontWeight="Bold">4. Barramento:</Run> Canal de comunicação
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource HighlightBox}">
+                                    <StackPanel>
+                                        <TextBlock Text="🔄 Ciclo de Instrução da CPU"
+                                                 FontSize="14"
+                                                 FontWeight="Bold"
+                                                 Foreground="#2980B9"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">a) Fetch:</Run> Busca instrução da memória<LineBreak/>
+                                            <Run FontWeight="Bold">b) Decode:</Run> Decodifica a operação<LineBreak/>
+                                            <Run FontWeight="Bold">c) Execute:</Run> ALU realiza cálculo ou operação lógica<LineBreak/>
+                                            <Run FontWeight="Bold">d) Write Back:</Run> Grava resultado na memória ou registradores
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Separador -->
+                                <Rectangle Height="2" Fill="#BDC3C7" Margin="0,30"/>
+
+                                <!-- Computação Quântica -->
+                                <TextBlock Text="⚛️ Computação Quântica"
+                                         Style="{StaticResource SubtitleStyle}"/>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="📌 Fundamentos Quânticos"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#27AE60"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            A computação quântica baseia-se em <Run FontWeight="Bold">QUBITS</Run>, que podem existir simultaneamente nos estados |0⟩ e |1⟩ (superposição). Isso permite que um único qubit codifique muito mais informação do que um bit clássico.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#E8F8F5"
+                                      BorderBrush="#1ABC9C"
+                                      BorderThickness="2"
+                                      CornerRadius="8"
+                                      Padding="15"
+                                      Margin="0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="🔬 Portas Quânticas"
+                                                 FontSize="14"
+                                                 FontWeight="Bold"
+                                                 Foreground="#16A085"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">• Hadamard (H):</Run> Cria superposição (|0⟩ + |1⟩)/√2<LineBreak/>
+                                            <Run FontWeight="Bold">• CNOT:</Run> Inverte o alvo quando controle está em |1⟩<LineBreak/>
+                                            <Run FontWeight="Bold">• Pauli-X/Y/Z:</Run> Rotação no espaço de Bloch
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="🔗 Emaranhamento Quântico"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#27AE60"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            Correlação instantânea entre qubits, de modo que a medição de um determina instantaneamente o estado do outro, mesmo separados fisicamente. Fundamental para algoritmos quânticos avançados.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource HighlightBox}">
+                                    <StackPanel>
+                                        <TextBlock Text="🚀 Algoritmos Quânticos Clássicos"
+                                                 FontSize="14"
+                                                 FontWeight="Bold"
+                                                 Foreground="#2980B9"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">• Shor (1994):</Run> Fatoração polinomial, ameaça ao RSA<LineBreak/>
+                                            <Run FontWeight="Bold">• Grover (1996):</Run> Busca em O(√N) versus O(N) clássico<LineBreak/>
+                                            <Run FontWeight="Bold">• Simulações Quânticas:</Run> Modelagem molecular impossível classicamente
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="⚠️ Desafios Práticos"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#E67E22"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">• Decoerência:</Run> Perda de coerência por interação ambiental<LineBreak/>
+                                            <Run FontWeight="Bold">• Temperatura:</Run> Qubits supercondutores exigem ~0 K<LineBreak/>
+                                            <Run FontWeight="Bold">• Correção de Erros:</Run> Qubits lógicos e códigos de superfície<LineBreak/>
+                                            <Run FontWeight="Bold">• Calibração:</Run> Precisão nas operações e leituras
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- Tab 2: Física -->
+                    <TabItem Header="⚛️ Física" Style="{StaticResource ModernTabItem}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                                    Background="Transparent" 
+                                    Padding="25">
+                            <StackPanel>
+
+                                <!-- Física Clássica -->
+                                <TextBlock Text="📐 Física Clássica"
+                                         Style="{StaticResource SubtitleStyle}"/>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="⚖️ Leis de Newton"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#3498DB"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">1ª Lei (Inércia):</Run> Corpo em repouso permanece em repouso, a menos que uma força externa aja<LineBreak/>
+                                            <Run FontWeight="Bold">2ª Lei (F = m·a):</Run> Força resultante é igual à massa × aceleração<LineBreak/>
+                                            <Run FontWeight="Bold">3ª Lei (Ação/Reação):</Run> Para toda ação, existe reação igual e oposta
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource HighlightBox}">
+                                    <StackPanel>
+                                        <TextBlock Text="⚡ Equações de Maxwell"
+                                                 FontSize="14"
+                                                 FontWeight="Bold"
+                                                 Foreground="#2980B9"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">• Lei de Coulomb:</Run> Força entre cargas ∝ produto das cargas / distância²<LineBreak/>
+                                            <Run FontWeight="Bold">• Lei de Gauss (E):</Run> Fluxo elétrico ∝ carga interna<LineBreak/>
+                                            <Run FontWeight="Bold">• Lei de Gauss (B):</Run> Não existem monopolos magnéticos<LineBreak/>
+                                            <Run FontWeight="Bold">• Lei de Faraday:</Run> Variação de fluxo magnético induz tensão<LineBreak/>
+                                            <Run FontWeight="Bold">• Lei de Ampère-Maxwell:</Run> Correntes geram campo magnético
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="🌡️ Termodinâmica"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#3498DB"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">• 1ª Lei:</Run> ΔU = Q – W (conservação de energia)<LineBreak/>
+                                            <Run FontWeight="Bold">• 2ª Lei:</Run> Entropia total aumenta (irreversibilidade)<LineBreak/>
+                                            <Run FontWeight="Bold">• 3ª Lei:</Run> Entropia de cristal perfeito a 0 K é zero
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Separador -->
+                                <Rectangle Height="2" Fill="#BDC3C7" Margin="0,30"/>
+
+                                <!-- Física Quântica -->
+                                <TextBlock Text="🔬 Física Quântica"
+                                         Style="{StaticResource SubtitleStyle}"/>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="〰️ Dualidade Onda-Partícula"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#27AE60"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            Partículas como elétrons e fótons exibem comportamento ondulatório e corpuscular simultaneamente, comprovado no famoso experimento da fenda dupla.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#E8F8F5"
+                                      BorderBrush="#1ABC9C"
+                                      BorderThickness="2"
+                                      CornerRadius="8"
+                                      Padding="15"
+                                      Margin="0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="❓ Princípio da Incerteza de Heisenberg"
+                                                 FontSize="14"
+                                                 FontWeight="Bold"
+                                                 Foreground="#16A085"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            Impossível medir simultaneamente posição e momento com precisão arbitrária: Δx·Δp ≥ ℏ/2
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource ConceptCard}">
+                                    <StackPanel>
+                                        <TextBlock Text="📊 Equação de Schrödinger"
+                                                 FontSize="15"
+                                                 FontWeight="Bold"
+                                                 Foreground="#27AE60"
+                                                 Margin="0,0,0,10"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            iℏ ∂ψ/∂t = Ĥψ — Descreve a evolução temporal da função de onda. O quadrado |ψ|² indica a probabilidade de encontrar a partícula em determinada posição.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource HighlightBox}">
+                                    <StackPanel>
+                                        <TextBlock Text="🌀 Spin e Estatística"
+                                                 FontSize="14"
+                                                 FontWeight="Bold"
+                                                 Foreground="#2980B9"
+                                                 Margin="0,0,0,8"/>
+                                        <TextBlock Style="{StaticResource NormalText}">
+                                            <Run FontWeight="Bold">• Férmions:</Run> Spin semi-inteiro, obedecem Pauli (elétrons, prótons)<LineBreak/>
+                                            <Run FontWeight="Bold">• Bósons:</Run> Spin inteiro, múltiplas partículas no mesmo estado (fótons)
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- Tab 3: Cronologia -->
+                    <TabItem Header="⏳ Cronologia" Style="{StaticResource ModernTabItem}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                                    Background="Transparent" 
+                                    Padding="25">
+                            <StackPanel>
+
+                                <TextBlock Text="⏳ Principais Marcos Históricos"
+                                         Style="{StaticResource SubtitleStyle}"
+                                         Margin="0,0,0,25"/>
+
+                                <!-- Timeline Visual -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Linha vertical -->
+                                    <Rectangle Grid.Column="0"
+                                             Fill="#3498DB"
+                                             Width="3"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,5"/>
+
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <!-- Década de 1940 -->
+                                        <Grid Margin="0,0,0,30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Style="{StaticResource TimelineDot}"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Década de 1940"
+                                                         FontWeight="Bold"
+                                                         FontSize="14"
+                                                         Foreground="#3498DB"
+                                                         Margin="0,0,0,5"/>
+                                                <TextBlock Style="{StaticResource TimelineText}">
+                                                    Desenvolvimento da mecânica quântica (Bohr, Schrödinger, Heisenberg) e primeiros computadores eletromecânicos (ENIAC, Colossus).
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- Década de 1950 -->
+                                        <Grid Margin="0,0,0,30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Style="{StaticResource TimelineDot}"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Década de 1950"
+                                                         FontWeight="Bold"
+                                                         FontSize="14"
+                                                         Foreground="#3498DB"
+                                                         Margin="0,0,0,5"/>
+                                                <TextBlock Style="{StaticResource TimelineText}">
+                                                    Invenção dos circuitos integrados por Jack Kilby e Robert Noyce; consolidação da arquitetura Von Neumann em mainframes.
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- 1981 -->
+                                        <Grid Margin="0,0,0,30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Style="{StaticResource TimelineDot}"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="1981"
+                                                         FontWeight="Bold"
+                                                         FontSize="14"
+                                                         Foreground="#3498DB"
+                                                         Margin="0,0,0,5"/>
+                                                <TextBlock Style="{StaticResource TimelineText}">
+                                                    Richard Feynman propõe usar computadores quânticos para simular sistemas quânticos, estabelecendo a base teórica da área.
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- 1994 -->
+                                        <Grid Margin="0,0,0,30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Style="{StaticResource TimelineDot}"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="1994 - Algoritmo de Shor"
+                                                         FontWeight="Bold"
+                                                         FontSize="14"
+                                                         Foreground="#3498DB"
+                                                         Margin="0,0,0,5"/>
+                                                <TextBlock Style="{StaticResource TimelineText}">
+                                                    Peter Shor desenvolve o algoritmo quântico de fatoração, mostrando vantagem exponencial sobre métodos clássicos e ameaçando a criptografia RSA.
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- 1996 -->
+                                        <Grid Margin="0,0,0,30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Style="{StaticResource TimelineDot}"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="1996 - Algoritmo de Grover"
+                                                         FontWeight="Bold"
+                                                         FontSize="14"
+                                                         Foreground="#3498DB"
+                                                         Margin="0,0,0,5"/>
+                                                <TextBlock Style="{StaticResource TimelineText}">
+                                                    Lov Grover apresenta algoritmo de busca quântica, reduzindo complexidade de O(N) para O(√N).
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- 2001 -->
+                                        <Grid Margin="0,0,0,30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Style="{StaticResource TimelineDot}"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="2001"
+                                                         FontWeight="Bold"
+                                                         FontSize="14"
+                                                         Foreground="#3498DB"
+                                                         Margin="0,0,0,5"/>
+                                                <TextBlock Style="{StaticResource TimelineText}">
+                                                    IBM constrói protótipo de 7 qubits e avança pesquisas em correção de erros quânticos.
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- 2019 -->
+                                        <Grid Margin="0,0,0,30">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Style="{StaticResource TimelineDot}"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="2019 - Supremacia Quântica"
+                                                         FontWeight="Bold"
+                                                         FontSize="14"
+                                                         Foreground="#3498DB"
+                                                         Margin="0,0,0,5"/>
+                                                <TextBlock Style="{StaticResource TimelineText}">
+                                                    Google Sycamore alcança supremacia quântica, resolvendo tarefa específica mais rápido que os supercomputadores clássicos mais poderosos.
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- 2025 -->
+                                        <Grid Margin="0,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Style="{StaticResource TimelineDot}" Fill="#27AE60"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="2025 - Ano Internacional"
+                                                         FontWeight="Bold"
+                                                         FontSize="14"
+                                                         Foreground="#27AE60"
+                                                         Margin="0,0,0,5"/>
+                                                <TextBlock Style="{StaticResource TimelineText}" Margin="0,0,0,0">
+                                                    A ONU proclamou 2025 como o Ano Internacional da Ciência e Tecnologia Quânticas (IYQ), reconhecendo a importância global dessa área.
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                    </StackPanel>
+                                </Grid>
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                </TabControl>
+            </Border>
+
+            <!-- Seção de Próximos Passos -->
+            <Border Background="White"
+                    BorderBrush="#BDC3C7"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="25"
+                    Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="🚀 Próximos Passos"
+                             FontSize="18"
+                             FontWeight="Bold"
+                             Foreground="#2C3E50"
+                             Margin="0,0,0,15"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Card 1 -->
+                        <Border Grid.Column="0"
+                              Background="#EBF5FB"
+                              BorderBrush="#3498DB"
+                              BorderThickness="2"
+                              CornerRadius="8"
+                              Padding="15"
+                              Margin="0,0,10,0">
+                            <StackPanel>
+                                <TextBlock Text="🎮"
+                                         FontSize="32"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Text="Simuladores"
+                                         FontSize="14"
+                                         FontWeight="Bold"
+                                         Foreground="#2980B9"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,5"/>
+                                <TextBlock Text="Explore simuladores interativos de ALU, portas lógicas e circuitos quânticos"
+                                         FontSize="11"
+                                         Foreground="#7F8C8D"
+                                         TextWrapping="Wrap"
+                                         TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Card 2 -->
+                        <Border Grid.Column="1"
+                              Background="#E8F8F5"
+                              BorderBrush="#1ABC9C"
+                              BorderThickness="2"
+                              CornerRadius="8"
+                              Padding="15"
+                              Margin="5,0">
+                            <StackPanel>
+                                <TextBlock Text="✍️"
+                                         FontSize="32"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Text="Exercícios"
+                                         FontSize="14"
+                                         FontWeight="Bold"
+                                         Foreground="#16A085"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,5"/>
+                                <TextBlock Text="Pratique com exercícios de computação, física e matemática"
+                                         FontSize="11"
+                                         Foreground="#7F8C8D"
+                                         TextWrapping="Wrap"
+                                         TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Card 3 -->
+                        <Border Grid.Column="2"
+                              Background="#FEF5E7"
+                              BorderBrush="#F39C12"
+                              BorderThickness="2"
+                              CornerRadius="8"
+                              Padding="15"
+                              Margin="10,0,0,0">
+                            <StackPanel>
+                                <TextBlock Text="📚"
+                                         FontSize="32"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock Text="Conteúdo"
+                                         FontSize="14"
+                                         FontWeight="Bold"
+                                         Foreground="#D68910"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,5"/>
+                                <TextBlock Text="Aprofunde-se nos fundamentos teóricos de cada área"
+                                         FontSize="11"
+                                         Foreground="#7F8C8D"
+                                         TextWrapping="Wrap"
+                                         TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Footer -->
+            <Border Background="#2C3E50"
+                    CornerRadius="8"
+                    Padding="20"
+                    Margin="0,30,0,20">
+                <StackPanel>
+                    <TextBlock Text="💡 Dica de Estudo"
+                             FontSize="15"
+                             FontWeight="Bold"
+                             Foreground="White"
+                             Margin="0,0,0,10"/>
+                    <TextBlock Text="Comece pelos fundamentos da computação clássica antes de mergulhar na computação quântica. A compreensão dos conceitos clássicos facilitará o entendimento dos princípios quânticos!"
+                             FontSize="12"
+                             Foreground="#ECF0F1"
+                             TextWrapping="Wrap"
+                             LineHeight="20"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

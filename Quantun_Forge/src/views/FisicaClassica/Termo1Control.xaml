@@ -4,85 +4,857 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="900">
+             d:DesignHeight="700"
+             d:DesignWidth="1200"
+             Background="#F5F5F5">
 
-    <Grid Background="#1E1E1E" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#F72585"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
 
-        <!-- TÍTULO -->
-        <TextBlock Text="1ª Lei da Termodinâmica – Energia Interna"
-                   FontSize="26" FontWeight="Bold" Foreground="White"
-                   HorizontalAlignment="Center" Margin="0,10"/>
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F72585"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF4DA6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- TEORIA -->
-        <ScrollViewer Grid.Row="1" Margin="20,0,20,10">
-            <StackPanel>
-                <TextBlock Text="📘 História e Conceito" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,10,0,5"/>
-                <TextBlock Text="A variação da energia interna de um sistema é dada pela diferença entre o calor recebido e o trabalho realizado: ΔU = Q - W." 
-                           FontSize="14" Foreground="White" TextWrapping="Wrap"/>
-                <TextBlock Text="Fórmula: ΔU = Q - W" FontSize="18" FontWeight="Bold" Foreground="LightBlue" Margin="10,10,0,4"/>
-            </StackPanel>
-        </ScrollViewer>
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- SIMULADOR -->
-        <Grid Grid.Row="2" Margin="0,10,0,0">
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.5*"/>
-                <ColumnDefinition Width="2.5*"/>
                 <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Visualização e cilindro -->
-            <Border Margin="10" BorderThickness="2" BorderBrush="Gray" CornerRadius="5">
-                <Canvas x:Name="CanvasSimulacao" Background="#2E2E2E" ClipToBounds="True">
-                    <Rectangle x:Name="Cilindro" Width="100" Height="100" Fill="LightBlue" Canvas.Left="100" Canvas.Top="50"/>
-                    <TextBlock x:Name="TxtSimulacaoEstado" Text="🧊 Sistema em equilíbrio" Foreground="White" FontSize="14" Canvas.Left="70" Canvas.Top="170"/>
+            <!-- Coluna Principal -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="🌡️ 1ª Lei da Termodinâmica" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="Conservação de Energia - A energia interna de um sistema depende do calor e do trabalho" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
 
-                    <!-- Barras -->
-                    <Rectangle x:Name="BarraQ" Width="20" Height="0" Fill="Orange" Canvas.Left="250" Canvas.Top="150"/>
-                    <TextBlock Text="Q" Foreground="White" Canvas.Left="250" Canvas.Top="160"/>
+                <!-- Fórmula Principal -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📐 Equação Fundamental" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                    <Rectangle x:Name="BarraW" Width="20" Height="0" Fill="SkyBlue" Canvas.Left="280" Canvas.Top="150"/>
-                    <TextBlock Text="W" Foreground="White" Canvas.Left="280" Canvas.Top="160"/>
+                        <Border Background="#F8F9FA" BorderBrush="#F72585" BorderThickness="3" CornerRadius="10" Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="ΔU = Q - W" 
+                                          FontSize="36" 
+                                          FontWeight="Bold" 
+                                          Foreground="#F72585" 
+                                          HorizontalAlignment="Center" 
+                                          Margin="0,10"/>
 
-                    <Rectangle x:Name="BarraU" Width="20" Height="0" Fill="LimeGreen" Canvas.Left="310" Canvas.Top="150"/>
-                    <TextBlock Text="ΔU" Foreground="White" Canvas.Left="310" Canvas.Top="160"/>
-                </Canvas>
-            </Border>
+                                <Separator Background="#E0E0E0" Margin="0,15"/>
 
-            <!-- Sliders -->
-            <StackPanel Grid.Column="1" Margin="10">
-                <TextBlock Text="🔥 Calor fornecido (Q - J)" Foreground="White"/>
-                <Slider x:Name="SliderQ" Minimum="-1000" Maximum="1000" Value="500"/>
-                <TextBlock Text="{Binding ElementName=SliderQ, Path=Value, StringFormat='Q = {0:F0} J'}" Foreground="White"/>
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                <TextBlock Text="⚙️ Trabalho realizado (W - J)" Foreground="White" Margin="10,10,0,0"/>
-                <Slider x:Name="SliderW" Minimum="-1000" Maximum="1000" Value="200"/>
-                <TextBlock Text="{Binding ElementName=SliderW, Path=Value, StringFormat='W = {0:F0} J'}" Foreground="White"/>
+                                    <StackPanel Grid.Column="0" Margin="5">
+                                        <TextBlock Text="ΔU" FontSize="18" FontWeight="Bold" Foreground="#3498DB" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Variação da" FontSize="10" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Energia Interna (J)" FontSize="10" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                    </StackPanel>
 
-                <!-- Ações -->
-                <Button Content="▶ Calcular" Width="200" Margin="0,10,0,0" Click="BtnCalcular_Click"/>
-                <Button Content="⏹ Resetar" Width="200" Click="BtnResetar_Click" Margin="0,5,0,0"/>
-                <Button Content="🎲 Modo Desafio" Width="200" Margin="0,5,0,0" Click="BtnDesafio_Click"/>
+                                    <StackPanel Grid.Column="1" Margin="5">
+                                        <TextBlock Text="Q" FontSize="18" FontWeight="Bold" Foreground="#E74C3C" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Calor trocado" FontSize="10" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="com ambiente (J)" FontSize="10" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                    </StackPanel>
 
-                <!-- Cenários rápidos -->
-                <TextBlock Text="⚡ Exemplos prontos:" Foreground="White" Margin="10,15,0,5"/>
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Aquece &amp; Expande" Click="BtnCenario1_Click" Margin="0,0,5,0"/>
-                    <Button Content="Esfria &amp; Comprime" Click="BtnCenario2_Click"/>
-                </StackPanel>
+                                    <StackPanel Grid.Column="2" Margin="5">
+                                        <TextBlock Text="W" FontSize="18" FontWeight="Bold" Foreground="#27AE60" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Trabalho realizado" FontSize="10" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="pelo sistema (J)" FontSize="10" Foreground="#7F8C8D" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="5" Padding="12" Margin="0,15,0,0">
+                            <StackPanel>
+                                <TextBlock Text="💡 Princípio Fundamental:" FontSize="12" FontWeight="Bold" Foreground="#16A085" Margin="0,0,0,5"/>
+                                <TextBlock Text="A energia não pode ser criada nem destruída, apenas transformada. A 1ª Lei da Termodinâmica é uma manifestação da conservação de energia em sistemas térmicos."
+                                          FontSize="11" 
+                                          Foreground="#2C3E50" 
+                                          TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Simulação Principal -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔬 Simulação: Sistema Termodinâmico" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Observe como o calor e o trabalho afetam a energia interna de um gás confinado em um cilindro!" 
+                                   FontSize="12" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Canvas para simulação -->
+                        <Border Background="#2C3E50" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="400"
+                                Margin="0,0,0,15">
+                            <Grid>
+                                <Canvas x:Name="CanvasSimulacao" ClipToBounds="True">
+                                    <!-- Fundo -->
+                                    <Rectangle Fill="#34495E" Width="800" Height="400"/>
+
+                                    <!-- Cilindro Base -->
+                                    <Rectangle x:Name="CilindroBase" 
+                                               Width="140" 
+                                               Height="280" 
+                                               Fill="#1E3A5F" 
+                                               Stroke="#3F5F8F" 
+                                               StrokeThickness="4" 
+                                               Canvas.Left="50" 
+                                               Canvas.Top="80"/>
+
+                                    <!-- Êmbolo móvel -->
+                                    <Rectangle x:Name="Embolo" 
+                                               Width="140" 
+                                               Height="20" 
+                                               Fill="#607D8B" 
+                                               Stroke="#78909C" 
+                                               StrokeThickness="3" 
+                                               Canvas.Left="50" 
+                                               Canvas.Top="60"/>
+
+                                    <!-- Partículas de gás -->
+                                    <Ellipse x:Name="Particula1" Width="10" Height="10" Fill="#3498DB" Canvas.Left="70" Canvas.Top="150">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#3498DB" BlurRadius="8" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+                                    <Ellipse x:Name="Particula2" Width="10" Height="10" Fill="#3498DB" Canvas.Left="120" Canvas.Top="190">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#3498DB" BlurRadius="8" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+                                    <Ellipse x:Name="Particula3" Width="10" Height="10" Fill="#3498DB" Canvas.Left="90" Canvas.Top="230">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#3498DB" BlurRadius="8" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+                                    <Ellipse x:Name="Particula4" Width="10" Height="10" Fill="#3498DB" Canvas.Left="150" Canvas.Top="210">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#3498DB" BlurRadius="8" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+                                    <Ellipse x:Name="Particula5" Width="10" Height="10" Fill="#3498DB" Canvas.Left="80" Canvas.Top="300">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#3498DB" BlurRadius="8" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+                                    <Ellipse x:Name="Particula6" Width="10" Height="10" Fill="#3498DB" Canvas.Left="130" Canvas.Top="270">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#3498DB" BlurRadius="8" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+
+                                    <!-- Chama (calor) -->
+                                    <Path x:Name="Chama" 
+                                          Data="M 0,30 Q 8,15 15,30 Q 23,8 30,30 Q 23,20 15,30 Q 8,20 0,30" 
+                                          Fill="#E74C3C" 
+                                          Opacity="0" 
+                                          Canvas.Left="90" 
+                                          Canvas.Top="370">
+                                        <Path.Effect>
+                                            <DropShadowEffect Color="#E74C3C" BlurRadius="15" ShadowDepth="0"/>
+                                        </Path.Effect>
+                                    </Path>
+
+                                    <!-- Seta de trabalho -->
+                                    <Path x:Name="SetaTrabalho" 
+                                          Data="M 0,8 L 40,8 L 35,0 L 50,15 L 35,30 L 40,22 L 0,22 Z" 
+                                          Fill="#27AE60" 
+                                          Opacity="0" 
+                                          Canvas.Left="200" 
+                                          Canvas.Top="190">
+                                        <Path.Effect>
+                                            <DropShadowEffect Color="#27AE60" BlurRadius="12" ShadowDepth="0"/>
+                                        </Path.Effect>
+                                    </Path>
+
+                                    <!-- Painel de informações -->
+                                    <Border Background="#000000" 
+                                            Opacity="0.8" 
+                                            CornerRadius="8" 
+                                            Padding="15" 
+                                            Canvas.Left="280" 
+                                            Canvas.Top="80">
+                                        <StackPanel Width="200">
+                                            <TextBlock x:Name="TxtEstadoSistema" 
+                                                       Text="⚡ Sistema em equilíbrio" 
+                                                       Foreground="White" 
+                                                       FontSize="13" 
+                                                       FontWeight="Bold"
+                                                       Margin="0,0,0,15"/>
+
+                                            <TextBlock Text="Balanço Energético:" 
+                                                       Foreground="#BDC3C7" 
+                                                       FontSize="12" 
+                                                       FontWeight="Bold" 
+                                                       Margin="0,0,0,10"/>
+
+                                            <!-- Barra Q -->
+                                            <Grid Margin="0,5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="25"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="Q" 
+                                                           Foreground="#E74C3C" 
+                                                           FontWeight="Bold" 
+                                                           FontSize="12"/>
+                                                <Border Grid.Column="1" 
+                                                        Background="#1E1E1E" 
+                                                        Height="20" 
+                                                        CornerRadius="4">
+                                                    <Rectangle x:Name="BarraQ" 
+                                                               Fill="#E74C3C" 
+                                                               HorizontalAlignment="Left" 
+                                                               Width="0"/>
+                                                </Border>
+                                            </Grid>
+
+                                            <!-- Barra W -->
+                                            <Grid Margin="0,5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="25"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="W" 
+                                                           Foreground="#27AE60" 
+                                                           FontWeight="Bold" 
+                                                           FontSize="12"/>
+                                                <Border Grid.Column="1" 
+                                                        Background="#1E1E1E" 
+                                                        Height="20" 
+                                                        CornerRadius="4">
+                                                    <Rectangle x:Name="BarraW" 
+                                                               Fill="#27AE60" 
+                                                               HorizontalAlignment="Left" 
+                                                               Width="0"/>
+                                                </Border>
+                                            </Grid>
+
+                                            <!-- Barra ΔU -->
+                                            <Grid Margin="0,5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="25"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="ΔU" 
+                                                           Foreground="#3498DB" 
+                                                           FontWeight="Bold" 
+                                                           FontSize="12"/>
+                                                <Border Grid.Column="1" 
+                                                        Background="#1E1E1E" 
+                                                        Height="20" 
+                                                        CornerRadius="4">
+                                                    <Rectangle x:Name="BarraU" 
+                                                               Fill="#3498DB" 
+                                                               HorizontalAlignment="Left" 
+                                                               Width="0"/>
+                                                </Border>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Legenda dos sinais -->
+                                    <Border Background="#000000" 
+                                            Opacity="0.8" 
+                                            CornerRadius="8" 
+                                            Padding="12" 
+                                            Canvas.Left="520" 
+                                            Canvas.Top="80">
+                                        <StackPanel Width="220">
+                                            <TextBlock Text="Convenção de Sinais:" 
+                                                       Foreground="#BDC3C7" 
+                                                       FontSize="12" 
+                                                       FontWeight="Bold" 
+                                                       Margin="0,0,0,10"/>
+
+                                            <TextBlock FontSize="11" Foreground="White" Margin="0,4">
+                                                <Run Text="Q > 0:" FontWeight="Bold" Foreground="#E74C3C"/>
+                                                <Run Text=" Sistema absorve calor"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="11" Foreground="White" Margin="0,4">
+                                                <Run Text="Q &lt; 0:" FontWeight="Bold" Foreground="#3498DB"/>
+                                                <Run Text=" Sistema cede calor"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="11" Foreground="White" Margin="0,4">
+                                                <Run Text="W > 0:" FontWeight="Bold" Foreground="#27AE60"/>
+                                                <Run Text=" Expansão (↑ volume)"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="11" Foreground="White" Margin="0,4">
+                                                <Run Text="W &lt; 0:" FontWeight="Bold" Foreground="#9B59B6"/>
+                                                <Run Text=" Compressão (↓ volume)"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                </Canvas>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Processos Termodinâmicos -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Processos Termodinâmicos Clássicos" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Processo Isotérmico -->
+                            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardStyle}" BorderBrush="#27AE60">
+                                <StackPanel>
+                                    <TextBlock Text="🌡️ Isotérmico (T = constante)" FontSize="13" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,8"/>
+                                    <TextBlock Text="ΔU = 0" FontSize="18" FontWeight="Bold" Foreground="#229954" HorizontalAlignment="Center" Margin="0,5"/>
+                                    <TextBlock Text="Q = W" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,3,0,8"/>
+                                    <TextBlock Text="A temperatura permanece constante. Todo o calor absorvido é convertido em trabalho." 
+                                              FontSize="11" 
+                                              Foreground="#7F8C8D" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Processo Adiabático -->
+                            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardStyle}" BorderBrush="#E74C3C">
+                                <StackPanel>
+                                    <TextBlock Text="🔒 Adiabático (Q = 0)" FontSize="13" FontWeight="Bold" Foreground="#E74C3C" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Q = 0" FontSize="18" FontWeight="Bold" Foreground="#C0392B" HorizontalAlignment="Center" Margin="0,5"/>
+                                    <TextBlock Text="ΔU = -W" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,3,0,8"/>
+                                    <TextBlock Text="Não há troca de calor com o ambiente. A variação de energia vem apenas do trabalho." 
+                                              FontSize="11" 
+                                              Foreground="#7F8C8D" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Processo Isovolumétrico -->
+                            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource CardStyle}" BorderBrush="#3498DB">
+                                <StackPanel>
+                                    <TextBlock Text="📊 Isovolumétrico (V = constante)" FontSize="13" FontWeight="Bold" Foreground="#3498DB" Margin="0,0,0,8"/>
+                                    <TextBlock Text="W = 0" FontSize="18" FontWeight="Bold" Foreground="#2980B9" HorizontalAlignment="Center" Margin="0,5"/>
+                                    <TextBlock Text="ΔU = Q" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,3,0,8"/>
+                                    <TextBlock Text="O volume não varia. Todo o calor absorvido aumenta a energia interna." 
+                                              FontSize="11" 
+                                              Foreground="#7F8C8D" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Processo Isobárico -->
+                            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardStyle}" BorderBrush="#9B59B6">
+                                <StackPanel>
+                                    <TextBlock Text="📈 Isobárico (P = constante)" FontSize="13" FontWeight="Bold" Foreground="#9B59B6" Margin="0,0,0,8"/>
+                                    <TextBlock Text="P = cte" FontSize="18" FontWeight="Bold" Foreground="#8E44AD" HorizontalAlignment="Center" Margin="0,5"/>
+                                    <TextBlock Text="ΔU = Q - W" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,3,0,8"/>
+                                    <TextBlock Text="A pressão é constante. Aplica-se a equação completa da 1ª Lei." 
+                                              FontSize="11" 
+                                              Foreground="#7F8C8D" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Aplicações -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔧 Aplicações da 1ª Lei da Termodinâmica" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" Grid.Column="0" Background="#E8F8F5" CornerRadius="5" Padding="12" Margin="0,0,5,5">
+                                <StackPanel>
+                                    <TextBlock Text="🚗 Motores a Combustão" FontSize="13" FontWeight="Bold" Foreground="#1ABC9C" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Convertem energia química do combustível em trabalho mecânico através de processos termodinâmicos." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="0" Grid.Column="1" Background="#FEF3E8" CornerRadius="5" Padding="12" Margin="5,0,0,5">
+                                <StackPanel>
+                                    <TextBlock Text="❄️ Refrigeradores" FontSize="13" FontWeight="Bold" Foreground="#F39C12" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Removem calor do interior e o transferem para o exterior, consumindo trabalho elétrico." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="0" Background="#EBF5FB" CornerRadius="5" Padding="12" Margin="0,5,5,5">
+                                <StackPanel>
+                                    <TextBlock Text="🏭 Usinas Termelétricas" FontSize="13" FontWeight="Bold" Foreground="#3498DB" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Geram eletricidade aquecendo água para produzir vapor que move turbinas." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="1" Background="#FADBD8" CornerRadius="5" Padding="12" Margin="5,5,0,5">
+                                <StackPanel>
+                                    <TextBlock Text="🔥 Aquecimento" FontSize="13" FontWeight="Bold" Foreground="#E74C3C" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Sistemas de aquecimento doméstico e industrial baseados na transferência de calor." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="2" Grid.Column="0" Background="#F4ECF7" CornerRadius="5" Padding="12" Margin="0,5,5,0">
+                                <StackPanel>
+                                    <TextBlock Text="⚡ Máquinas Térmicas" FontSize="13" FontWeight="Bold" Foreground="#9B59B6" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Dispositivos que convertem calor em trabalho útil, como turbinas a vapor." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="2" Grid.Column="1" Background="#E8F6F3" CornerRadius="5" Padding="12" Margin="5,5,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🌍 Climatização" FontSize="13" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Ar-condicionado e sistemas de climatização usam ciclos termodinâmicos." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </StackPanel>
 
-            <!-- Resultado -->
-            <StackPanel Grid.Column="2" Margin="10">
-                <TextBlock x:Name="TxtResultado" FontSize="14" FontWeight="Bold" Foreground="LightGreen" TextWrapping="Wrap"/>
-                <TextBlock x:Name="TxtInterpretacao" FontSize="13" Foreground="White" Margin="0,5,0,0" TextWrapping="Wrap"/>
-                <TextBlock x:Name="TxtRespostaDesafio" FontSize="13" Foreground="Gold" Margin="10,10,0,0" Visibility="Collapsed"/>
+            <!-- Coluna Lateral - Controles -->
+            <StackPanel Grid.Column="2">
+                <!-- Controles do Sistema -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Parâmetros do Sistema" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Calor (Q) -->
+                        <TextBlock Text="🔥 Calor (Q):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderQ"
+                               Minimum="-1000"
+                               Maximum="1000"
+                               Value="500"
+                               TickFrequency="100"
+                               IsSnapToTickEnabled="True"
+                               ValueChanged="SliderQ_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtValorQ" 
+                                  Text="Q = +500 J" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,5"/>
+                        <TextBlock Text="Positivo: absorve calor | Negativo: cede calor" 
+                                   FontSize="9" 
+                                   Foreground="#95A5A6" 
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Trabalho (W) -->
+                        <TextBlock Text="⚙️ Trabalho (W):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,5"/>
+                        <Slider x:Name="SliderW"
+                               Minimum="-1000"
+                               Maximum="1000"
+                               Value="200"
+                               TickFrequency="100"
+                               IsSnapToTickEnabled="True"
+                               ValueChanged="SliderW_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtValorW" 
+                                  Text="W = +200 J" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,5"/>
+                        <TextBlock Text="Positivo: expansão | Negativo: compressão" 
+                                   FontSize="9" 
+                                   Foreground="#95A5A6" 
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,20"/>
+
+                        <!-- Botões de Ação -->
+                        <Button Content="▶️ Simular Processo" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Click="BtnCalcular_Click"/>
+
+                        <Button Content="🔄 Resetar Sistema" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnResetar_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Processos Predefinidos -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚡ Cenários Rápidos" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Button Content="🔥 Aquecimento + Expansão" 
+                                Click="BtnCenario1_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#E74C3C"/>
+
+                        <Button Content="❄️ Resfriamento + Compressão" 
+                                Click="BtnCenario2_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#3498DB"/>
+
+                        <Button Content="🌡️ Processo Isotérmico" 
+                                Click="BtnCenario3_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#27AE60"/>
+
+                        <Button Content="🔒 Processo Adiabático" 
+                                Click="BtnCenario4_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#9B59B6"/>
+
+                        <Button Content="📊 Processo Isovolumétrico" 
+                                Click="BtnCenario5_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#F39C12"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Resultados -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Resultados" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Valores Atuais -->
+                        <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="5" Padding="12" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Valores Atuais:" 
+                                           FontSize="11" 
+                                           Foreground="#7F8C8D" 
+                                           Margin="0,0,0,8"/>
+
+                                <TextBlock x:Name="TxtValoresAtuais" 
+                                           FontSize="11" 
+                                           TextWrapping="Wrap">
+                                    <Run Text="Q = +500 J" Foreground="#E74C3C" FontWeight="Bold"/><LineBreak/>
+                                    <Run Text="W = +200 J" Foreground="#27AE60" FontWeight="Bold"/><LineBreak/>
+                                    <Run Text="ΔU = +300 J" Foreground="#3498DB" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Resultado Principal -->
+                        <Border Background="#F8F9FA" BorderBrush="#F72585" BorderThickness="3" CornerRadius="8" Padding="15" Margin="0,0,0,15">
+                            <StackPanel>
+                                <TextBlock Text="Variação de Energia:" 
+                                           FontSize="11" 
+                                           Foreground="#7F8C8D" 
+                                           Margin="0,0,0,5"/>
+                                <TextBlock x:Name="TxtResultado" 
+                                           Text="ΔU = +300 J" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" 
+                                           Foreground="#F72585" 
+                                           TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Interpretação -->
+                        <Border Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="5" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="📖 Interpretação:" 
+                                           FontSize="12" 
+                                           FontWeight="Bold" 
+                                           Foreground="#16A085" 
+                                           Margin="0,0,0,8"/>
+                                <TextBlock x:Name="TxtInterpretacao" 
+                                           Text="Configure os parâmetros e clique em 'Simular Processo' para ver a análise física do sistema." 
+                                           FontSize="11" 
+                                           Foreground="#2C3E50" 
+                                           TextWrapping="Wrap" 
+                                           LineHeight="16"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Análise Detalhada -->
+                <Border x:Name="PainelAnalise" 
+                        Style="{StaticResource SectionBorderStyle}"
+                        Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="🔬 Análise Detalhada" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtAnaliseDetalhada" 
+                                   FontSize="11" 
+                                   Foreground="#2C3E50" 
+                                   TextWrapping="Wrap" 
+                                   LineHeight="16"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Modo Desafio -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎲 Modo Desafio" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Button Content="🎯 Novo Desafio" 
+                                Click="BtnDesafio_Click" 
+                                Style="{StaticResource ButtonPrimaryStyle}"
+                                Background="#9B59B6"/>
+
+                        <Border x:Name="PainelDesafio" 
+                                Background="#F4ECF7" 
+                                BorderBrush="#9B59B6" 
+                                BorderThickness="2" 
+                                CornerRadius="5" 
+                                Padding="12" 
+                                Margin="0,10,0,0"
+                                Visibility="Collapsed">
+                            <StackPanel>
+                                <TextBlock x:Name="TxtEnunciadoDesafio" 
+                                           FontSize="11" 
+                                           Foreground="#2C3E50" 
+                                           TextWrapping="Wrap" 
+                                           LineHeight="16" 
+                                           Margin="0,0,0,10"/>
+
+                                <TextBlock x:Name="TxtRespostaDesafio" 
+                                           FontSize="11" 
+                                           FontWeight="Bold" 
+                                           Foreground="#8E44AD" 
+                                           TextWrapping="Wrap" 
+                                           Visibility="Collapsed"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Dicas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Dica Útil" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F39C12" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtDica" 
+                                   Text="Observe as barras energéticas no painel de visualização para entender visualmente o balanço entre Q, W e ΔU!" 
+                                   FontSize="11" 
+                                   Foreground="#2C3E50" 
+                                   TextWrapping="Wrap" 
+                                   LineHeight="16"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Estatísticas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📈 Estatísticas" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock Text="Simulações:" FontSize="11" Foreground="#7F8C8D" Margin="0,3"/>
+                                <TextBlock Text="Desafios:" FontSize="11" Foreground="#7F8C8D" Margin="0,3"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock x:Name="TxtContadorSimulacoes" 
+                                           Text="0" 
+                                           FontSize="11" 
+                                           FontWeight="Bold" 
+                                           Foreground="#2C3E50" 
+                                           Margin="0,3"/>
+                                <TextBlock x:Name="TxtContadorDesafios" 
+                                           Text="0" 
+                                           FontSize="11" 
+                                           FontWeight="Bold" 
+                                           Foreground="#2C3E50" 
+                                           Margin="0,3"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Constantes Importantes -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Constantes" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,0,0,8">
+                            <Run Text="• R (constante dos gases):" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  8.314 J/(mol·K)" FontFamily="Consolas"/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,0,0,8">
+                            <Run Text="• kB (constante de Boltzmann):" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  1.38×10⁻²³ J/K" FontFamily="Consolas"/>
+                        </TextBlock>
+
+                        <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="5" Padding="10" Margin="0,10,0,0">
+                            <TextBlock FontSize="11" Foreground="#2C3E50" TextWrapping="Wrap">
+                                <Run Text="Para gás ideal:" FontWeight="Bold"/>
+                                <LineBreak/>
+                                <Run Text="ΔU = n·Cv·ΔT" FontFamily="Consolas"/>
+                                <LineBreak/>
+                                <Run Text="W = P·ΔV (isobárico)"/>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Info Extra -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📚 Curiosidade" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F72585" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#7F8C8D" LineHeight="16">
+                            <Run Text="A 1ª Lei da Termodinâmica foi formulada por Rudolf Clausius e William Thomson (Lord Kelvin) no século XIX. É uma das leis mais fundamentais da física, aplicando-se a todos os processos energéticos do universo!"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

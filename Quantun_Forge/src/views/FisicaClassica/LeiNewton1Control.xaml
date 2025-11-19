@@ -4,94 +4,427 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="800">
+             d:DesignHeight="700"
+             d:DesignWidth="1200"
+             Background="#F5F5F5">
 
-    <Grid Background="#1E1E1E" Margin="10" MinHeight="400" MinWidth="600">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#F72585"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
 
-        <!-- Título -->
-        <TextBlock Text="1ª Lei de Newton - Lei da Inércia"
-                   FontSize="26"
-                   FontWeight="Bold"
-                   Foreground="White"
-                   Margin="0,10,0,10"
-                   HorizontalAlignment="Center"/>
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F72585"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF4DA6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- Texto Explicativo -->
-        <ScrollViewer Grid.Row="1" Margin="20,0,20,10" VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <TextBlock Text="📜 História" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,10,0,4"/>
-                <TextBlock Text="A 1ª Lei de Newton, ou Lei da Inércia, afirma que um corpo em repouso tende a permanecer em repouso e um corpo em movimento tende a manter seu movimento retilíneo uniforme, a menos que uma força externa atue sobre ele." 
-                           FontSize="14" Foreground="White" TextWrapping="Wrap"/>
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
 
-                <TextBlock Text="🧠 Explicação" FontSize="18" FontWeight="Bold" Foreground="White" Margin="20,20,0,4"/>
-                <TextBlock Text="Este simulador mostra como um objeto se comporta sem atrito (espaço) ou com atrito (Terra). No vácuo, o objeto nunca para, demonstrando a inércia. Já em cenários com resistência, ele desacelera. O corpo só muda seu estado de movimento se for forçado por uma força externa — o que pode ser simulado abaixo." 
-                           FontSize="14" Foreground="White" TextWrapping="Wrap"/>
-            </StackPanel>
-        </ScrollViewer>
-
-        <!-- Simulação -->
-        <Grid Grid.Row="2" Margin="0,10,0,0">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Área de simulação -->
-            <Border Margin="10" BorderThickness="2" BorderBrush="#555" CornerRadius="5">
-                <Canvas x:Name="SimulationCanvas" Background="#2E2E2E" ClipToBounds="True" MinHeight="150" MinWidth="200">
-                    <!-- AQUI está o MovingBall com x:Name correto -->
-                    <Ellipse x:Name="MovingBall"
-                             Fill="DeepSkyBlue"
-                             Width="30"
-                             Height="30"
-                             Canvas.Left="10"
-                             Canvas.Top="50"/>
-                </Canvas>
-            </Border>
+            <!-- Coluna Principal -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="1ª Lei de Newton - Lei da Inércia" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="Todo corpo permanece em repouso ou movimento uniforme" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
 
-            <!-- Painel de controle com scroll -->
-            <ScrollViewer Grid.Column="1" Margin="5,0,0,0" VerticalScrollBarVisibility="Auto">
-                <StackPanel Margin="10" VerticalAlignment="Top">
+                <!-- Canvas de Simulação -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎯 Simulação Interativa" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                    <TextBlock Text="⚙️ Cenário:" Foreground="White" FontWeight="SemiBold" Margin="0,5,0,3"/>
-                    <ComboBox x:Name="ComboCenario" Margin="0,0,0,10">
-                        <ComboBoxItem Content="Espaço (sem atrito)" IsSelected="True"/>
-                        <ComboBoxItem Content="Terra (com atrito)"/>
-                    </ComboBox>
+                        <!-- Ambiente Visual -->
+                        <Border Background="#ECF0F1" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="300"
+                                Margin="0,0,0,15">
+                            <Canvas x:Name="SimulationCanvas" ClipToBounds="True">
+                                <!-- Chão/Superfície -->
+                                <Rectangle x:Name="Ground"
+                                          Fill="#95A5A6"
+                                          Height="5"
+                                          Canvas.Bottom="0"
+                                          Width="800"/>
 
-                    <TextBlock Text="🎯 Velocidade Inicial:" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,3"/>
-                    <Slider x:Name="SliderVelocidade" Minimum="0" Maximum="10" Value="5" Margin="0,0,0,5"/>
-                    <TextBlock Text="{Binding ElementName=SliderVelocidade, Path=Value, StringFormat='Velocidade: {0:F1}'}"
-                               Foreground="White" FontSize="12" Margin="0,0,0,10"/>
+                                <!-- Objeto em Movimento -->
+                                <Grid x:Name="MovingObject"
+                                      Canvas.Left="50"
+                                      Canvas.Bottom="5">
+                                    <Ellipse x:Name="ObjectShape"
+                                            Width="50"
+                                            Height="50"
+                                            Fill="#F72585"
+                                            Stroke="#C0392B"
+                                            StrokeThickness="2"/>
+                                    <TextBlock Text="m" 
+                                              FontSize="20"
+                                              FontWeight="Bold"
+                                              Foreground="White"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                                </Grid>
 
-                    <TextBlock Text="⚖️ Massa do Objeto (kg):" Foreground="White" FontWeight="SemiBold" Margin="0,10,0,3"/>
-                    <Slider x:Name="SliderMassa" Minimum="1" Maximum="20" Value="5" Margin="0,0,0,5"/>
-                    <TextBlock Text="{Binding ElementName=SliderMassa, Path=Value, StringFormat='Massa: {0:F0} kg'}"
-                               Foreground="White" FontSize="12" Margin="0,0,0,10"/>
+                                <!-- Vetor de Velocidade -->
+                                <Line x:Name="VelocityVector"
+                                      Stroke="#27AE60"
+                                      StrokeThickness="3"
+                                      Visibility="Collapsed"
+                                      Canvas.Left="75"
+                                      Canvas.Bottom="30"
+                                      X1="0" Y1="0"
+                                      X2="0" Y2="0"/>
 
-                    <Button Content="▶ Iniciar Simulação" Click="StartSimulation_Click" Margin="0,0,0,8"/>
-                    <Button Content="⏹ Resetar" Click="ResetSimulation_Click" Margin="0,0,0,8"/>
-                    <Button Content="🔄 Reiniciar Simulação" Click="BtnReiniciar_Click" Margin="0,0,0,8"/>
-                    <Button Content="💥 Aplicar Força Externa" Click="BtnAplicarForca_Click" Margin="0,0,0,8"/>
-                    <Button Content="🛑 Aplicar Força Oposta" Click="BtnForcaContraria_Click" Margin="0,0,0,10"/>
+                                <!-- Indicador de Ambiente -->
+                                <Border Background="#3498DB"
+                                       CornerRadius="5"
+                                       Padding="10,5"
+                                       Canvas.Left="10"
+                                       Canvas.Top="10">
+                                    <TextBlock x:Name="EnvironmentLabel"
+                                              Text="🌍 Terra (com atrito)"
+                                              Foreground="White"
+                                              FontWeight="Bold"
+                                              FontSize="12"/>
+                                </Border>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button Content="⏸ Pausar" Width="95" Click="BtnPausar_Click"/>
-                        <Button Content="▶ Retomar" Width="95" Margin="10,0,0,0" Click="BtnRetomar_Click"/>
+                                <!-- Rastro de movimento -->
+                                <Path x:Name="TrailPath"
+                                     Stroke="#F72585"
+                                     StrokeThickness="2"
+                                     Opacity="0.3"
+                                     StrokeDashArray="5,3"/>
+                            </Canvas>
+                        </Border>
+
+                        <!-- Dados em Tempo Real -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="5" Padding="10" Margin="0,0,5,0">
+                                <StackPanel>
+                                    <TextBlock Text="Velocidade" FontSize="11" Foreground="#7F8C8D" FontWeight="Bold"/>
+                                    <TextBlock x:Name="TxtVelocidade" Text="0.00 m/s" FontSize="18" FontWeight="Bold" Foreground="#000000"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Background="#EBF5FB" BorderBrush="#3498DB" BorderThickness="2" CornerRadius="5" Padding="10" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock Text="Posição" FontSize="11" Foreground="#7F8C8D" FontWeight="Bold"/>
+                                    <TextBlock x:Name="TxtPosicao" Text="0.0 m" FontSize="18" FontWeight="Bold" Foreground="#000000"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="2" Background="#FEF3E8" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="5" Padding="10" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock Text="Aceleração" FontSize="11" Foreground="#7F8C8D" FontWeight="Bold"/>
+                                    <TextBlock x:Name="TxtAceleracao" Text="0.00 m/s²" FontSize="18" FontWeight="Bold" Foreground="#000000"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="3" Background="#F4ECF7" BorderBrush="#9B59B6" BorderThickness="2" CornerRadius="5" Padding="10" Margin="5,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="Tempo" FontSize="11" Foreground="#7F8C8D" FontWeight="Bold"/>
+                                    <TextBlock x:Name="TxtTempo" Text="0.00 s" FontSize="18" FontWeight="Bold" Foreground="#000000"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </StackPanel>
+                </Border>
 
-                    <Separator Margin="0,10,0,10"/>
+                <!-- Explicação da Lei -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📚 Entendendo a Lei da Inércia" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                    <TextBlock x:Name="TxtVelocidadeAtual" Foreground="White" FontSize="13" Margin="0,0,0,2"/>
-                    <TextBlock x:Name="TxtPosicao" Foreground="White" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" 
+                                   FontSize="13" 
+                                   Foreground="#2C3E50" 
+                                   LineHeight="22"
+                                   Margin="0,0,0,10">
+                            <Run Text="A Primeira Lei de Newton, também conhecida como " FontWeight="Normal"/>
+                            <Run Text="Lei da Inércia" FontWeight="Bold" Foreground="#F72585"/>
+                            <Run Text=", estabelece que:" FontWeight="Normal"/>
+                        </TextBlock>
 
-                </StackPanel>
-            </ScrollViewer>
+                        <Border Background="#FADBD8" BorderBrush="#E74C3C" BorderThickness="2" CornerRadius="5" Padding="15" Margin="0,0,0,15">
+                            <TextBlock TextWrapping="Wrap" 
+                                      FontSize="14" 
+                                      Foreground="#2C3E50"
+                                      FontStyle="Italic"
+                                      LineHeight="24"
+                                      Text="&quot;Um corpo em repouso permanece em repouso, e um corpo em movimento retilíneo uniforme permanece em movimento retilíneo uniforme, a menos que uma força externa atue sobre ele.&quot;"/>
+                        </Border>
+
+                        <TextBlock Text="Conceitos-chave:" FontSize="13" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,8"/>
+
+                        <StackPanel Margin="15,0,0,0">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#7F8C8D" Margin="0,0,0,5">
+                                <Run Text="• Inércia:" FontWeight="Bold" Foreground="#F72585"/>
+                                <Run Text=" Tendência dos corpos de resistir a mudanças no estado de movimento"/>
+                            </TextBlock>
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#7F8C8D" Margin="0,0,0,5">
+                                <Run Text="• Massa:" FontWeight="Bold" Foreground="#F72585"/>
+                                <Run Text=" Medida da inércia de um corpo (maior massa = maior inércia)"/>
+                            </TextBlock>
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#7F8C8D">
+                                <Run Text="• Força Resultante:" FontWeight="Bold" Foreground="#F72585"/>
+                                <Run Text=" Se for zero, o movimento não muda"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Cenários Práticos -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Exemplos do Cotidiano" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" Background="#E8F8F5" CornerRadius="5" Padding="12" Margin="0,0,5,0">
+                                <StackPanel>
+                                    <TextBlock Text="🚗 Freada Brusca" FontSize="13" FontWeight="Bold" Foreground="#1ABC9C" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Quando o carro freia, seu corpo tende a continuar em movimento para frente devido à inércia." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Background="#EBF5FB" CornerRadius="5" Padding="12" Margin="5,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🚀 Astronauta no Espaço" FontSize="13" FontWeight="Bold" Foreground="#3498DB" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Sem atrito no vácuo, um objeto continua se movendo indefinidamente em linha reta." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Coluna Lateral - Controles -->
+            <StackPanel Grid.Column="2">
+                <!-- Controles de Simulação -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Controles" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Ambiente -->
+                        <TextBlock Text="Ambiente:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="ComboAmbiente" 
+                                 FontSize="12" 
+                                 Padding="8"
+                                 Margin="0,0,0,15"
+                                 SelectionChanged="ComboAmbiente_Changed">
+                            <ComboBoxItem Content="🌍 Terra (com atrito)" IsSelected="True"/>
+                            <ComboBoxItem Content="🚀 Espaço (sem atrito)"/>
+                            <ComboBoxItem Content="💧 Água (alta resistência)"/>
+                            <ComboBoxItem Content="🧊 Gelo (baixo atrito)"/>
+                        </ComboBox>
+
+                        <!-- Velocidade Inicial -->
+                        <TextBlock Text="Velocidade Inicial:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,5"/>
+                        <Slider x:Name="SliderVelocidade"
+                               Minimum="0"
+                               Maximum="30"
+                               Value="10"
+                               TickFrequency="5"
+                               IsSnapToTickEnabled="True"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtVelocidadeSlider" 
+                                  Text="10 m/s" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Massa -->
+                        <TextBlock Text="Massa do Objeto:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderMassa"
+                               Minimum="1"
+                               Maximum="100"
+                               Value="10"
+                               TickFrequency="10"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtMassaSlider" 
+                                  Text="10 kg" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,20"/>
+
+                        <!-- Botões de Controle -->
+                        <Button Content="▶️ Iniciar Simulação" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Click="IniciarSimulacao_Click"/>
+
+                        <Button Content="⏸️ Pausar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="PausarSimulacao_Click"/>
+
+                        <Button Content="🔄 Resetar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="ResetarSimulacao_Click"/>
+
+                        <Separator Background="#E0E0E0" Margin="0,15"/>
+
+                        <!-- Aplicar Forças -->
+                        <TextBlock Text="Aplicar Forças Externas:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,10"/>
+
+                        <Button Content="➡️ Força para Direita" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Background="#27AE60"
+                               Click="AplicarForcaDireita_Click"/>
+
+                        <Button Content="⬅️ Força para Esquerda" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Background="#E74C3C"
+                               Click="AplicarForcaEsquerda_Click"/>
+
+                        <Button Content="⏹️ Remover Todas as Forças" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="RemoverForcas_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Informações -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="ℹ️ Estado Atual" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock x:Name="TxtEstadoMovimento" 
+                                  Text="Em repouso" 
+                                  FontSize="13" 
+                                  FontWeight="Bold"
+                                  Foreground="#F72585" 
+                                  Margin="0,0,0,8"/>
+
+                        <TextBlock x:Name="TxtForcaResultante" 
+                                  Text="Força resultante: 0 N" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  Margin="0,0,0,5"/>
+
+                        <TextBlock x:Name="TxtQuantidadeMovimento" 
+                                  Text="Quantidade de movimento: 0 kg⋅m/s" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Fórmulas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📐 Fórmulas" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,0,0,8">
+                            <Run Text="• Velocidade:" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  v = v₀ (constante)"/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,0,0,8">
+                            <Run Text="• Posição:" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  x = x₀ + v⋅t"/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap">
+                            <Run Text="• Quantidade de Movimento:" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  p = m⋅v"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

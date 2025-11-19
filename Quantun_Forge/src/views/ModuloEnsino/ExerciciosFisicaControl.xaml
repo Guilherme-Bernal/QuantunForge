@@ -1,0 +1,204 @@
+﻿<Page x:Class="Quantun_Forge.src.views.ModuloEnsino.ExerciciosFisicaControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ExerciciosFisicaControl">
+
+    <Page.Resources>
+        <!-- Estilo para os Cards de Tópicos de Física -->
+        <Style x:Key="PhysicsCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#F72585"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFF5F9"/>
+                    <Setter Property="BorderBrush" Value="#FF4DA6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="PhysicsTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#1A2332"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style x:Key="PhysicsSubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#5A5A6B"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+        </Style>
+
+        <Style x:Key="PhysicsHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="#F5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <StackPanel Grid.Row="0" Margin="30,20,30,0">
+            <TextBlock Text="Fundamentos de Física Clássica" Style="{StaticResource PhysicsHeaderStyle}"/>
+            <TextBlock Text="Explore os pilares da física clássica através das grandes leis fundamentais" 
+                       FontSize="14" 
+                       Foreground="#5A5A6B" 
+                       Margin="0,0,0,20"/>
+        </StackPanel>
+
+        <!-- ScrollViewer para o conteúdo -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="20,0,20,20">
+            <StackPanel>
+                <!-- Tópico 1: Leis de Newton -->
+                <Border Style="{StaticResource PhysicsCardStyle}" 
+                        x:Name="LeisNewtonCard"
+                        MouseLeftButtonDown="EnergiaCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⚡" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Leis de Newton" Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Mecânica clássica e fundamentos do movimento" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 2: Ondas e Eletromagnetismo -->
+                <Border Style="{StaticResource PhysicsCardStyle}"
+                        x:Name="OndasEletromagnetismoCard"
+                        MouseLeftButtonDown="OndasCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="〰️" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Ondas e Eletromagnetismo" Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Equações de Maxwell e propagação de ondas eletromagnéticas" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 3: Movimento Periódico (Oscilador Harmônico) -->
+                <Border Style="{StaticResource PhysicsCardStyle}"
+                        x:Name="MovimentoPeriodicoCard"
+                        MouseLeftButtonDown="OsciladorCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🔄" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Movimento Periódico" 
+                                       Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Oscilador harmônico simples e movimento oscilatório" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 4: Momento Angular e Rotação -->
+                <Border Style="{StaticResource PhysicsCardStyle}"
+                        x:Name="MomentoAngularCard"
+                        MouseLeftButtonDown="MomentoAngularCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🌀" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Momento Angular e Rotação" 
+                                       Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Dinâmica rotacional e conservação do momento angular" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 5: Termodinâmica e Entropia -->
+                <Border Style="{StaticResource PhysicsCardStyle}"
+                        x:Name="TermodinamicaCard"
+                        MouseLeftButtonDown="TermodinamicaCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🔥" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Termodinâmica e Entropia" 
+                                       Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="As quatro leis da termodinâmica e teoria estatística" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 6: Mecânica Lagrangiana e Hamiltoniana -->
+                <Border Style="{StaticResource PhysicsCardStyle}"
+                        x:Name="MecanicaAnaliticaCard"
+                        MouseLeftButtonDown="MecanicaAnaliticaCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🎭" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Mecânica Lagrangiana e Hamiltoniana" 
+                                       Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Princípio da ação mínima e formalismo avançado da mecânica" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 7: Teoria do Caos -->
+                <Border Style="{StaticResource PhysicsCardStyle}"
+                        x:Name="TeoriaCaosCard"
+                        MouseLeftButtonDown="TeoriaCaosCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🌀" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Teoria do Caos e Sistemas Dinâmicos" 
+                                       Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Sensibilidade a condições iniciais e comportamento imprevisível" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 8: Mecânica Estatística -->
+                <Border Style="{StaticResource PhysicsCardStyle}"
+                        x:Name="MecanicaEstatisticaCard"
+                        MouseLeftButtonDown="MecanicaEstatisticaCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🎲" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Mecânica Estatística Clássica" 
+                                       Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Distribuições estatísticas e fundamentos microscópicos da termodinâmica" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tópico 9: Relatividade Geral e Teorema de Liouville -->
+                <Border Style="{StaticResource PhysicsCardStyle}"
+                        x:Name="RelatividadeCard"
+                        MouseLeftButtonDown="RelatividadeCard_Click">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🌌" FontSize="24" Margin="0,0,10,0"/>
+                            <TextBlock Text="Relatividade Geral e Teorema de Liouville" 
+                                       Style="{StaticResource PhysicsTitleStyle}"/>
+                        </StackPanel>
+                        <TextBlock Text="Curvatura do espaço-tempo e conservação do volume no espaço de fase" 
+                                   Style="{StaticResource PhysicsSubtitleStyle}"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

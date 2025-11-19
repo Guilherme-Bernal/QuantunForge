@@ -1,0 +1,871 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Computacao.ComputacaoClassica.Turing"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Computacao.ComputacaoClassica"
+        mc:Ignorable="d"
+        Title="Alan Turing e Máquina de Turing - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#16A085"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#138D75"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#E8F8F5"/>
+            <Setter Property="BorderBrush" Value="#16A085"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="TapeCell" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#16A085"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Alan Turing e a Máquina de Turing" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="O Pai da Ciência da Computação"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#16A085" FontWeight="Bold">Alan Turing</Run> (1912-1954) foi um matemático, 
+                        lógico e criptógrafo britânico considerado o <Run FontWeight="Bold">pai da ciência da computação</Run>. 
+                        Em 1936, ele propôs um modelo teórico de computação que revolucionaria nossa compreensão sobre 
+                        o que pode ser computado, conhecido como <Run FontWeight="Bold">Máquina de Turing</Run>.
+                    </TextBlock>
+
+                    <!-- Quem foi Alan Turing -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Quem foi Alan Turing?
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" FontWeight="Bold" Margin="0,0,0,10">
+                                Principais Contribuições:
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="🧮 Máquina de Turing (1936)" 
+                                             FontWeight="Bold" 
+                                             Foreground="#16A085"
+                                             FontSize="13"
+                                             Margin="0,0,0,5"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             FontSize="12" 
+                                             Margin="0">
+                                        Modelo teórico que define o que é computável
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#E67E22" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="🔐 Quebra do Enigma (1940-1945)" 
+                                             FontWeight="Bold" 
+                                             Foreground="#E67E22"
+                                             FontSize="13"
+                                             Margin="0,0,0,5"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             FontSize="12" 
+                                             Margin="0">
+                                        Desenvolveu técnicas que quebraram o código Enigma nazista, ajudando a encurtar a Segunda Guerra Mundial
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="🤖 Teste de Turing (1950)" 
+                                             FontWeight="Bold" 
+                                             Foreground="#3498DB"
+                                             FontSize="13"
+                                             Margin="0,0,0,5"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             FontSize="12" 
+                                             Margin="0">
+                                        Propôs um método para avaliar se uma máquina pode exibir comportamento inteligente
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#9B59B6" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="💻 Fundamentos da IA" 
+                                             FontWeight="Bold" 
+                                             Foreground="#9B59B6"
+                                             FontSize="13"
+                                             Margin="0,0,0,5"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             FontSize="12" 
+                                             Margin="0">
+                                        Pioneiro em inteligência artificial e ciência cognitiva
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- O que é a Máquina de Turing -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        O que é a Máquina de Turing?
+                    </TextBlock>
+
+                    <TextBlock Style="{StaticResource NormalText}">
+                        A <Run Foreground="#16A085" FontWeight="Bold">Máquina de Turing</Run> é um modelo matemático 
+                        abstrato de um dispositivo que manipula símbolos em uma fita de acordo com um conjunto de regras. 
+                        Apesar de sua simplicidade, ela pode simular <Run FontWeight="Bold">qualquer algoritmo computacional</Run>, 
+                        não importa quão complexo.
+                    </TextBlock>
+
+                    <!-- Componentes da Máquina -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Componentes da Máquina de Turing
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <Border Background="White" 
+                                    BorderBrush="#16A085" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="1️⃣ Fita Infinita" 
+                                             FontWeight="Bold" 
+                                             FontSize="14"
+                                             Foreground="#16A085"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                        Uma fita infinita dividida em células, onde cada célula contém um símbolo. 
+                                        Representa a <Run FontWeight="Bold">memória</Run> da máquina.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="2️⃣ Cabeça de Leitura/Escrita" 
+                                             FontWeight="Bold" 
+                                             FontSize="14"
+                                             Foreground="#3498DB"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                        Um dispositivo que pode ler o símbolo atual, escrever um novo símbolo e 
+                                        mover-se para a esquerda ou direita na fita.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#E67E22" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="3️⃣ Conjunto de Estados" 
+                                             FontWeight="Bold" 
+                                             FontSize="14"
+                                             Foreground="#E67E22"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                        A máquina está sempre em um de vários estados possíveis. 
+                                        Existe um <Run FontWeight="Bold">estado inicial</Run> e estados de <Run FontWeight="Bold">aceitação/rejeição</Run>.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#9B59B6" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="4️⃣ Tabela de Transições" 
+                                             FontWeight="Bold" 
+                                             FontSize="14"
+                                             Foreground="#9B59B6"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                        Um conjunto de regras que define: dado o estado atual e o símbolo lido, 
+                                        qual símbolo escrever, para onde mover a cabeça e qual o próximo estado.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Como Funciona -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Como Funciona?
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,10">
+                                Ciclo de Operação:
+                            </TextBlock>
+
+                            <Border Background="#E8F5E9" 
+                                    BorderBrush="#27AE60" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="1. LER" 
+                                             FontWeight="Bold" 
+                                             Foreground="#27AE60"
+                                             FontSize="13"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             Margin="0,5,0,0"
+                                             FontSize="12">
+                                        A cabeça lê o símbolo na posição atual da fita
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Text="↓" 
+                                     FontSize="24" 
+                                     FontWeight="Bold"
+                                     Foreground="#16A085"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,5"/>
+
+                            <Border Background="#FFF3E0" 
+                                    BorderBrush="#F39C12" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="2. CONSULTAR REGRA" 
+                                             FontWeight="Bold" 
+                                             Foreground="#F39C12"
+                                             FontSize="13"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             Margin="0,5,0,0"
+                                             FontSize="12">
+                                        Consulta a tabela de transições baseando-se no estado atual e símbolo lido
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Text="↓" 
+                                     FontSize="24" 
+                                     FontWeight="Bold"
+                                     Foreground="#16A085"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,5"/>
+
+                            <Border Background="#E3F2FD" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="12" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="3. EXECUTAR AÇÃO" 
+                                             FontWeight="Bold" 
+                                             Foreground="#3498DB"
+                                             FontSize="13"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             Margin="0,5,0,0"
+                                             FontSize="12">
+                                        Escreve um novo símbolo, move a cabeça (← ou →) e muda de estado
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Text="↻ Repete até parar" 
+                                     FontSize="14" 
+                                     FontWeight="Bold"
+                                     Foreground="#16A085"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,10"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Máquina Universal -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Máquina Universal de Turing
+                    </TextBlock>
+
+                    <Border Background="#FEF5E7" 
+                            BorderBrush="#F39C12" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,8">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="🌟" FontSize="20" Margin="0,0,10,0"/>
+                                <TextBlock Text="Conceito Revolucionário" 
+                                         FontWeight="Bold" 
+                                         FontSize="15"
+                                         Foreground="#F39C12"
+                                         VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}">
+                                Turing demonstrou que é possível construir uma <Run FontWeight="Bold">Máquina Universal</Run> 
+                                capaz de simular qualquer outra Máquina de Turing. Esta ideia é a base dos 
+                                <Run FontWeight="Bold" Foreground="#F39C12">computadores modernos</Run>: 
+                                um único dispositivo programável que pode executar qualquer algoritmo!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Tese de Church-Turing -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Tese de Church-Turing
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontStyle="Italic"
+                                     Foreground="#16A085"
+                                     FontWeight="SemiBold"
+                                     Margin="0,0,0,10">
+                                "Tudo que é computável pode ser computado por uma Máquina de Turing"
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}">
+                                Esta tese afirma que qualquer função que pode ser calculada por um algoritmo 
+                                pode ser computada por uma Máquina de Turing. Ela define o limite teórico do 
+                                que é <Run FontWeight="Bold">computacionalmente possível</Run>.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Problema da Parada -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Problema da Parada
+                    </TextBlock>
+
+                    <Border Background="#FADBD8" 
+                            BorderBrush="#E74C3C" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,8">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="⚠️" FontSize="20" Margin="0,0,10,0"/>
+                                <TextBlock Text="Limites da Computação" 
+                                         FontWeight="Bold" 
+                                         FontSize="15"
+                                         Foreground="#E74C3C"
+                                         VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}">
+                                Turing provou que <Run FontWeight="Bold">não existe</Run> um algoritmo geral que 
+                                possa determinar se qualquer programa irá parar ou executar indefinidamente. 
+                                Este é o famoso <Run FontWeight="Bold" Foreground="#E74C3C">Problema da Parada</Run>, 
+                                demonstrando que há limites fundamentais para o que pode ser computado.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Impacto e Legado -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Impacto e Legado
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="💻" FontSize="16"/> 
+                                <Run FontWeight="Bold">Computação Moderna:</Run> Base teórica de todos os computadores
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🤖" FontSize="16"/> 
+                                <Run FontWeight="Bold">Inteligência Artificial:</Run> Teste de Turing ainda usado hoje
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🏆" FontSize="16"/> 
+                                <Run FontWeight="Bold">Prêmio Turing:</Run> "Nobel da Computação" criado em sua homenagem
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🔐" FontSize="16"/> 
+                                <Run FontWeight="Bold">Criptografia:</Run> Fundamentos modernos de segurança digital
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: SIMULADOR -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título do Simulador -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Simulador de Máquina de Turing" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Veja a máquina em ação!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- Área do Simulador -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- Fita da Máquina -->
+                        <Border Background="#F8F9FA" 
+                                BorderBrush="#16A085" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Padding="20" 
+                                Margin="0,0,0,15">
+                            <StackPanel>
+                                <TextBlock Text="📼 Fita de Memória" 
+                                         FontWeight="Bold" 
+                                         FontSize="15"
+                                         Foreground="#16A085"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <!-- Fita -->
+                                <Border Background="White" 
+                                        BorderBrush="#BDC3C7" 
+                                        BorderThickness="1" 
+                                        CornerRadius="6" 
+                                        Padding="10"
+                                        Margin="0,0,0,10">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                                                VerticalScrollBarVisibility="Disabled">
+                                        <StackPanel x:Name="TapePanel" 
+                                                  Orientation="Horizontal" 
+                                                  HorizontalAlignment="Center">
+                                            <!-- Células da fita serão geradas aqui -->
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Border>
+
+                                <!-- Indicador da Cabeça -->
+                                <TextBlock x:Name="HeadIndicator" 
+                                         Text="▲" 
+                                         FontSize="24"
+                                         Foreground="#E74C3C"
+                                         FontWeight="Bold"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Estado Atual -->
+                        <Border Background="White" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Padding="20" 
+                                Margin="0,0,0,15">
+                            <StackPanel>
+                                <TextBlock Text="⚙️ Estado da Máquina" 
+                                         FontWeight="Bold" 
+                                         FontSize="14"
+                                         Foreground="#16A085"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" 
+                                            Background="#E8F5E9" 
+                                            BorderBrush="#27AE60" 
+                                            BorderThickness="1" 
+                                            CornerRadius="6" 
+                                            Padding="10" 
+                                            Margin="0,0,5,0">
+                                        <StackPanel>
+                                            <TextBlock Text="Estado Atual:" 
+                                                     FontSize="11"
+                                                     Foreground="#7F8C8D"
+                                                     HorizontalAlignment="Center"/>
+                                            <TextBlock x:Name="CurrentState" 
+                                                     Text="q0" 
+                                                     FontWeight="Bold"
+                                                     FontSize="18"
+                                                     Foreground="#27AE60"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" 
+                                            Background="#E3F2FD" 
+                                            BorderBrush="#3498DB" 
+                                            BorderThickness="1" 
+                                            CornerRadius="6" 
+                                            Padding="10" 
+                                            Margin="5,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="Símbolo Lido:" 
+                                                     FontSize="11"
+                                                     Foreground="#7F8C8D"
+                                                     HorizontalAlignment="Center"/>
+                                            <TextBlock x:Name="CurrentSymbol" 
+                                                     Text="1" 
+                                                     FontWeight="Bold"
+                                                     FontSize="18"
+                                                     Foreground="#3498DB"
+                                                     HorizontalAlignment="Center"
+                                                     Margin="0,5,0,0"
+                                                     FontFamily="Consolas"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <Border Background="#FFF3E0" 
+                                        BorderBrush="#F39C12" 
+                                        BorderThickness="1" 
+                                        CornerRadius="6" 
+                                        Padding="12" 
+                                        Margin="0,10,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="Passos Executados:" 
+                                                 FontSize="11"
+                                                 Foreground="#7F8C8D"
+                                                 HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="StepCounter" 
+                                                 Text="0" 
+                                                 FontWeight="Bold"
+                                                 FontSize="20"
+                                                 Foreground="#F39C12"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Ação Atual -->
+                        <Border x:Name="ActionPanel"
+                                Background="#E8F8F5" 
+                                BorderBrush="#16A085" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Padding="15" 
+                                Margin="0,0,0,15">
+                            <StackPanel>
+                                <TextBlock Text="📝 Ação em Execução" 
+                                         FontWeight="Bold" 
+                                         FontSize="13"
+                                         Foreground="#16A085"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,10"/>
+                                <TextBlock x:Name="ActionDescription" 
+                                         Text="Aguardando início da execução..."
+                                         FontSize="12"
+                                         Foreground="#2C3E50"
+                                         TextWrapping="Wrap"
+                                         HorizontalAlignment="Center"
+                                         TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Controles -->
+                        <Border Background="White" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="🎮 Controles" 
+                                         FontWeight="Bold" 
+                                         FontSize="14"
+                                         Foreground="#16A085"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <!-- Escolher Exemplo -->
+                                <TextBlock Text="Escolha um exemplo:" 
+                                         FontWeight="SemiBold" 
+                                         FontSize="12"
+                                         Foreground="#7F8C8D"
+                                         Margin="0,0,0,8"/>
+
+                                <ComboBox x:Name="ExampleComboBox" 
+                                        FontSize="13"
+                                        Padding="10"
+                                        Margin="0,0,0,15"
+                                        SelectionChanged="ExampleComboBox_SelectionChanged">
+                                    <ComboBoxItem Content="Verificar número binário par" IsSelected="True"/>
+                                    <ComboBoxItem Content="Inverter bits (NOT)"/>
+                                    <ComboBoxItem Content="Adicionar 1 ao número binário"/>
+                                    <ComboBoxItem Content="Reconhecer palíndromo"/>
+                                </ComboBox>
+
+                                <!-- Descrição do Exemplo -->
+                                <Border Background="#F8F9FA" 
+                                        BorderBrush="#BDC3C7" 
+                                        BorderThickness="1" 
+                                        CornerRadius="6" 
+                                        Padding="12" 
+                                        Margin="0,0,0,15">
+                                    <TextBlock x:Name="ExampleDescription" 
+                                             Text="Verifica se um número binário é par (termina em 0)"
+                                             FontSize="11"
+                                             Foreground="#7F8C8D"
+                                             TextWrapping="Wrap"/>
+                                </Border>
+
+                                <!-- Botões de Controle -->
+                                <Grid Margin="0,5,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="10"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Column="0" 
+                                                x:Name="StepButton"
+                                                Content="▶ PASSO" 
+                                                Style="{StaticResource ButtonStyle}"
+                                                Height="40"
+                                                FontSize="13"
+                                                Click="StepButton_Click"/>
+
+                                        <Button Grid.Column="2" 
+                                                x:Name="RunButton"
+                                                Content="▶▶ EXECUTAR" 
+                                                Style="{StaticResource ButtonStyle}"
+                                                Height="40"
+                                                FontSize="13"
+                                                Click="RunButton_Click"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Column="0" 
+                                                x:Name="ResetButton"
+                                                Content="🔄 REINICIAR" 
+                                                Style="{StaticResource SecondaryButtonStyle}"
+                                                Height="40"
+                                                FontSize="13"
+                                                Click="ResetButton_Click"/>
+
+                                        <Button Grid.Column="2" 
+                                                x:Name="StopButton"
+                                                Content="⏹ PARAR" 
+                                                Style="{StaticResource SecondaryButtonStyle}"
+                                                Height="40"
+                                                FontSize="13"
+                                                Click="StopButton_Click"
+                                                IsEnabled="False"/>
+                                    </Grid>
+                                </Grid>
+
+                                <!-- Status -->
+                                <Border x:Name="StatusPanel"
+                                        Background="#D5F4E6" 
+                                        BorderBrush="#27AE60" 
+                                        BorderThickness="1" 
+                                        CornerRadius="6" 
+                                        Padding="12" 
+                                        Margin="0,15,0,0"
+                                        Visibility="Collapsed">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock x:Name="StatusIcon" 
+                                                 Text="✓" 
+                                                 FontSize="20" 
+                                                 FontWeight="Bold"
+                                                 Foreground="#27AE60"
+                                                 Margin="0,0,10,0"/>
+                                        <TextBlock x:Name="StatusMessage" 
+                                                 Text="Execução concluída!" 
+                                                 FontSize="13"
+                                                 FontWeight="SemiBold"
+                                                 Foreground="#27AE60"
+                                                 VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Botão de Exercícios -->
+                <Button Grid.Row="2" 
+                        Content="IR PARA EXERCÍCIOS PRÁTICOS"
+                        Height="50" 
+                        Margin="0,15,0,0"
+                        Style="{StaticResource DangerButtonStyle}"
+                        FontSize="15"
+                        Click="btnExePratica_Click"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

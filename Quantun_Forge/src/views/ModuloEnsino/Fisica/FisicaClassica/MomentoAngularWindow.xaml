@@ -1,0 +1,795 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica.MomentoAngularWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica"
+        mc:Ignorable="d"
+        Title="Momento Angular e Rotação - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E67E22"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#D35400"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#FEF5E7"/>
+            <Setter Property="BorderBrush" Value="#E67E22"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="EquationBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E67E22"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Momento Angular e Rotação" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="Dinâmica Rotacional e Conservação do Momento Angular"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#E67E22" FontWeight="Bold">Movimento Rotacional</Run> é tão fundamental 
+                        quanto o movimento linear! De planetas girando em torno do Sol até patinadores no gelo, 
+                        rodas de carro e giroscópios, o <Run FontWeight="Bold">momento angular</Run> governa todos 
+                        os movimentos de rotação no universo.
+                    </TextBlock>
+
+                    <!-- Grandezas da Rotação -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Grandezas do Movimento Rotacional
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#E67E22"
+                                     Margin="0,0,0,10">
+                                🔄 Analogia com o Movimento Linear
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Cada grandeza do movimento linear tem uma correspondente rotacional:
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#E67E22" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,10,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="LINEAR" 
+                                                 FontSize="12" 
+                                                 FontWeight="Bold" 
+                                                 Foreground="#3498DB"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,0,0,10"/>
+
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Posição (x)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Velocidade (v)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Aceleração (a)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Massa (m)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Força (F)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Momento (p = mv)
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="1" 
+                                             Text="↔️" 
+                                             FontSize="20"
+                                             VerticalAlignment="Center"
+                                             HorizontalAlignment="Center"/>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="ROTACIONAL" 
+                                                 FontSize="12" 
+                                                 FontWeight="Bold" 
+                                                 Foreground="#E67E22"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,0,0,10"/>
+
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Ângulo (θ)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Velocidade Angular (ω)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Aceleração Angular (α)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Momento de Inércia (I)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Torque (τ)
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,3">
+                                            • Momento Angular (L = Iω)
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Momento de Inércia -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Momento de Inércia (I)
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#E67E22"
+                                     Margin="0,0,0,10">
+                                📊 A "Massa Rotacional" de um Objeto
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                O momento de inércia mede a resistência de um objeto à rotação. 
+                                Quanto mais massa está distribuída longe do eixo de rotação, maior o momento de inércia.
+                            </TextBlock>
+
+                            <Border Background="#D6EAF8" BorderBrush="#2874A6" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,10,0,10">
+                                <StackPanel>
+                                    <TextBlock Text="Fórmula Geral:" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#1F618D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Text="I = Σ mᵢrᵢ²" 
+                                             FontSize="22" 
+                                             FontWeight="Bold" 
+                                             Foreground="#2874A6"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="(soma das massas × distância² ao eixo)" 
+                                             FontSize="11" 
+                                             Foreground="#5D6D7E"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Text="Momentos de Inércia Comuns:" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#E67E22"
+                                     Margin="0,10,0,8"/>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,3">
+                                <StackPanel>
+                                    <TextBlock Text="🔵 Esfera Sólida (pelo centro):" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Text="I = (2/5)MR²" FontSize="12" Foreground="#D68910" Margin="5,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,3">
+                                <StackPanel>
+                                    <TextBlock Text="⭕ Cilindro Sólido (pelo eixo central):" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Text="I = (1/2)MR²" FontSize="12" Foreground="#D68910" Margin="5,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,3">
+                                <StackPanel>
+                                    <TextBlock Text="📏 Barra Fina (pelo centro):" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Text="I = (1/12)ML²" FontSize="12" Foreground="#D68910" Margin="5,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,3">
+                                <StackPanel>
+                                    <TextBlock Text="💿 Disco/Anel (pelo centro perpendicular):" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Text="I = MR²" FontSize="12" Foreground="#D68910" Margin="5,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Torque -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Torque (τ) - Força Rotacional
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#EBF5FB" BorderBrush="#3498DB">
+                        <StackPanel>
+                            <TextBlock Text="🔧 O que Causa Rotação" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2874A6" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Torque é a tendência de uma força causar rotação em torno de um eixo. 
+                                É o "equivalente rotacional" da força.
+                            </TextBlock>
+
+                            <Border Background="#D6EAF8" BorderBrush="#2874A6" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="τ = r × F = rF sen(θ)" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#1F618D"
+                                             HorizontalAlignment="Center"/>
+                                    <TextBlock Text="r = braço de alavanca | F = força | θ = ângulo" 
+                                             FontSize="10" 
+                                             Foreground="#5D6D7E"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                💡 <Bold>Regra prática:</Bold> Torque máximo quando força é perpendicular ao braço (θ = 90°)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Segunda Lei de Newton Rotacional -->
+                    <Border Style="{StaticResource EquationBox}" Background="#E8F8F5" BorderBrush="#16A085" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="⚙️ Segunda Lei de Newton para Rotação" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#138D75" 
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="#D1F2EB" BorderBrush="#138D75" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="τ = I × α" 
+                                             FontSize="22" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             HorizontalAlignment="Center"/>
+                                    <TextBlock Text="(Compare com F = m × a)" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                Torque resultante = Momento de Inércia × Aceleração Angular
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Momento Angular -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Momento Angular (L)
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#E67E22"
+                                     Margin="0,0,0,10">
+                                🌀 A Quantidade de Movimento Rotacional
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Momento angular é para rotação o que momento linear (quantidade de movimento) é 
+                                para translação. Mede "quanto movimento rotacional" um objeto possui.
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,10,0,10">
+                                <StackPanel>
+                                    <TextBlock Text="L = I × ω" 
+                                             FontSize="22" 
+                                             FontWeight="Bold" 
+                                             Foreground="#D35400"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="I = momento de inércia | ω = velocidade angular" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                    <TextBlock Text="(Compare com p = m × v)" 
+                                             FontSize="10" 
+                                             Foreground="#95A5A6"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,8,0,0">
+                                <Bold>Unidade:</Bold> kg·m²/s ou J·s (joule-segundo)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Conservação do Momento Angular -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Conservação do Momento Angular
+                    </TextBlock>
+
+                    <Border Background="#FDEDEC" BorderBrush="#E74C3C" BorderThickness="3" CornerRadius="10" Padding="20" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="⭐ LEI FUNDAMENTAL DA NATUREZA" 
+                                     FontSize="15" 
+                                     FontWeight="Bold" 
+                                     Foreground="#C0392B"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,15"/>
+
+                            <Border Background="White" BorderBrush="#E74C3C" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Se τ_externo = 0, então:" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,0,0,8"/>
+                                    <TextBlock Text="L_inicial = L_final" 
+                                             FontSize="22" 
+                                             FontWeight="Bold" 
+                                             Foreground="#C0392B"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="I₁ω₁ = I₂ω₂" 
+                                             FontSize="18" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,15,0,0" FontWeight="SemiBold">
+                                💡 <Run Foreground="#E74C3C">Na ausência de torques externos</Run>, o momento angular 
+                                total de um sistema permanece constante!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exemplos de Conservação -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Exemplos de Conservação do Momento Angular
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⛸️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Patinador no Gelo:</Run> Quando encolhe os braços, 
+                                diminui I → aumenta ω (gira mais rápido!)
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌍" FontSize="16"/> 
+                                <Run FontWeight="Bold">Terra e Lua:</Run> A Lua "rouba" momento angular da Terra, 
+                                fazendo os dias ficarem mais longos
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌟" FontSize="16"/> 
+                                <Run FontWeight="Bold">Pulsares:</Run> Estrelas colapsadas giram extremamente rápido 
+                                porque reduziram drasticamente seu raio
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🚁" FontSize="16"/> 
+                                <Run FontWeight="Bold">Helicóptero:</Run> Precisa de rotor de cauda para compensar 
+                                o torque e não girar junto
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🏊" FontSize="16"/> 
+                                <Run FontWeight="Bold">Atleta de Salto Ornamental:</Run> Controla rotação 
+                                mudando posição do corpo (aberto vs. encolhido)
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🪐" FontSize="16"/> 
+                                <Run FontWeight="Bold">Formação de Sistemas Solares:</Run> Nuvens de gás girando 
+                                se achatam em discos ao conservar momento angular
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Energia Cinética Rotacional -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Energia Cinética Rotacional
+                    </TextBlock>
+
+                    <Border Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="⚡ Energia do Movimento de Rotação" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="White" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Ec_rot = (1/2)Iω²" 
+                                             FontSize="20" 
+                                             FontWeight="Bold" 
+                                             Foreground="#138D75"
+                                             HorizontalAlignment="Center"/>
+                                    <TextBlock Text="(Compare com Ec = (1/2)mv²)" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                💡 Para objetos que rolam (sem deslizar): Ec_total = Ec_translação + Ec_rotação
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Relação Torque-Trabalho-Potência -->
+                    <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="⚙️ Trabalho e Potência Rotacional" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910"
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="White" BorderBrush="#F39C12" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Trabalho: W = τθ" FontSize="12" Foreground="#B7950B" Margin="0,2"/>
+                                    <TextBlock Text="Potência: P = τω" FontSize="12" Foreground="#B7950B" Margin="0,2"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Curiosidade -->
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Curiosidade: O Gato Sempre Cai de Pé!" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12">
+                                Gatos conseguem se virar no ar e pousar de pé mesmo começando de cabeça para baixo! 
+                                Eles fazem isso sem violar a conservação do momento angular: encolhem as patas dianteiras 
+                                (reduzindo I na frente) e esticam as traseiras (aumentando I atrás), girando partes 
+                                do corpo em direções opostas até ficarem de pé. Puro física em ação!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: CALCULADORA -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" MinHeight="200"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Calculadora Rotacional" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Calcule torques, momentos e conservação!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+
+                    <!-- Comandos -->
+                    <Expander Header="Comandos Disponíveis" 
+                            IsExpanded="False" 
+                            Margin="0,15,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularTorque(forca: 50, raio: 2, angulo: 90)" 
+                                             Foreground="#D35400" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula torque τ = r × F × sen(θ)" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularMomentoInercia(tipo: 'esfera', massa: 10, raio: 0.5)" 
+                                             Foreground="#D35400" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula I para esfera, cilindro, barra, disco" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularMomentoAngular(I: 5, omega: 10)" 
+                                             Foreground="#D35400" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula L = I × ω" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="calcularEnergiaRotacional(I: 5, omega: 10)" 
+                                             Foreground="#D35400" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula Ec = (1/2)Iω²" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="conservacaoMomento(I1: 5, omega1: 10, I2: 2)" 
+                                             Foreground="#D35400" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Calcula ω₂ pela conservação (I₁ω₁ = I₂ω₂)" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#E67E22" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="escreva(&quot;mensagem&quot;)" 
+                                             Foreground="#D35400" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="11"/>
+                                    <TextBlock Text="Exibe mensagens no console" 
+                                             Foreground="#7F8C8D" FontSize="10" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+
+                <!-- Editor -->
+                <Border Grid.Row="1" Background="White" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="8" Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#ECF0F1" CornerRadius="8,8,0,0" Padding="10,8">
+                            <TextBlock Text="Editor de Código" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <TextBox x:Name="CodeEditor" 
+                                 Grid.Row="1"
+                                 AcceptsReturn="True" 
+                                 AcceptsTab="True" 
+                                 FontFamily="Cascadia Code, Consolas"
+                                 FontSize="13"
+                                 Background="White"
+                                 Foreground="#2C3E50"
+                                 CaretBrush="#E67E22"
+                                 VerticalScrollBarVisibility="Auto" 
+                                 BorderThickness="0"
+                                 Padding="15"
+                                 Text="// ⛸️ Simulando um Patinador no Gelo&#x0A;escreva(&quot;=== CONSERVAÇÃO DE MOMENTO ANGULAR ===&quot;)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Patinador com braços abertos&#x0A;escreva(&quot;⛸️ Patinador com BRAÇOS ABERTOS:&quot;)&#x0A;calcularMomentoAngular(I: 5, omega: 2)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;// Patinador encolhe os braços (I diminui)&#x0A;escreva(&quot;⛸️ Patinador ENCOLHE os braços:&quot;)&#x0A;conservacaoMomento(I1: 5, omega1: 2, I2: 1.5)&#x0A;escreva(&quot;&quot;)&#x0A;&#x0A;escreva(&quot;✅ Velocidade aumentou! Momento conservado!&quot;)" />
+                    </Grid>
+                </Border>
+
+                <!-- Botões -->
+                <Grid Grid.Row="2" Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Content="EXECUTAR" Height="45" Style="{StaticResource ButtonStyle}" FontSize="14" Click="RunCode_Click"/>
+                    <Button Grid.Column="2" Content="LIMPAR" Height="45" Style="{StaticResource SecondaryButtonStyle}" FontSize="14" Click="ClearCode_Click"/>
+                </Grid>
+
+                <!-- Console -->
+                <Border Grid.Row="3" Background="White" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="8" Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#ECF0F1" CornerRadius="8,8,0,0" Padding="10,8">
+                            <TextBlock Text="Console de Saída" Foreground="#2C3E50" FontWeight="SemiBold" FontSize="13"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                            <TextBlock x:Name="ConsoleOutput" 
+                                     Foreground="#27AE60" 
+                                     FontFamily="Cascadia Code, Consolas"
+                                     FontSize="12"
+                                     TextWrapping="Wrap"
+                                     Text="&gt; Calculadora Rotacional iniciada.&#x0A;&gt; Digite seu código e clique em EXECUTAR.&#x0A;&gt; Explore o momento angular!"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Botões Finais -->
+                <StackPanel Grid.Row="4" Margin="0,15,0,0">
+                    <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="6" Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="🎓 Recursos Adicionais" 
+                                     FontWeight="Bold" 
+                                     FontSize="13"
+                                     Foreground="#E67E22"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" x:Name="ExercisesButton" Content="📝 Exercícios" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="ExercisesButton_Click"/>
+                                <Button Grid.Column="2" x:Name="QuizButton" Content="🧪 Quiz" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="QuizButton_Click"/>
+                            </Grid>
+
+                            <Button x:Name="BackButton" Content="← Voltar ao Menu" Style="{StaticResource SecondaryButtonStyle}" Height="35" FontSize="12" Margin="0,10,0,0" Click="BackButton_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

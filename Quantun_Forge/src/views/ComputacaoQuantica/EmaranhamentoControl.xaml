@@ -4,83 +4,258 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
-             xmlns:local="clr-namespace:Quantun_Forge.src.views.ComputacaoQuantica"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" 
+             d:DesignWidth="800"
+             Background="#F5F5F5">
 
-    <Border Background="#1E1E1E" Padding="20">
-        <Border Background="#2E2E2E"
-                Padding="20"
-                CornerRadius="10"
-                BorderBrush="#FF00FF"
-                BorderThickness="2"
-                Margin="10">
+    <!-- ================================
+         Recursos (Brushes, Effects e Styles)
+         ================================ -->
+    <UserControl.Resources>
+        <!-- Efeito de sombra para destacar os cartões -->
+        <DropShadowEffect x:Key="DropShadowEffect"
+                          Color="Black"
+                          BlurRadius="10"
+                          Opacity="0.2"
+                          ShadowDepth="3"/>
 
-            <StackPanel HorizontalAlignment="Center" Width="700">
+        <!-- Paleta de cores - Tema Claro -->
+        <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="PrimaryBorderBrush"   Color="#F72585"/>
+        <SolidColorBrush x:Key="TitleForegroundBrush" Color="#000000"/>
+        <SolidColorBrush x:Key="SectionHeaderBrush"   Color="#F72585"/>
+        <SolidColorBrush x:Key="TextBrush"            Color="#5A5A6B"/>
+        <SolidColorBrush x:Key="CuriosityBrush"       Color="#F39C12"/>
+        <SolidColorBrush x:Key="ResultBrush"          Color="#2ECC71"/>
+        <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#F72585"/>
+        <SolidColorBrush x:Key="ButtonForegroundBrush" Color="White"/>
+        <SolidColorBrush x:Key="SeparatorBrush"       Color="#E0E0E0"/>
+        <SolidColorBrush x:Key="GraphBackgroundBrush" Color="#FAFAFA"/>
+        <SolidColorBrush x:Key="GraphBorderBrush"     Color="#E0E0E0"/>
 
-                <!-- Título -->
-                <TextBlock Text="🔗 Experimento de Emaranhamento Quântico"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           Foreground="White"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,15"/>
+        <!-- Estilo para Seções/Cartões -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="Effect" Value="{StaticResource DropShadowEffect}"/>
+        </Style>
 
-                <!-- Explicação Principal -->
-                <TextBlock TextWrapping="Wrap"
-                           Foreground="LightGray"
-                           FontSize="14"
-                           Margin="0,0,0,10"
-                           Text="Neste experimento, simulamos o fenômeno do emaranhamento quântico, no qual dois qubits são preparados em um estado compartilhado e interdependente. 
-Ao medir um dos qubits, o estado do outro é instantaneamente definido, independentemente da distância entre eles. 
-Os resultados esperados são fortemente correlacionados, geralmente |00⟩ ou |11⟩, demonstrando um dos aspectos mais surpreendentes da física quântica: a não localidade." />
+        <!-- Estilo para Botões -->
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,12,0"/>
+            <Setter Property="Width" Value="200"/>
+        </Style>
+    </UserControl.Resources>
 
-                <!-- Curiosidade Extra -->
-                <TextBlock TextWrapping="Wrap"
-                           Foreground="LightBlue"
-                           FontSize="13"
-                           Margin="0,0,0,20"
-                           Text="💡 Curiosidade: Einstein chamou o emaranhamento quântico de 'ação fantasmagórica à distância' por desafiar a ideia clássica de causalidade local." />
+    <!-- ================================
+         Estrutura Principal do UserControl
+         ================================ -->
+    <Border Background="#F5F5F5" Padding="20">
+        <Border Background="{StaticResource CardBackgroundBrush}"
+                Padding="25"
+                CornerRadius="8"
+                BorderBrush="{StaticResource PrimaryBorderBrush}"
+                BorderThickness="1.5"
+                SnapsToDevicePixels="True"
+                Effect="{StaticResource DropShadowEffect}">
 
-                <!-- Botões -->
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center"
+            <!-- ScrollViewer para permitir rolagem se o conteúdo exceder a altura -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel HorizontalAlignment="Center" Width="750">
+
+                    <!-- 1. Cabeçalho Principal -->
+                    <TextBlock Text="🔗 Experimento de Emaranhamento Quântico"
+                               FontSize="26"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TitleForegroundBrush}"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
+
+                    <!-- 2. Seção: Objetivos -->
+                    <TextBlock Text="🎯 Objetivos"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource SectionHeaderBrush}"
+                               Margin="0,0,0,8"/>
+                    <Separator Background="{StaticResource SeparatorBrush}"
+                               Height="1"
+                               Margin="0,0,0,12"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Foreground="{StaticResource TextBrush}"
+                               FontSize="14"
+                               Margin="0,0,0,20"
+                               Text="• Demonstrar como dois qubits podem ser preparados em um estado emaranhado.&#10;• Mostrar a correlação instantânea entre medições em qubits emaranhados, mesmo em distâncias arbitrárias.&#10;• Visualizar as distribuições de resultado (|00⟩, |11⟩, etc.) e evidenciar a não-localidade quântica."/>
+
+                    <!-- 3. Seção: Funcionamento do Emaranhamento -->
+                    <TextBlock Text="⚙️ Funcionamento do Emaranhamento"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource SectionHeaderBrush}"
+                               Margin="0,30,0,8"/>
+                    <Separator Background="{StaticResource SeparatorBrush}"
+                               Height="1"
+                               Margin="0,0,0,12"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Foreground="{StaticResource TextBrush}"
+                               FontSize="14"
+                               Margin="0,0,0,20"
+                               Text="1. Iniciamos com dois qubits no estado |00⟩.&#10;2. Aplicamos portas quânticas (Hadamard + CNOT) para criar um estado emaranhado: (|00⟩ + |11⟩) / √2.&#10;3. Ao medir o primeiro qubit, seu valor colapsa para 0 ou 1. Instantaneamente, o segundo qubit colapsa para o mesmo valor, mantendo a correlação.&#10;4. Registramos várias medições para observar a estatística de resultados."/>
+
+                    <!-- 4. Seção: Passos da Simulação -->
+                    <TextBlock Text="🔍 Passos da Simulação"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource SectionHeaderBrush}"
+                               Margin="0,30,0,8"/>
+                    <Separator Background="{StaticResource SeparatorBrush}"
+                               Height="1"
+                               Margin="0,0,0,12"/>
+                    <StackPanel Margin="0,0,0,20">
+                        <StackPanel Orientation="Horizontal" Margin="0,4">
+                            <TextBlock Text="1."
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextBrush}"
+                                       Width="20"/>
+                            <TextBlock Text="Preparar dois qubits no estado |00⟩."
+                                       FontSize="14"
+                                       Foreground="{StaticResource TextBrush}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,4">
+                            <TextBlock Text="2."
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextBrush}"
+                                       Width="20"/>
+                            <TextBlock Text="Aplicar porta Hadamard ao primeiro qubit."
+                                       FontSize="14"
+                                       Foreground="{StaticResource TextBrush}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,4">
+                            <TextBlock Text="3."
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextBrush}"
+                                       Width="20"/>
+                            <TextBlock Text="Aplicar porta CNOT (controlador = qubit 1, alvo = qubit 2) para gerar emaranhamento."
+                                       FontSize="14"
+                                       Foreground="{StaticResource TextBrush}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,4">
+                            <TextBlock Text="4."
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextBrush}"
+                                       Width="20"/>
+                            <TextBlock Text="Realizar medições em ambos os qubits e registrar resultados."
+                                       FontSize="14"
+                                       Foreground="{StaticResource TextBrush}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,4">
+                            <TextBlock Text="5."
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextBrush}"
+                                       Width="20"/>
+                            <TextBlock Text="Repetir o processo N vezes para coletar estatísticas."
+                                       FontSize="14"
+                                       Foreground="{StaticResource TextBrush}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- 5. Curiosidade Extra -->
+                    <TextBlock Text="💡 Curiosidade"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource CuriosityBrush}"
+                               Margin="0,10,0,8"/>
+                    <Separator Background="{StaticResource SeparatorBrush}"
+                               Height="1"
+                               Margin="0,0,0,12"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Foreground="{StaticResource CuriosityBrush}"
+                               FontSize="14"
+                               Margin="0,0,0,20"
+                               Text="Einstein chamou o emaranhamento quântico de 'ação fantasmagórica à distância' por desafiar a noção clássica de causalidade local. No entanto, diversos experimentos confirmaram que o emaranhamento é real e não viola sinais de informação mais rápidos que a luz."/>
+
+                    <!-- 6. Botões de Ação -->
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Margin="0,10,0,20">
+                        <Button Content="🔬 Executar Simulação"
+                                Click="ExecutarSimulacao_Click"
+                                Style="{StaticResource ButtonPrimaryStyle}"/>
+                        <Button Content="🔁 Executar 100 Simulações"
+                                Click="ExecutarMultiplasSimulacoes_Click"
+                                Style="{StaticResource ButtonPrimaryStyle}"
+                                Margin="0"/>
+                    </StackPanel>
+
+                    <!-- 7. Texto de Resultado -->
+                    <TextBlock x:Name="txtResultado"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource ResultBrush}"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,30"/>
+
+                    <!-- 8. Explicação antes do gráfico -->
+                    <TextBlock Text="🔍 Este gráfico mostra a frequência com que cada estado (|00⟩ ou |11⟩) apareceu nas simulações realizadas."
+                               FontSize="16"
+                               Foreground="{StaticResource TextBrush}"
+                               TextAlignment="Center"
+                               Margin="0,0,0,10"
+                               TextWrapping="Wrap"/>
+
+                    <!-- 9. Título do Gráfico -->
+                    <TextBlock Text="📊 Distribuição de Resultados"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource SectionHeaderBrush}"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,12"/>
+
+                    <!-- 10. Gráfico de Distribuição -->
+                    <Border Background="{StaticResource GraphBackgroundBrush}"
+                            CornerRadius="5"
+                            Padding="10"
+                            BorderBrush="{StaticResource GraphBorderBrush}"
+                            BorderThickness="2"
                             Margin="0,0,0,20">
-                    <Button Content="🔬 Executar Simulação"
-                            Click="ExecutarSimulacao_Click"
-                            FontSize="14"
-                            Padding="10"
-                            Background="#FF00FF"
-                            Foreground="White"
-                            BorderThickness="0"
-                            Margin="0,0,10,0"/>
+                        <lvc:CartesianChart x:Name="graficoEmaranhamento"
+                                            Width="700"
+                                            Height="300"
+                                            LegendPosition="Right"
+                                            ZoomMode="None"
+                                            TooltipPosition="Top"/>
+                    </Border>
 
-                    <Button Content="🔁 Executar 100 Simulações"
-                            Click="ExecutarMultiplasSimulacoes_Click"
-                            FontSize="14"
-                            Padding="10"
-                            Background="#FF00FF"
-                            Foreground="White"
-                            BorderThickness="0"/>
+                    <!-- 11. Rodapé / Fonte -->
+                    <TextBlock Text="Fonte: Qiskit, IBM Quantum"
+                               FontSize="12"
+                               Foreground="Gray"
+                               HorizontalAlignment="Right"
+                               Margin="0,10,0,0"/>
+
                 </StackPanel>
-
-                <!-- Resultado -->
-                <TextBlock x:Name="txtResultado"
-                           FontSize="18"
-                           FontWeight="Bold"
-                           Foreground="LightGreen"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,20"/>
-
-                <!-- Gráfico -->
-                <lvc:CartesianChart x:Name="graficoEmaranhamento"
-                                    Width="600"
-                                    Height="300"
-                                    LegendPosition="Right"
-                                    ZoomMode="None"
-                                    TooltipPosition="Top"
-                                    Foreground="White"/>
-            </StackPanel>
+            </ScrollViewer>
         </Border>
     </Border>
 </UserControl>

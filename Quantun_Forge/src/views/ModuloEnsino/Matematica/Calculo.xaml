@@ -1,0 +1,697 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Matematica.Calculo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Matematica"
+        mc:Ignorable="d"
+        Title="Cálculo Diferencial e Integral - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#7F8C8D"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,5,10,5"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="FormulaText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Cambria Math, Segoe UI"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="15,10"/>
+            <Setter Property="Foreground" Value="#2980B9"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#229954"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="WarningButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#F39C12"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#D68910"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#EBF5FB"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="CaretBrush" Value="#3498DB"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                        Margin="8,0,8,0"
+                                        VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo de TabControl -->
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="TabItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="Border" 
+                                Background="#BDC3C7" 
+                                BorderThickness="0"
+                                CornerRadius="8,8,0,0"
+                                Padding="20,10"
+                                Margin="2,0">
+                            <ContentPresenter ContentSource="Header" 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#3498DB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#85C1E9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA E CONTROLES -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <TabControl Margin="0">
+                <!-- TAB 1: DERIVADAS -->
+                <TabItem Header="📈 DERIVADAS">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="25">
+                            <!-- Cabeçalho -->
+                            <Border Margin="0,0,0,20">
+                                <StackPanel>
+                                    <TextBlock Text="Cálculo Diferencial" 
+                                             Style="{StaticResource TitleStyle}"
+                                             FontSize="24"/>
+                                    <TextBlock Text="Análise de Derivadas"
+                                             FontSize="14" 
+                                             Foreground="#7F8C8D" 
+                                             FontStyle="Italic"
+                                             Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Entrada de Função -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Função f(x)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource LabelStyle}">
+                                Digite a função (ex: x^2, 3*x^3 + 2*x, sin(x), e^x):
+                            </TextBlock>
+                            <TextBox x:Name="txtFuncaoDerivada" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Height="40"
+                                     Margin="0,5,0,10"
+                                     Text="x^3 + 2*x^2 - 5*x + 1"/>
+
+                            <!-- Ponto de Avaliação -->
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="Ponto x₀ = " 
+                                         VerticalAlignment="Center"
+                                         FontSize="13"
+                                         Foreground="#7F8C8D"
+                                         Margin="0,0,10,0"/>
+                                <TextBox x:Name="txtPontoDerivada" 
+                                         Style="{StaticResource ModernTextBox}"
+                                         Width="100"
+                                         Height="40"
+                                         Text="2"/>
+                            </StackPanel>
+
+                            <!-- Operações -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Operações com Derivadas
+                            </TextBlock>
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Button Content="f'(x) - 1ª Derivada" 
+                                        x:Name="btnPrimeiraDerivada"
+                                        Grid.Row="0" Grid.Column="0"
+                                        Style="{StaticResource ButtonStyle}"/>
+                                <Button Content="f''(x) - 2ª Derivada" 
+                                        x:Name="btnSegundaDerivada"
+                                        Grid.Row="0" Grid.Column="1"
+                                        Style="{StaticResource ButtonStyle}"/>
+
+                                <Button Content="f'''(x) - 3ª Derivada" 
+                                        x:Name="btnTerceiraDerivada"
+                                        Grid.Row="1" Grid.Column="0"
+                                        Style="{StaticResource ButtonStyle}"/>
+                                <Button Content="f'(x₀) - No Ponto" 
+                                        x:Name="btnDerivadaPonto"
+                                        Grid.Row="1" Grid.Column="1"
+                                        Style="{StaticResource ButtonStyle}"/>
+
+                                <Button Content="📊 Análise Completa" 
+                                        x:Name="btnAnaliseDerivada"
+                                        Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                        Style="{StaticResource SuccessButtonStyle}"/>
+
+                                <Button Content="📐 Pontos Críticos" 
+                                        x:Name="btnPontosCriticos"
+                                        Grid.Row="3" Grid.Column="0"
+                                        Style="{StaticResource WarningButtonStyle}"/>
+                                <Button Content="📈 Concavidade" 
+                                        x:Name="btnConcavidade"
+                                        Grid.Row="3" Grid.Column="1"
+                                        Style="{StaticResource WarningButtonStyle}"/>
+                            </Grid>
+
+                            <!-- Fórmulas -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Fórmulas de Derivadas
+                            </TextBlock>
+                            <Border Style="{StaticResource InfoBox}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        (xⁿ)' = n·xⁿ⁻¹
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        (eˣ)' = eˣ
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        (ln x)' = 1/x
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        (sin x)' = cos x
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        (cos x)' = -sin x
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        (tan x)' = sec²x
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- TAB 2: INTEGRAIS -->
+                <TabItem Header="∫ INTEGRAIS">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="25">
+                            <!-- Cabeçalho -->
+                            <Border Margin="0,0,0,20">
+                                <StackPanel>
+                                    <TextBlock Text="Cálculo Integral" 
+                                             Style="{StaticResource TitleStyle}"
+                                             FontSize="24"/>
+                                    <TextBlock Text="Análise de Integrais"
+                                             FontSize="14" 
+                                             Foreground="#7F8C8D" 
+                                             FontStyle="Italic"
+                                             Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Entrada de Função -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Função f(x)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource LabelStyle}">
+                                Digite a função para integrar:
+                            </TextBlock>
+                            <TextBox x:Name="txtFuncaoIntegral" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Height="40"
+                                     Margin="0,5,0,10"
+                                     Text="2*x + 3"/>
+
+                            <!-- Limites de Integração -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Limites de Integração
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="a = " 
+                                         VerticalAlignment="Center"
+                                         FontSize="13"
+                                         Foreground="#7F8C8D"
+                                         Margin="0,0,10,0"/>
+                                <TextBox x:Name="txtLimiteInferior" 
+                                         Style="{StaticResource ModernTextBox}"
+                                         Width="80"
+                                         Height="40"
+                                         Text="0"/>
+
+                                <TextBlock Text="b = " 
+                                         VerticalAlignment="Center"
+                                         FontSize="13"
+                                         Foreground="#7F8C8D"
+                                         Margin="20,0,10,0"/>
+                                <TextBox x:Name="txtLimiteSuperior" 
+                                         Style="{StaticResource ModernTextBox}"
+                                         Width="80"
+                                         Height="40"
+                                         Text="5"/>
+                            </StackPanel>
+
+                            <!-- Operações -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Operações com Integrais
+                            </TextBlock>
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Button Content="∫ f(x)dx - Indefinida" 
+                                        x:Name="btnIntegralIndefinida"
+                                        Grid.Row="0" Grid.Column="0"
+                                        Style="{StaticResource ButtonStyle}"/>
+                                <Button Content="∫ᵃᵇ f(x)dx - Definida" 
+                                        x:Name="btnIntegralDefinida"
+                                        Grid.Row="0" Grid.Column="1"
+                                        Style="{StaticResource ButtonStyle}"/>
+
+                                <Button Content="📊 Área sob Curva" 
+                                        x:Name="btnAreaCurva"
+                                        Grid.Row="1" Grid.Column="0"
+                                        Style="{StaticResource SuccessButtonStyle}"/>
+                                <Button Content="📈 Análise Completa" 
+                                        x:Name="btnAnaliseIntegral"
+                                        Grid.Row="1" Grid.Column="1"
+                                        Style="{StaticResource SuccessButtonStyle}"/>
+
+                                <Button Content="🔢 Métodos Numéricos" 
+                                        x:Name="btnMetodosNumericos"
+                                        Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                        Style="{StaticResource WarningButtonStyle}"/>
+                            </Grid>
+
+                            <!-- Fórmulas -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Fórmulas de Integrais
+                            </TextBlock>
+                            <Border Style="{StaticResource InfoBox}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        ∫ xⁿdx = xⁿ⁺¹/(n+1) + C
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        ∫ eˣdx = eˣ + C
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        ∫ 1/x dx = ln|x| + C
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        ∫ sin x dx = -cos x + C
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        ∫ cos x dx = sin x + C
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        ∫ᵃᵇ f(x)dx = F(b) - F(a)
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- TAB 3: LIMITES -->
+                <TabItem Header="🎯 LIMITES">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="25">
+                            <!-- Cabeçalho -->
+                            <Border Margin="0,0,0,20">
+                                <StackPanel>
+                                    <TextBlock Text="Cálculo de Limites" 
+                                             Style="{StaticResource TitleStyle}"
+                                             FontSize="24"/>
+                                    <TextBlock Text="Análise de Limites e Continuidade"
+                                             FontSize="14" 
+                                             Foreground="#7F8C8D" 
+                                             FontStyle="Italic"
+                                             Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Entrada de Função -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Função f(x)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource LabelStyle}">
+                                Digite a função:
+                            </TextBlock>
+                            <TextBox x:Name="txtFuncaoLimite" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Height="40"
+                                     Margin="0,5,0,10"
+                                     Text="(x^2 - 4)/(x - 2)"/>
+
+                            <!-- Ponto do Limite -->
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="lim x → " 
+                                         VerticalAlignment="Center"
+                                         FontSize="13"
+                                         Foreground="#7F8C8D"
+                                         Margin="0,0,10,0"/>
+                                <TextBox x:Name="txtPontoLimite" 
+                                         Style="{StaticResource ModernTextBox}"
+                                         Width="100"
+                                         Height="40"
+                                         Text="2"/>
+                            </StackPanel>
+
+                            <!-- Operações -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Tipos de Limites
+                            </TextBlock>
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Button Content="📍 Limite no Ponto" 
+                                        x:Name="btnLimitePonto"
+                                        Grid.Row="0" Grid.Column="0"
+                                        Style="{StaticResource ButtonStyle}"/>
+                                <Button Content="← Lateral Esquerdo" 
+                                        x:Name="btnLimiteEsquerda"
+                                        Grid.Row="0" Grid.Column="1"
+                                        Style="{StaticResource ButtonStyle}"/>
+
+                                <Button Content="→ Lateral Direito" 
+                                        x:Name="btnLimiteDireita"
+                                        Grid.Row="1" Grid.Column="0"
+                                        Style="{StaticResource ButtonStyle}"/>
+                                <Button Content="∞ No Infinito" 
+                                        x:Name="btnLimiteInfinito"
+                                        Grid.Row="1" Grid.Column="1"
+                                        Style="{StaticResource ButtonStyle}"/>
+                            </Grid>
+
+                            <!-- Propriedades -->
+                            <TextBlock Style="{StaticResource SubtitleStyle}">
+                                Propriedades dos Limites
+                            </TextBlock>
+                            <Border Style="{StaticResource InfoBox}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        lim[f(x) ± g(x)] = lim f(x) ± lim g(x)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        lim[f(x)·g(x)] = lim f(x) · lim g(x)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        lim[f(x)/g(x)] = lim f(x) / lim g(x)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        lim k·f(x) = k·lim f(x)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" Margin="0,2">
+                                        <Run Text="•" Foreground="#3498DB" FontSize="16" FontWeight="Bold"/> 
+                                        Regra de L'Hôpital: lim f/g = lim f'/g'
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: RESULTADOS -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título -->
+                <Border Grid.Row="0" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Resultados" 
+                                 Style="{StaticResource TitleStyle}"/>
+                        <TextBlock Text="Cálculos e análises" 
+                                 FontSize="13" 
+                                 Foreground="#7F8C8D" 
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Console de Resultados -->
+                <Border Grid.Row="1" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="Console de Saída" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" 
+                                    VerticalScrollBarVisibility="Auto">
+                            <Border Padding="15">
+                                <StackPanel>
+                                    <!-- Resultado para Derivadas -->
+                                    <TextBlock x:Name="txtResultadosDerivada" 
+                                             Foreground="#27AE60" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="12"
+                                             TextWrapping="Wrap"
+                                             Text="Aguardando cálculos de derivadas..."
+                                             Visibility="Visible"/>
+
+                                    <!-- Resultado para Integrais -->
+                                    <TextBlock x:Name="txtResultadosIntegral" 
+                                             Foreground="#27AE60" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="12"
+                                             TextWrapping="Wrap"
+                                             Text="Aguardando cálculos de integrais..."
+                                             Visibility="Collapsed"/>
+
+                                    <!-- Resultado para Limites -->
+                                    <TextBlock x:Name="txtResultadosLimite" 
+                                             Foreground="#27AE60" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="12"
+                                             TextWrapping="Wrap"
+                                             Text="Aguardando cálculos de limites..."
+                                             Visibility="Collapsed"/>
+                                </StackPanel>
+                            </Border>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Botões de Ação -->
+                <Border Grid.Row="2" Margin="0,15,0,0">
+                    <StackPanel>
+                        <Button x:Name="btnLimparDerivada"
+                                Content="LIMPAR RESULTADOS" 
+                                Height="45"
+                                Style="{StaticResource DangerButtonStyle}"
+                                FontSize="14"
+                                Visibility="Visible"/>
+
+                        <Button x:Name="btnLimparIntegral"
+                                Content="LIMPAR RESULTADOS" 
+                                Height="45"
+                                Style="{StaticResource DangerButtonStyle}"
+                                FontSize="14"
+                                Visibility="Collapsed"/>
+
+                        <Button x:Name="btnLimparLimite"
+                                Content="LIMPAR RESULTADOS" 
+                                Height="45"
+                                Style="{StaticResource DangerButtonStyle}"
+                                FontSize="14"
+                                Visibility="Collapsed"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

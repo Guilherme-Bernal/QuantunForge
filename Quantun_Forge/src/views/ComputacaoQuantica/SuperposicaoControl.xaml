@@ -6,71 +6,193 @@
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              xmlns:local="clr-namespace:Quantun_Forge.src.views.ComputacaoQuantica"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="800">
+             d:DesignHeight="700" 
+             d:DesignWidth="800"
+             Background="#F5F5F5">
 
-    <Border Background="#1E1E1E" Padding="20">
-        <Border Background="#2E2E2E" Padding="20" CornerRadius="10" BorderBrush="#00BFFF" BorderThickness="2" Margin="10">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="700">
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#F72585"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
 
-                <!-- Título -->
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F72585"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF4DA6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,20">
+            <StackPanel HorizontalAlignment="Center" 
+                        MaxWidth="800">
+
+                <!-- Cabeçalho -->
                 <TextBlock Text="⚛️ Experimento de Superposição Quântica"
-                           FontSize="24" FontWeight="Bold" Foreground="White"
-                           HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000"
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,10"/>
 
-                <!-- Fórmula -->
                 <TextBlock Text="Porta Hadamard: H|0⟩ = (|0⟩ + |1⟩) / √2"
-                           FontSize="14" Foreground="LightBlue"
-                           HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                           FontSize="14" 
+                           Foreground="#5A5A6B"
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,25"/>
 
-                <!-- Explicação -->
-                <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="14" Margin="0,0,0,20">
-                    A superposição é um dos princípios mais intrigantes da computação quântica.
-                    Aqui, simulamos um qubit inicialmente no estado |0⟩. Ao aplicarmos a porta Hadamard (H),
-                    colocamos esse qubit em um estado de superposição: ele estará "simultaneamente" em |0⟩ e |1⟩.
-                    Porém, ao medirmos o qubit, o estado colapsa, e o resultado será |0⟩ ou |1⟩ — 
-                    cada um com 50% de chance.
-                    Esta simulação mostra, na prática, como o comportamento probabilístico da física quântica
-                    influencia diretamente a computação. Repetindo várias vezes, o gráfico abaixo revela
-                    essa distribuição estatística.
-                </TextBlock>
+                <!-- Seção de Explicação -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📖 O que é Superposição?" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                <!-- Estado visual -->
-                <TextBlock x:Name="txtEstado"
-                           FontSize="14" Foreground="Orange"
-                           HorizontalAlignment="Center" Margin="0,0,0,10"
-                           Text="Estado atual: superposição (|0⟩ + |1⟩) / √2"/>
+                        <TextBlock TextWrapping="Wrap" 
+                                   Foreground="#7F8C8D" 
+                                   FontSize="12" 
+                                   LineHeight="20">
+                            A superposição é um dos princípios mais intrigantes da computação quântica.
+                            Aqui, simulamos um qubit inicialmente no estado |0⟩. Ao aplicarmos a porta Hadamard (H),
+                            colocamos esse qubit em um estado de superposição: ele estará "simultaneamente" em |0⟩ e |1⟩.
+                            Porém, ao medirmos o qubit, o estado colapsa, e o resultado será |0⟩ ou |1⟩ — 
+                            cada um com 50% de chance.
+                            <LineBreak/>
+                            <LineBreak/>
+                            Esta simulação mostra, na prática, como o comportamento probabilístico da física quântica
+                            influencia diretamente a computação. Repetindo várias vezes, o gráfico abaixo revela
+                            essa distribuição estatística.
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
 
-                <!-- Botões -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-                    <Button Content="🎲 Executar 1 Simulação"
-                            Click="ExecutarSimulacao_Click"
-                            FontSize="14" Padding="10"
-                            Background="#00BFFF" Foreground="White" BorderThickness="0"
-                            Margin="0,0,10,0"/>
-                    <Button Content="🔁 Executar 100 Simulações"
-                            Click="ExecutarMultiplasSimulacoes_Click"
-                            FontSize="14" Padding="10"
-                            Background="#00BFFF" Foreground="White" BorderThickness="0"/>
-                </StackPanel>
+                <!-- Estado Atual -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎯 Estado Atual do Qubit" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
 
-                <!-- Resultado Texto -->
-                <TextBlock x:Name="txtResultado"
-                           FontSize="18" FontWeight="Bold" Foreground="LightGreen"
-                           HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="txtEstado"
+                                   Text="Estado atual: superposição (|0⟩ + |1⟩) / √2"
+                                   FontSize="13" 
+                                   Foreground="#F39C12"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
 
-                <!-- Legenda do gráfico -->
-                <TextBlock Text="Distribuição após múltiplas medições:"
-                           FontSize="14" FontWeight="SemiBold"
-                           Foreground="LightGray" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <!-- Controles de Simulação -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎲 Executar Simulação" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                <!-- Gráfico -->
-                <lvc:CartesianChart x:Name="graficoResultado"
-                                    Width="600" Height="300"
-                                    LegendPosition="Right"
-                                    ZoomMode="None"
-                                    TooltipPosition="Top"
-                                    Foreground="White"/>
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Center">
+
+                            <Button Content="🎲 Executar 1 Simulação"
+                                    Click="ExecutarSimulacao_Click"
+                                    Style="{StaticResource ButtonPrimaryStyle}"/>
+
+                            <Button Content="🔁 Executar 100 Simulações"
+                                    Click="ExecutarMultiplasSimulacoes_Click"
+                                    Style="{StaticResource ButtonPrimaryStyle}"
+                                    Margin="0"/>
+
+                        </StackPanel>
+
+                        <!-- Resultado -->
+                        <TextBlock x:Name="txtResultado"
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#2ECC71"
+                                   HorizontalAlignment="Center" 
+                                   Margin="0,20,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Gráfico de Resultados -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Distribuição após múltiplas medições"
+                                   FontSize="14" 
+                                   FontWeight="Bold"
+                                   Foreground="#000000" 
+                                   HorizontalAlignment="Center" 
+                                   Margin="0,0,0,15"/>
+
+                        <Border Background="#ECF0F1" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8"
+                                Padding="10">
+                            <lvc:CartesianChart x:Name="graficoResultado"
+                                                Height="300"
+                                                LegendPosition="Right"
+                                                ZoomMode="None"
+                                                TooltipPosition="Top"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Curiosidade -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Curiosidade" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F39C12" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock TextWrapping="Wrap"
+                                   FontSize="11" 
+                                   Foreground="#7F8C8D" 
+                                   LineHeight="18">
+                            A porta Hadamard é fundamental na computação quântica e é usada em algoritmos 
+                            como o de Grover e Shor. Ela cria uma superposição perfeita, dividindo 
+                            igualmente a probabilidade entre os estados |0⟩ e |1⟩!
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
             </StackPanel>
-        </Border>
-    </Border>
+        </Grid>
+    </ScrollViewer>
+
 </UserControl>

@@ -1,81 +1,769 @@
 ﻿<UserControl x:Class="Quantun_Forge.src.views.AluControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="#1E1E1E">
+             Background="#ECF0F1">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="40">
-            <TextBlock Text="🧮 Unidade Aritmética e Lógica (ALU)"
-                       FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,20"/>
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
 
-            <!-- Sobre a ALU -->
-            <Border Background="#2D2D30" CornerRadius="8" Padding="15" Margin="0,0,0,20">
-                <StackPanel>
-                    <TextBlock Text="📜 Sobre a ALU" Foreground="White" FontWeight="Bold" FontSize="16" Margin="0,0,0,8"/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="14"
-                               Text="A ALU (Unidade Aritmética e Lógica) surgiu no contexto das primeiras arquiteturas computacionais baseadas na proposta de John von Neumann, em 1945. 
-Ela é o componente responsável por executar operações matemáticas e lógicas no processador."/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="14" Margin="0,8,0,0"
-                               Text="A importância da ALU está no fato de que toda tomada de decisão e cálculo dentro da CPU passa por ela. 
-Desde uma simples soma até comparações e cálculos complexos, a ALU é essencial para a execução de programas."/>
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#229954"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ConceptCard" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="SimulatorCard" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="CaretBrush" Value="#3498DB"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                        Padding="{TemplateBinding Padding}"
+                                        VerticalAlignment="Center"
+                                        Focusable="False"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernComboBox" TargetType="ComboBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+        </Style>
+
+        <Style x:Key="ResultBox" TargetType="Border">
+            <Setter Property="Background" Value="#E8F8F5"/>
+            <Setter Property="BorderBrush" Value="#1ABC9C"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="RegisterBox" TargetType="Border">
+            <Setter Property="Background" Value="#FEF5E7"/>
+            <Setter Property="BorderBrush" Value="#F39C12"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style x:Key="ProcessorBox" TargetType="Border">
+            <Setter Property="Background" Value="#E8EAF6"/>
+            <Setter Property="BorderBrush" Value="#5C6BC0"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+
+        <Style x:Key="DataFlowArrow" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Foreground" Value="#7F8C8D"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Unidade Aritmética e Lógica (ALU)" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="Simulador de Operações Aritméticas e Lógicas"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <Border Background="#E8F8F5" 
+                            BorderBrush="#1ABC9C" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="🎯 O que é a ALU?" 
+                                     FontSize="15" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="13" 
+                                     Margin="0">
+                                A ALU (Arithmetic Logic Unit) é o componente fundamental do processador responsável por executar todas as operações matemáticas e lógicas. Proposta por John von Neumann em 1945, ela representa o "cérebro computacional" da CPU.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Diagrama Visual -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        🔄 Fluxo de Dados na ALU
+                    </TextBlock>
+
+                    <Border Background="#F8F9FA" 
+                            BorderBrush="#3498DB" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,0,0,15">
+                        <StackPanel>
+                            <!-- Entradas -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" Background="#E3F2FD" BorderBrush="#2196F3" 
+                                      BorderThickness="2" CornerRadius="5" Padding="8" Margin="5">
+                                    <TextBlock Text="Operando A" TextAlignment="Center" FontWeight="Bold" 
+                                             Foreground="#1976D2" FontSize="11"/>
+                                </Border>
+
+                                <TextBlock Grid.Column="1" Text="+" FontSize="16" 
+                                         VerticalAlignment="Center" Margin="5" Foreground="#7F8C8D"/>
+
+                                <Border Grid.Column="2" Background="#E3F2FD" BorderBrush="#2196F3" 
+                                      BorderThickness="2" CornerRadius="5" Padding="8" Margin="5">
+                                    <TextBlock Text="Operando B" TextAlignment="Center" FontWeight="Bold" 
+                                             Foreground="#1976D2" FontSize="11"/>
+                                </Border>
+                            </Grid>
+
+                            <!-- Seta para baixo -->
+                            <TextBlock Style="{StaticResource DataFlowArrow}" Text="⬇"/>
+
+                            <!-- ALU Core -->
+                            <Border Background="#5C6BC0" BorderBrush="#3F51B5" 
+                                  BorderThickness="3" CornerRadius="8" Padding="12" Margin="20,5">
+                                <StackPanel>
+                                    <TextBlock Text="⚙️ ALU CORE" TextAlignment="Center" 
+                                             Foreground="White" FontWeight="Bold" FontSize="13"/>
+                                    <TextBlock Text="(Circuitos Aritméticos + Lógicos)" TextAlignment="Center" 
+                                             Foreground="#E8EAF6" FontSize="9" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Seta para baixo -->
+                            <TextBlock Style="{StaticResource DataFlowArrow}" Text="⬇"/>
+
+                            <!-- Resultado -->
+                            <Border Background="#C8E6C9" BorderBrush="#4CAF50" 
+                                  BorderThickness="2" CornerRadius="5" Padding="10" Margin="30,5">
+                                <TextBlock Text="📊 RESULTADO" TextAlignment="Center" FontWeight="Bold" 
+                                         Foreground="#2E7D32" FontSize="12"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Operações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        🔢 Operações Suportadas
+                    </TextBlock>
+
+                    <Border Style="{StaticResource ConceptCard}">
+                        <StackPanel>
+                            <TextBlock Text="➕ Operações Aritméticas" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9" 
+                                     Margin="0,0,0,8"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,4">
+                                    <TextBlock Text="ADD (Soma)" FontFamily="Consolas" FontSize="11" FontWeight="Bold" Foreground="#27AE60"/>
+                                    <TextBlock Text="A + B" FontFamily="Consolas" FontSize="10" Foreground="#7F8C8D" Margin="10,0,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,4">
+                                    <TextBlock Text="SUB (Subtração)" FontFamily="Consolas" FontSize="11" FontWeight="Bold" Foreground="#E67E22"/>
+                                    <TextBlock Text="A - B" FontFamily="Consolas" FontSize="10" Foreground="#7F8C8D" Margin="10,0,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,4">
+                                    <TextBlock Text="MUL (Multiplicação)" FontFamily="Consolas" FontSize="11" FontWeight="Bold" Foreground="#8E44AD"/>
+                                    <TextBlock Text="A × B" FontFamily="Consolas" FontSize="10" Foreground="#7F8C8D" Margin="10,0,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,4">
+                                    <TextBlock Text="DIV (Divisão)" FontFamily="Consolas" FontSize="11" FontWeight="Bold" Foreground="#E74C3C"/>
+                                    <TextBlock Text="A ÷ B" FontFamily="Consolas" FontSize="10" Foreground="#7F8C8D" Margin="10,0,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource ConceptCard}">
+                        <StackPanel>
+                            <TextBlock Text="🔀 Operações Lógicas (Bitwise)" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9" 
+                                     Margin="0,0,0,8"/>
+
+                            <StackPanel Margin="0,4">
+                                <TextBlock Text="AND (&amp;)" FontFamily="Consolas" FontSize="11" FontWeight="Bold" Foreground="#3498DB"/>
+                                <TextBlock Text="Resultado = 1 apenas se ambos bits = 1" FontSize="10" Foreground="#7F8C8D" Margin="10,2,0,0"/>
+                                <TextBlock Text="Ex: 1100 &amp; 1010 = 1000" FontFamily="Consolas" FontSize="9" Foreground="#95A5A6" Margin="10,2,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,8,0,4">
+                                <TextBlock Text="OR (|)" FontFamily="Consolas" FontSize="11" FontWeight="Bold" Foreground="#3498DB"/>
+                                <TextBlock Text="Resultado = 1 se pelo menos um bit = 1" FontSize="10" Foreground="#7F8C8D" Margin="10,2,0,0"/>
+                                <TextBlock Text="Ex: 1100 | 1010 = 1110" FontFamily="Consolas" FontSize="9" Foreground="#95A5A6" Margin="10,2,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,8,0,0">
+                                <TextBlock Text="XOR (⊕)" FontFamily="Consolas" FontSize="11" FontWeight="Bold" Foreground="#3498DB"/>
+                                <TextBlock Text="Resultado = 1 se os bits são diferentes" FontSize="10" Foreground="#7F8C8D" Margin="10,2,0,0"/>
+                                <TextBlock Text="Ex: 1100 ⊕ 1010 = 0110" FontFamily="Consolas" FontSize="9" Foreground="#95A5A6" Margin="10,2,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Componentes -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        🔧 Componentes Internos
+                    </TextBlock>
+
+                    <Border Style="{StaticResource ConceptCard}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="📦" FontSize="16" Margin="0,4,10,4"/>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,4">
+                                <TextBlock Text="Registradores" FontWeight="Bold" FontSize="12" Foreground="#2C3E50"/>
+                                <TextBlock Text="Armazenam temporariamente operandos e resultados" FontSize="10" Foreground="#7F8C8D"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="➕" FontSize="16" Margin="0,4,10,4"/>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,4">
+                                <TextBlock Text="Circuitos Aritméticos" FontWeight="Bold" FontSize="12" Foreground="#2C3E50"/>
+                                <TextBlock Text="Somadores, multiplicadores, divisores" FontSize="10" Foreground="#7F8C8D"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="🔀" FontSize="16" Margin="0,4,10,4"/>
+                            <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,4">
+                                <TextBlock Text="Circuitos Lógicos" FontWeight="Bold" FontSize="12" Foreground="#2C3E50"/>
+                                <TextBlock Text="Portas lógicas (AND, OR, XOR, NOT)" FontSize="10" Foreground="#7F8C8D"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="🚩" FontSize="16" Margin="0,4,10,4"/>
+                            <StackPanel Grid.Row="3" Grid.Column="1" Margin="0,4">
+                                <TextBlock Text="Flags de Status" FontWeight="Bold" FontSize="12" Foreground="#2C3E50"/>
+                                <TextBlock Text="Zero, Carry, Overflow, Sinal (negativo)" FontSize="10" Foreground="#7F8C8D"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Aplicações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        🌍 Aplicações no Mundo Real
+                    </TextBlock>
+
+                    <Border Background="#EBF5FB" 
+                            BorderBrush="#3498DB" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="💻 Processamento de Dados" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="Cálculos matemáticos, processamento de imagens, criptografia, compressão de dados"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#EBF5FB" 
+                            BorderBrush="#3498DB" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🎮 Gaming e Gráficos" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="Renderização 3D, física de jogos, transformações geométricas, iluminação"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#EBF5FB" 
+                            BorderBrush="#3498DB" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🔐 Segurança e Criptografia" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="Operações XOR para criptografia, hash functions, assinaturas digitais"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
-            </Border>
+            </ScrollViewer>
+        </Border>
 
-            <!-- Explicação técnica -->
-            <Border Background="#2D2D30" CornerRadius="8" Padding="15" Margin="0,0,0,20">
-                <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="14"
-                           Text="A ALU executa operações como soma, subtração e lógica (AND, OR, XOR) entre dois operandos fornecidos. 
-É um dos principais blocos funcionais de um processador."/>
-            </Border>
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
 
-            <!-- Entradas -->
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="Operando 1:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox x:Name="txtOperando1" Width="100" Margin="0,0,20,0"/>
-                <TextBlock Text="Operando 2:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <TextBox x:Name="txtOperando2" Width="100"/>
-            </StackPanel>
+        <!-- PAINEL DIREITO: SIMULADOR -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-            <!-- Operações -->
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="Operação:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ComboBox x:Name="cmbOperacao" Width="200">
-                    <ComboBoxItem Content="Soma"/>
-                    <ComboBoxItem Content="Subtração"/>
-                    <ComboBoxItem Content="Multiplicação"/>
-                    <ComboBoxItem Content="Divisão"/>
-                    <Separator/>
-                    <ComboBoxItem Content="AND"/>
-                    <ComboBoxItem Content="OR"/>
-                    <ComboBoxItem Content="XOR"/>
-                </ComboBox>
-            </StackPanel>
+                    <!-- Título -->
+                    <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                        <TextBlock Text="🧮 Simulador ALU" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="18"/>
+                        <TextBlock Text="Execute operações em tempo real" 
+                                 FontSize="12" 
+                                 Foreground="#7F8C8D" 
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
 
-            <!-- Botão -->
-            <Button Content="Calcular" Width="120" Height="30"
-                    Background="#007ACC" Foreground="White" FontWeight="Bold"
-                    Click="Calcular_Click"/>
+                    <!-- Registradores de Entrada -->
+                    <Border Grid.Row="1" Style="{StaticResource ProcessorBox}">
+                        <StackPanel>
+                            <TextBlock Text="📥 REGISTRADORES DE ENTRADA" 
+                                     FontSize="12" 
+                                     FontWeight="Bold" 
+                                     Foreground="#5C6BC0"
+                                     TextAlignment="Center"
+                                     Margin="0,0,0,12"/>
 
-            <!-- Resultado -->
-            <Border Background="#222" CornerRadius="10" Padding="15" Margin="0,20,0,0">
-                <StackPanel>
-                    <TextBlock x:Name="lblResultado" Foreground="#00C8FF" FontSize="20" FontWeight="Bold"/>
-                    <TextBlock x:Name="lblBinario" Foreground="LightGray" FontSize="14" Margin="0,5,0,0"/>
-                </StackPanel>
-            </Border>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-            <!-- Registradores simulados -->
-            <TextBlock Text="📦 Registradores (simulados)" Foreground="White" FontWeight="Bold" Margin="0,20,0,5"/>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="R1: " Foreground="Gray"/>
-                <TextBlock x:Name="lblR1" Text="0" Foreground="White" Margin="0,0,20,0"/>
-                <TextBlock Text="R2: " Foreground="Gray"/>
-                <TextBlock x:Name="lblR2" Text="0" Foreground="White"/>
-            </StackPanel>
+                                <!-- Registrador 1 -->
+                                <StackPanel Grid.Column="0">
+                                    <Border Background="#FFF9C4" BorderBrush="#FBC02D" 
+                                          BorderThickness="2" CornerRadius="6" Padding="8" Margin="0,0,5,0">
+                                        <StackPanel>
+                                            <TextBlock Text="R1" TextAlignment="Center" 
+                                                     FontWeight="Bold" FontSize="10" 
+                                                     Foreground="#F57F17" Margin="0,0,0,4"/>
+                                            <TextBox x:Name="txtOperando1" 
+                                                   Text="5"
+                                                   FontFamily="Consolas"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   TextAlignment="Center"
+                                                   BorderBrush="#FBC02D"
+                                                   BorderThickness="1"
+                                                   Background="White"
+                                                   Padding="4"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
 
-            <!-- Histórico -->
-            <TextBlock Text="🧾 Histórico de Operações" Foreground="White" FontWeight="Bold" Margin="0,20,0,5"/>
-            <ListBox x:Name="lstHistorico" Height="150" Background="#1E1E1E" Foreground="LightGray"/>
-        </StackPanel>
-    </ScrollViewer>
+                                <!-- Ícone Central -->
+                                <TextBlock Grid.Column="1" Text="⚙️" 
+                                         FontSize="20" 
+                                         VerticalAlignment="Center" 
+                                         Margin="5"/>
+
+                                <!-- Registrador 2 -->
+                                <StackPanel Grid.Column="2">
+                                    <Border Background="#FFF9C4" BorderBrush="#FBC02D" 
+                                          BorderThickness="2" CornerRadius="6" Padding="8" Margin="5,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="R2" TextAlignment="Center" 
+                                                     FontWeight="Bold" FontSize="10" 
+                                                     Foreground="#F57F17" Margin="0,0,0,4"/>
+                                            <TextBox x:Name="txtOperando2" 
+                                                   Text="3"
+                                                   FontFamily="Consolas"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   TextAlignment="Center"
+                                                   BorderBrush="#FBC02D"
+                                                   BorderThickness="1"
+                                                   Background="White"
+                                                   Padding="4"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Seletor de Operação -->
+                    <Border Grid.Row="2" Style="{StaticResource SimulatorCard}" Margin="0,10">
+                        <StackPanel>
+                            <TextBlock Text="⚙️ OPCODE - Seletor de Operação" 
+                                     FontSize="12" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2C3E50"
+                                     TextAlignment="Center"
+                                     Margin="0,0,0,10"/>
+
+                            <ComboBox x:Name="cmbOperacao" 
+                                    Style="{StaticResource ModernComboBox}"
+                                    Height="40"
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    SelectedIndex="0">
+                                <ComboBoxItem Content="➕ SOMA (ADD)"/>
+                                <ComboBoxItem Content="➖ SUBTRAÇÃO (SUB)"/>
+                                <ComboBoxItem Content="✖️ MULTIPLICAÇÃO (MUL)"/>
+                                <ComboBoxItem Content="➗ DIVISÃO (DIV)"/>
+                                <Separator/>
+                                <ComboBoxItem Content="🔀 AND (Bitwise)"/>
+                                <ComboBoxItem Content="🔀 OR (Bitwise)"/>
+                                <ComboBoxItem Content="🔀 XOR (Bitwise)"/>
+                            </ComboBox>
+
+                            <Button Content="▶️ EXECUTAR OPERAÇÃO" 
+                                  Style="{StaticResource SuccessButtonStyle}"
+                                  Height="45"
+                                  FontSize="14"
+                                  Margin="0,12,0,0"
+                                  Click="Calcular_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Processador ALU Visual -->
+                    <Border Grid.Row="3" Background="#F5F5F5" 
+                            BorderBrush="#5C6BC0" 
+                            BorderThickness="3" 
+                            CornerRadius="10" 
+                            Padding="15"
+                            Margin="0,10">
+                        <StackPanel>
+                            <TextBlock Text="⚡ ALU PROCESSING UNIT" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#5C6BC0"
+                                     TextAlignment="Center"
+                                     Margin="0,0,0,5"/>
+
+                            <TextBlock Text="Aguardando execução..." 
+                                     FontSize="10" 
+                                     Foreground="#7F8C8D"
+                                     TextAlignment="Center"
+                                     FontStyle="Italic"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Resultado e Registradores de Saída -->
+                    <Border Grid.Row="4" Style="{StaticResource ResultBox}" Margin="0,10">
+                        <StackPanel>
+                            <TextBlock Text="📊 RESULTADO DA OPERAÇÃO" 
+                                     FontSize="12" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     TextAlignment="Center"
+                                     Margin="0,0,0,10"/>
+
+                            <Border Background="White" 
+                                    BorderBrush="#1ABC9C" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="12"
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock x:Name="lblResultado" 
+                                             Text="Aguardando operação..."
+                                             Foreground="#16A085" 
+                                             FontSize="20" 
+                                             FontWeight="Bold"
+                                             FontFamily="Consolas"
+                                             TextAlignment="Center"
+                                             Margin="0,0,0,8"/>
+
+                                    <TextBlock x:Name="lblBinario" 
+                                             Text=""
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             FontFamily="Consolas"
+                                             TextAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Registradores Simulados -->
+                            <TextBlock Text="📦 Registradores Internos" 
+                                     FontSize="11" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     TextAlignment="Center"
+                                     Margin="0,12,0,8"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" 
+                                        Background="#FFF3E0" 
+                                        BorderBrush="#FF9800" 
+                                        BorderThickness="2" 
+                                        CornerRadius="6" 
+                                        Padding="10"
+                                        Margin="0,0,5,0">
+                                    <StackPanel>
+                                        <TextBlock Text="REG A" 
+                                                 Foreground="#F57C00" 
+                                                 FontSize="9" 
+                                                 FontWeight="Bold"
+                                                 TextAlignment="Center"
+                                                 Margin="0,0,0,4"/>
+                                        <TextBlock x:Name="lblR1" 
+                                                 Text="0" 
+                                                 Foreground="#2C3E50" 
+                                                 FontSize="16"
+                                                 FontWeight="Bold"
+                                                 FontFamily="Consolas"
+                                                 TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="1" 
+                                        Background="#FFF3E0" 
+                                        BorderBrush="#FF9800" 
+                                        BorderThickness="2" 
+                                        CornerRadius="6" 
+                                        Padding="10"
+                                        Margin="5,0,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="REG B" 
+                                                 Foreground="#F57C00" 
+                                                 FontSize="9" 
+                                                 FontWeight="Bold"
+                                                 TextAlignment="Center"
+                                                 Margin="0,0,0,4"/>
+                                        <TextBlock x:Name="lblR2" 
+                                                 Text="0" 
+                                                 Foreground="#2C3E50" 
+                                                 FontSize="16"
+                                                 FontWeight="Bold"
+                                                 FontFamily="Consolas"
+                                                 TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Histórico de Operações -->
+                    <Border Grid.Row="5" 
+                            Background="White" 
+                            BorderBrush="#BDC3C7" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Margin="0,10,0,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="180"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" 
+                                    Background="#5C6BC0" 
+                                    CornerRadius="8,8,0,0" 
+                                    Padding="10,8">
+                                <TextBlock Text="🧾 HISTÓRICO DE EXECUÇÕES" 
+                                         Foreground="White" 
+                                         FontWeight="Bold"
+                                         FontSize="12"
+                                         TextAlignment="Center"/>
+                            </Border>
+
+                            <ListBox x:Name="lstHistorico" 
+                                   Grid.Row="1"
+                                   Background="#FAFAFA" 
+                                   Foreground="#2C3E50"
+                                   BorderThickness="0"
+                                   FontFamily="Consolas"
+                                   FontSize="10"
+                                   Padding="10"
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+                            <Border Grid.Row="2" 
+                                    Background="#ECF0F1" 
+                                    CornerRadius="0,0,8,8" 
+                                    Padding="8,6">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="💡 Dica: " 
+                                             FontSize="10" 
+                                             FontWeight="Bold" 
+                                             Foreground="#7F8C8D"/>
+                                    <TextBlock Text="Operações lógicas funcionam apenas com números inteiros" 
+                                             FontSize="10" 
+                                             Foreground="#95A5A6"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </Grid>
 </UserControl>

@@ -4,91 +4,632 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="700" d:DesignWidth="900">
+             d:DesignHeight="700"
+             d:DesignWidth="1200"
+             Background="#F5F5F5">
 
-    <Grid Background="#1E1E1E" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#F72585"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
 
-        <!-- Título -->
-        <TextBlock Text="⚡ Leis de Maxwell – Fundamentos do Eletromagnetismo"
-                   FontSize="24" FontWeight="Bold" Foreground="White"
-                   HorizontalAlignment="Center" Margin="0,10"/>
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F72585"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF4DA6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- Conteúdo com Scroll -->
-        <ScrollViewer Grid.Row="1" Margin="10">
-            <StackPanel>
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-                <!-- Introdução -->
-                <TextBlock Text="📘 Introdução" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,10,0,5"/>
-                <TextBlock Text="As Equações de Maxwell descrevem como os campos elétricos e magnéticos se comportam e interagem. São fundamentais para entender a luz, eletricidade, magnetismo e ondas eletromagnéticas." 
-                           FontSize="14" Foreground="White" TextWrapping="Wrap"/>
+        <Style x:Key="EquationCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
 
-                <!-- Equações -->
-                <UniformGrid Columns="2" Rows="2" Margin="0,20,0,0" HorizontalAlignment="Center">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
-                    <!-- Gauss E -->
-                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="10" Padding="10" Margin="5">
-                        <StackPanel>
-                            <TextBlock Text="1️⃣ Lei de Gauss (E)" FontSize="16" FontWeight="Bold" Foreground="LightBlue"/>
-                            <TextBlock Text="∮ E · dA = Q / ε₀" FontSize="18" Foreground="White" Margin="0,5"/>
-                            <TextBlock Text="O fluxo elétrico através de uma superfície é proporcional à carga total dentro dela." 
-                                       FontSize="13" Foreground="LightGray" TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </Border>
+            <!-- Coluna Principal -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="⚡ Equações de Maxwell" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="Os pilares fundamentais do Eletromagnetismo unificando eletricidade, magnetismo e luz" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
 
-                    <!-- Gauss B -->
-                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="10" Padding="10" Margin="5">
-                        <StackPanel>
-                            <TextBlock Text="2️⃣ Lei de Gauss (B)" FontSize="16" FontWeight="Bold" Foreground="LightBlue"/>
-                            <TextBlock Text="∮ B · dA = 0" FontSize="18" Foreground="White" Margin="0,5"/>
-                            <TextBlock Text="O fluxo magnético líquido através de uma superfície fechada é sempre zero – não existem monopólos magnéticos." 
-                                       FontSize="13" Foreground="LightGray" TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </Border>
+                <!-- As 4 Equações em Cards -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📐 As Quatro Equações Fundamentais" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                    <!-- Faraday -->
-                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="10" Padding="10" Margin="5">
-                        <StackPanel>
-                            <TextBlock Text="3️⃣ Lei de Faraday" FontSize="16" FontWeight="Bold" Foreground="LightBlue"/>
-                            <TextBlock Text="∮ E · dl = - dΦB/dt" FontSize="18" Foreground="White" Margin="0,5"/>
-                            <TextBlock Text="Uma variação de campo magnético induz um campo elétrico." 
-                                       FontSize="13" Foreground="LightGray" TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                    <!-- Ampère-Maxwell -->
-                    <Border BorderBrush="White" BorderThickness="1" CornerRadius="10" Padding="10" Margin="5">
-                        <StackPanel>
-                            <TextBlock Text="4️⃣ Lei de Ampère-Maxwell" FontSize="16" FontWeight="Bold" Foreground="LightBlue"/>
-                            <TextBlock Text="∮ B · dl = μ₀·I + μ₀·ε₀·dΦE/dt" FontSize="18" Foreground="White" Margin="0,5"/>
-                            <TextBlock Text="Corrente elétrica e variação de campo elétrico criam campo magnético." 
-                                       FontSize="13" Foreground="LightGray" TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </Border>
-                </UniformGrid>
+                            <!-- Lei de Gauss para Campo Elétrico -->
+                            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource EquationCardStyle}" BorderBrush="#3498DB">
+                                <StackPanel>
+                                    <TextBlock Text="1️⃣ Lei de Gauss (Campo Elétrico)" FontSize="13" FontWeight="Bold" Foreground="#3498DB" Margin="0,0,0,8"/>
+                                    <TextBlock Text="∮ E⃗ · dA⃗ = Q/ε₀" FontSize="20" FontWeight="Bold" Foreground="#2980B9" HorizontalAlignment="Center" Margin="0,5"/>
+                                    <TextBlock Text="O fluxo elétrico através de uma superfície fechada é proporcional à carga interna." 
+                                              FontSize="11" 
+                                              Foreground="#7F8C8D" 
+                                              TextWrapping="Wrap"
+                                              Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
 
-                <!-- Interpretação -->
-                <TextBlock Text="🧠 Interpretação" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,30,0,5"/>
-                <TextBlock Text="As equações mostram que eletricidade e magnetismo estão interligados. Mudanças em campos elétricos geram campos magnéticos, e vice-versa – base das ondas eletromagnéticas." 
-                           FontSize="14" Foreground="White" TextWrapping="Wrap"/>
+                            <!-- Lei de Gauss para Campo Magnético -->
+                            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource EquationCardStyle}" BorderBrush="#E74C3C">
+                                <StackPanel>
+                                    <TextBlock Text="2️⃣ Lei de Gauss (Campo Magnético)" FontSize="13" FontWeight="Bold" Foreground="#E74C3C" Margin="0,0,0,8"/>
+                                    <TextBlock Text="∮ B⃗ · dA⃗ = 0" FontSize="20" FontWeight="Bold" Foreground="#C0392B" HorizontalAlignment="Center" Margin="0,5"/>
+                                    <TextBlock Text="Não existem monopolos magnéticos. As linhas de campo magnético sempre formam loops fechados." 
+                                              FontSize="11" 
+                                              Foreground="#7F8C8D" 
+                                              TextWrapping="Wrap"
+                                              Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
 
-                <!-- Simulação -->
-                <TextBlock Text="🎞️ Simulação Interativa – Onda Eletromagnética"
-                           FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,30,0,10"/>
+                            <!-- Lei de Faraday -->
+                            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource EquationCardStyle}" BorderBrush="#9B59B6">
+                                <StackPanel>
+                                    <TextBlock Text="3️⃣ Lei de Faraday-Lenz" FontSize="13" FontWeight="Bold" Foreground="#9B59B6" Margin="0,0,0,8"/>
+                                    <TextBlock Text="∮ E⃗ · dl⃗ = -dΦB/dt" FontSize="20" FontWeight="Bold" Foreground="#8E44AD" HorizontalAlignment="Center" Margin="0,5"/>
+                                    <TextBlock Text="Uma variação no fluxo magnético induz um campo elétrico. Base dos geradores e transformadores." 
+                                              FontSize="11" 
+                                              Foreground="#7F8C8D" 
+                                              TextWrapping="Wrap"
+                                              Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
 
-                <StackPanel Margin="0,0,0,20">
-                    <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="10" Margin="0,10">
-                        <Canvas x:Name="CanvasOnda" Background="#222" Height="200" ClipToBounds="True"/>
-                    </Border>
+                            <!-- Lei de Ampère-Maxwell -->
+                            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource EquationCardStyle}" BorderBrush="#27AE60">
+                                <StackPanel>
+                                    <TextBlock Text="4️⃣ Lei de Ampère-Maxwell" FontSize="13" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,8"/>
+                                    <TextBlock Text="∮ B⃗ · dl⃗ = μ₀I + μ₀ε₀(dΦE/dt)" FontSize="18" FontWeight="Bold" Foreground="#229954" HorizontalAlignment="Center" Margin="0,5"/>
+                                    <TextBlock Text="Correntes elétricas e campos elétricos variáveis geram campos magnéticos." 
+                                              FontSize="11" 
+                                              Foreground="#7F8C8D" 
+                                              TextWrapping="Wrap"
+                                              Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
 
-                    <Button Content="▶ Iniciar Onda Eletromagnética"
-                            Width="250" HorizontalAlignment="Left" Click="BtnIniciar_Click" Margin="0,10"/>
-                </StackPanel>
+                <!-- Simulação de Onda Eletromagnética -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🌊 Simulação: Onda Eletromagnética" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
+                        <TextBlock Text="As equações de Maxwell preveem a existência de ondas eletromagnéticas que se propagam à velocidade da luz!" 
+                                   FontSize="12" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Canvas para a onda -->
+                        <Border Background="#1E1E1E" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="350"
+                                Margin="0,0,0,15">
+                            <Grid>
+                                <Canvas x:Name="CanvasOndaEM" ClipToBounds="True">
+                                    <!-- Grid de fundo -->
+                                    <Rectangle Fill="#2C2C2C" Width="800" Height="350"/>
+
+                                    <!-- Eixos -->
+                                    <Line X1="0" Y1="175" X2="800" Y2="175" Stroke="#555555" StrokeThickness="1" StrokeDashArray="5,5"/>
+                                    <Line X1="400" Y1="0" X2="400" Y2="350" Stroke="#555555" StrokeThickness="1" StrokeDashArray="5,5"/>
+
+                                    <!-- Labels dos eixos -->
+                                    <TextBlock Text="Campo Elétrico (E⃗)" Foreground="#3498DB" FontSize="12" FontWeight="Bold" Canvas.Left="10" Canvas.Top="10"/>
+                                    <TextBlock Text="Campo Magnético (B⃗)" Foreground="#E74C3C" FontSize="12" FontWeight="Bold" Canvas.Left="10" Canvas.Top="30"/>
+                                    <TextBlock Text="Direção de propagação →" Foreground="#F39C12" FontSize="11" Canvas.Right="10" Canvas.Top="10"/>
+
+                                    <!-- Polylines para as ondas (serão atualizadas no code-behind) -->
+                                    <Polyline x:Name="OndaEletrica" 
+                                             Stroke="#3498DB" 
+                                             StrokeThickness="3"
+                                             Opacity="0.9"/>
+
+                                    <Polyline x:Name="OndaMagnetica" 
+                                             Stroke="#E74C3C" 
+                                             StrokeThickness="3"
+                                             Opacity="0.9"/>
+
+                                    <!-- Vetores dinâmicos -->
+                                    <Line x:Name="VetorE" 
+                                         Stroke="#3498DB" 
+                                         StrokeThickness="4"
+                                         X1="400" Y1="175"
+                                         X2="400" Y2="100">
+                                        <Line.Effect>
+                                            <DropShadowEffect Color="#3498DB" BlurRadius="10" ShadowDepth="0"/>
+                                        </Line.Effect>
+                                    </Line>
+
+                                    <Line x:Name="VetorB" 
+                                         Stroke="#E74C3C" 
+                                         StrokeThickness="4"
+                                         X1="400" Y1="175"
+                                         X2="400" Y2="100">
+                                        <Line.Effect>
+                                            <DropShadowEffect Color="#E74C3C" BlurRadius="10" ShadowDepth="0"/>
+                                        </Line.Effect>
+                                    </Line>
+                                </Canvas>
+
+                                <!-- Overlay com informações -->
+                                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="15">
+                                    <Border Background="#000000" Opacity="0.7" CornerRadius="5" Padding="10">
+                                        <StackPanel>
+                                            <TextBlock x:Name="TxtFrequencia" Text="Frequência: 1.0 Hz" Foreground="White" FontSize="11" Margin="0,0,0,3"/>
+                                            <TextBlock x:Name="TxtComprimento" Text="λ = 3.0×10⁸ m" Foreground="White" FontSize="11" Margin="0,0,0,3"/>
+                                            <TextBlock x:Name="TxtVelocidade" Text="v = c = 3×10⁸ m/s" Foreground="#F39C12" FontSize="11" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Legenda -->
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Rectangle Fill="#3498DB" Width="30" Height="4" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Campo Elétrico (E⃗)" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Rectangle Fill="#E74C3C" Width="30" Height="4" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Campo Magnético (B⃗)" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Simulação de Campo Elétrico (Lei de Gauss) -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚡ Simulação: Lei de Gauss - Campo Elétrico" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Border Background="#ECF0F1" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="300"
+                                Margin="0,0,0,15">
+                            <Canvas x:Name="CanvasCampoEletrico" ClipToBounds="True">
+                                <!-- Carga central -->
+                                <Ellipse x:Name="CargaCentral"
+                                        Width="40"
+                                        Height="40"
+                                        Fill="#3498DB"
+                                        Stroke="#2980B9"
+                                        StrokeThickness="3"
+                                        Canvas.Left="380"
+                                        Canvas.Top="130">
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect Color="#3498DB" BlurRadius="20" ShadowDepth="0"/>
+                                    </Ellipse.Effect>
+                                </Ellipse>
+
+                                <TextBlock Text="+" 
+                                          FontSize="28" 
+                                          FontWeight="Bold" 
+                                          Foreground="White"
+                                          Canvas.Left="392"
+                                          Canvas.Top="132"/>
+
+                                <!-- Superfície gaussiana -->
+                                <Ellipse x:Name="SuperficieGaussiana"
+                                        Width="200"
+                                        Height="200"
+                                        Stroke="#F39C12"
+                                        StrokeThickness="2"
+                                        StrokeDashArray="5,5"
+                                        Canvas.Left="300"
+                                        Canvas.Top="50"
+                                        Opacity="0.6"/>
+
+                                <!-- Linhas de campo (serão criadas dinamicamente) -->
+                            </Canvas>
+                        </Border>
+
+                        <Border Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="5" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="💡 Visualização:" FontSize="12" FontWeight="Bold" Foreground="#16A085" Margin="0,0,0,5"/>
+                                <TextBlock x:Name="TxtInfoGauss" 
+                                          Text="As linhas de campo elétrico saem radialmente da carga positiva. O fluxo através da superfície gaussiana (círculo tracejado) é constante."
+                                          FontSize="11" 
+                                          Foreground="#2C3E50" 
+                                          TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Aplicações Práticas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔧 Aplicações das Equações de Maxwell" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" Grid.Column="0" Background="#EBF5FB" CornerRadius="5" Padding="12" Margin="0,0,5,5">
+                                <StackPanel>
+                                    <TextBlock Text="📡 Telecomunicações" FontSize="13" FontWeight="Bold" Foreground="#3498DB" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Rádio, TV, celulares, WiFi e satélites dependem da propagação de ondas eletromagnéticas." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="0" Grid.Column="1" Background="#FADBD8" CornerRadius="5" Padding="12" Margin="5,0,0,5">
+                                <StackPanel>
+                                    <TextBlock Text="💡 Geradores e Motores" FontSize="13" FontWeight="Bold" Foreground="#E74C3C" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Lei de Faraday é a base de geradores elétricos, transformadores e motores elétricos." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="0" Background="#F4ECF7" CornerRadius="5" Padding="12" Margin="0,5,5,5">
+                                <StackPanel>
+                                    <TextBlock Text="🔬 Óptica e Fotônica" FontSize="13" FontWeight="Bold" Foreground="#9B59B6" Margin="0,0,0,5"/>
+                                    <TextBlock Text="A luz é uma onda eletromagnética. Laser, fibra óptica e fotografia baseiam-se nesse princípio." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="1" Background="#E8F8F5" CornerRadius="5" Padding="12" Margin="5,5,0,5">
+                                <StackPanel>
+                                    <TextBlock Text="🏥 Ressonância Magnética" FontSize="13" FontWeight="Bold" Foreground="#1ABC9C" Margin="0,0,0,5"/>
+                                    <TextBlock Text="MRI usa campos magnéticos e ondas de rádio para criar imagens detalhadas do corpo humano." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="2" Grid.Column="0" Background="#FEF3E8" CornerRadius="5" Padding="12" Margin="0,5,5,0">
+                                <StackPanel>
+                                    <TextBlock Text="☀️ Energia Solar" FontSize="13" FontWeight="Bold" Foreground="#F39C12" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Painéis solares convertem ondas eletromagnéticas (luz) em energia elétrica." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="2" Grid.Column="1" Background="#E8F6F3" CornerRadius="5" Padding="12" Margin="5,5,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🌐 GPS e Navegação" FontSize="13" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Sistemas de posicionamento global usam sinais eletromagnéticos de satélites." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </StackPanel>
-        </ScrollViewer>
-    </Grid>
+
+            <!-- Coluna Lateral - Controles -->
+            <StackPanel Grid.Column="2">
+                <!-- Controles da Onda EM -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Controles da Onda EM" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Frequência -->
+                        <TextBlock Text="Frequência (Hz):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderFrequencia"
+                               Minimum="0.1"
+                               Maximum="5"
+                               Value="1"
+                               TickFrequency="0.1"
+                               IsSnapToTickEnabled="True"
+                               ValueChanged="SliderFrequencia_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtFrequenciaSlider" 
+                                  Text="1.0 Hz" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Amplitude -->
+                        <TextBlock Text="Amplitude:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,5"/>
+                        <Slider x:Name="SliderAmplitude"
+                               Minimum="20"
+                               Maximum="80"
+                               Value="60"
+                               TickFrequency="5"
+                               IsSnapToTickEnabled="True"
+                               ValueChanged="SliderAmplitude_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtAmplitudeSlider" 
+                                  Text="60" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Velocidade de Animação -->
+                        <TextBlock Text="Velocidade de Animação:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,5"/>
+                        <Slider x:Name="SliderVelocidade"
+                               Minimum="1"
+                               Maximum="10"
+                               Value="3"
+                               TickFrequency="1"
+                               IsSnapToTickEnabled="True"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtVelocidadeSlider" 
+                                  Text="3x" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,20"/>
+
+                        <!-- Botões -->
+                        <Button x:Name="BtnIniciarOnda"
+                               Content="▶️ Iniciar Animação" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Click="BtnIniciarOnda_Click"/>
+
+                        <Button x:Name="BtnPausarOnda"
+                               Content="⏸️ Pausar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnPausarOnda_Click"
+                               IsEnabled="False"/>
+
+                        <Button Content="🔄 Resetar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnResetarOnda_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Controles do Campo Elétrico -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Campo Elétrico" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Carga -->
+                        <TextBlock Text="Carga (μC):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderCarga"
+                               Minimum="-10"
+                               Maximum="10"
+                               Value="5"
+                               TickFrequency="1"
+                               IsSnapToTickEnabled="True"
+                               ValueChanged="SliderCarga_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtCargaSlider" 
+                                  Text="+5 μC" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Número de linhas -->
+                        <TextBlock Text="Linhas de Campo:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,10,0,5"/>
+                        <Slider x:Name="SliderLinhas"
+                               Minimum="8"
+                               Maximum="24"
+                               Value="16"
+                               TickFrequency="4"
+                               IsSnapToTickEnabled="True"
+                               ValueChanged="SliderLinhas_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtLinhasSlider" 
+                                  Text="16 linhas" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,20"/>
+
+                        <Button Content="🔄 Atualizar Campo" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Click="BtnAtualizarCampo_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Espectro Eletromagnético -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🌈 Espectro EM" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <StackPanel Margin="0,0,0,8">
+                            <Border Background="#8B008B" CornerRadius="3" Padding="8,5" Margin="0,2">
+                                <TextBlock Text="Raios Gama" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                            <Border Background="#4B0082" CornerRadius="3" Padding="8,5" Margin="0,2">
+                                <TextBlock Text="Raios X" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                            <Border Background="#9400D3" CornerRadius="3" Padding="8,5" Margin="0,2">
+                                <TextBlock Text="UV" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                            <Border Background="#FF6B6B" CornerRadius="3" Padding="8,5" Margin="0,2">
+                                <TextBlock Text="Luz Visível" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                            <Border Background="#FF8C00" CornerRadius="3" Padding="8,5" Margin="0,2">
+                                <TextBlock Text="Infravermelho" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                            <Border Background="#DC143C" CornerRadius="3" Padding="8,5" Margin="0,2">
+                                <TextBlock Text="Microondas" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                            <Border Background="#8B0000" CornerRadius="3" Padding="8,5" Margin="0,2">
+                                <TextBlock Text="Ondas de Rádio" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                        </StackPanel>
+
+                        <TextBlock Text="Todas são ondas eletromagnéticas, diferindo apenas na frequência!" 
+                                   FontSize="10" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"
+                                   FontStyle="Italic"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Constantes Importantes -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Constantes" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,0,0,8">
+                            <Run Text="• ε₀ (permissividade):" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  8.85×10⁻¹² F/m" FontFamily="Consolas"/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,0,0,8">
+                            <Run Text="• μ₀ (permeabilidade):" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  4π×10⁻⁷ H/m" FontFamily="Consolas"/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="11" Foreground="#7F8C8D" TextWrapping="Wrap" Margin="0,0,0,8">
+                            <Run Text="• c (velocidade da luz):" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="  3×10⁸ m/s" FontFamily="Consolas"/>
+                        </TextBlock>
+
+                        <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="5" Padding="10" Margin="0,10,0,0">
+                            <TextBlock FontSize="11" Foreground="#2C3E50" TextWrapping="Wrap">
+                                <Run Text="c = 1/√(ε₀μ₀)" FontFamily="Consolas" FontWeight="Bold"/>
+                                <LineBreak/>
+                                <Run Text="Maxwell provou que a luz é uma onda eletromagnética!"/>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Info Extra -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Curiosidade" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F39C12" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#7F8C8D" LineHeight="18">
+                            <Run Text="James Clerk Maxwell unificou eletricidade, magnetismo e óptica em apenas 4 equações! Einstein disse que o trabalho de Maxwell foi 'a mais profunda mudança nas bases da física desde Newton'."/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

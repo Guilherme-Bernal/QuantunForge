@@ -1,0 +1,725 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.ComputacaoQuantica._01quantun"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="950">
+
+    <UserControl.Resources>
+        <!-- Estilos Reutilizáveis -->
+        <Style x:Key="SectionBorder" TargetType="Border">
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+
+        <Style x:Key="BodyText" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="#CCCCCC"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="QuantumButton" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="MinWidth" Value="110"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.85"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#181B20">
+        <StackPanel Margin="40,30,40,40" MaxWidth="1200">
+
+            <!-- Título Principal -->
+            <TextBlock Text="🌌 Origem, Funcionamento e Portas Quânticas" 
+                       FontSize="36" 
+                       FontWeight="Bold" 
+                       Foreground="#FFD700" 
+                       TextAlignment="Center" 
+                       Margin="0,0,0,8"/>
+
+            <TextBlock Text="|0⟩ e |1⟩: A Base da Computação Quântica" 
+                       FontSize="18" 
+                       Foreground="#B3B3B3" 
+                       TextAlignment="Center" 
+                       Margin="0,0,0,30"/>
+
+            <!-- Seção: Notação Dirac -->
+            <Border Style="{StaticResource SectionBorder}" Background="#222A35">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" 
+                               Text="📖 O que significa &quot;|0⟩&quot; e &quot;|1⟩&quot;?"/>
+
+                    <TextBlock Style="{StaticResource BodyText}" Foreground="#FFECB3">
+                        Essa é a chamada <Bold>notação de Dirac</Bold> ou <Bold>notação "ket"</Bold>, criada pelo físico Paul Dirac em 1939. Ela é amplamente utilizada em mecânica quântica para representar estados de sistemas, principalmente qubits em computação quântica.
+                    </TextBlock>
+
+                    <TextBlock Style="{StaticResource BodyText}" Foreground="#FFECB3" Margin="0,12,0,0">
+                        O símbolo "| ⟩" é chamado de <Bold>"ket"</Bold> e serve para descrever, de forma compacta e elegante, os estados possíveis do qubit.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Seção: Como funciona o Qubit -->
+            <Border Style="{StaticResource SectionBorder}" Background="#23282D">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" 
+                               Text="⚛️ Como funciona o Qubit?"/>
+
+                    <TextBlock Style="{StaticResource BodyText}">
+                        O <Bold>qubit</Bold> é a menor unidade de informação da computação quântica — análogo ao bit na computação clássica, porém com propriedades quânticas extraordinárias.
+                    </TextBlock>
+
+                    <Grid Margin="0,16,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" 
+                                Background="#2A3F5F" 
+                                CornerRadius="8" 
+                                Padding="16,12" 
+                                Margin="0,0,16,8">
+                            <TextBlock Text="0 ou 1" 
+                                       FontSize="16" 
+                                       FontWeight="Bold" 
+                                       Foreground="#3B9AE1"/>
+                        </Border>
+
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource BodyText}" 
+                                   VerticalAlignment="Center">
+                            Um bit clássico só pode ser "0" ou "1" (estado definitivo).
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" 
+                                Background="#4A2E6B" 
+                                CornerRadius="8" 
+                                Padding="16,12" 
+                                Margin="0,0,16,0">
+                            <TextBlock Text="|0⟩, |1⟩ ou ambos" 
+                                       FontSize="16" 
+                                       FontWeight="Bold" 
+                                       Foreground="#9649CB"/>
+                        </Border>
+
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource BodyText}" 
+                                   VerticalAlignment="Center">
+                            Um qubit pode estar em <Bold>superposição</Bold>: |0⟩, |1⟩, ou qualquer combinação linear dos dois estados simultaneamente!
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Comparação Visual: Bit vs Qubit -->
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Bit Clássico -->
+                <Border Grid.Column="0" 
+                        Background="#253149" 
+                        CornerRadius="16" 
+                        Padding="24">
+                    <StackPanel>
+                        <TextBlock Text="💾 Bit Clássico" 
+                                   Foreground="#FFD700" 
+                                   FontSize="20" 
+                                   FontWeight="Bold" 
+                                   TextAlignment="Center"
+                                   Margin="0,0,0,16"/>
+
+                        <Viewbox Width="100" Height="100" Margin="0,0,0,16">
+                            <Canvas Width="100" Height="100">
+                                <Ellipse Width="100" Height="100" 
+                                         Fill="#3B9AE1" 
+                                         Stroke="#FFFFFF" 
+                                         StrokeThickness="3"/>
+                                <TextBlock Text="0 | 1" 
+                                           Canvas.Left="17" 
+                                           Canvas.Top="35" 
+                                           FontSize="24" 
+                                           Foreground="White" 
+                                           FontWeight="Bold"/>
+                            </Canvas>
+                        </Viewbox>
+
+                        <TextBlock Text="Estado Definitivo" 
+                                   FontSize="16" 
+                                   FontWeight="SemiBold"
+                                   Foreground="White" 
+                                   TextAlignment="Center"
+                                   Margin="0,0,0,8"/>
+
+                        <TextBlock Text="Apenas 0 ou 1 por vez" 
+                                   FontSize="14" 
+                                   Foreground="#B3B3B3" 
+                                   TextAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Separador -->
+                <StackPanel Grid.Column="1" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="⇄" 
+                               FontSize="40" 
+                               Foreground="#FFD700" 
+                               FontWeight="Bold"/>
+                    <TextBlock Text="VS" 
+                               FontSize="14" 
+                               Foreground="#FFD700" 
+                               TextAlignment="Center"
+                               Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <!-- Qubit -->
+                <Border Grid.Column="2" 
+                        Background="#33234A" 
+                        CornerRadius="16" 
+                        Padding="24">
+                    <StackPanel>
+                        <TextBlock Text="🌀 Qubit" 
+                                   Foreground="#61DFFF" 
+                                   FontSize="20" 
+                                   FontWeight="Bold" 
+                                   TextAlignment="Center"
+                                   Margin="0,0,0,16"/>
+
+                        <Viewbox Width="100" Height="100" Margin="0,0,0,16">
+                            <Canvas Width="100" Height="100">
+                                <Ellipse Width="100" Height="100" 
+                                         Fill="#9649CB" 
+                                         Opacity="0.7"
+                                         Stroke="#FFFFFF" 
+                                         StrokeThickness="3"/>
+                                <Ellipse Width="70" Height="70" 
+                                         Canvas.Left="15" 
+                                         Canvas.Top="15"
+                                         Fill="#9649CB" 
+                                         Opacity="0.5"/>
+                                <TextBlock Text="|ψ⟩" 
+                                           Canvas.Left="32" 
+                                           Canvas.Top="35" 
+                                           FontSize="24" 
+                                           Foreground="#FFD700" 
+                                           FontWeight="Bold"/>
+                            </Canvas>
+                        </Viewbox>
+
+                        <TextBlock x:Name="txtQubitVisual"
+                                   Text="|ψ⟩ = α|0⟩ + β|1⟩" 
+                                   FontSize="16" 
+                                   FontWeight="SemiBold"
+                                   Foreground="#FFD700" 
+                                   TextAlignment="Center"
+                                   Margin="0,0,0,8"/>
+
+                        <TextBlock x:Name="txtQubitDesc"
+                                   Text="Pode estar em superposição: 0, 1 ou ambos simultaneamente!" 
+                                   FontSize="14" 
+                                   Foreground="#B3B3B3" 
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Seção: Estados Quânticos -->
+            <Border Style="{StaticResource SectionBorder}" Background="#1E2530">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" 
+                               Foreground="#FFD700"
+                               Text="🎯 Entendendo os Estados |0⟩ e |1⟩"/>
+
+                    <!-- Cards dos Estados -->
+                    <UniformGrid Columns="3" Margin="0,0,0,20">
+                        <!-- Estado |0⟩ -->
+                        <Border Background="#222A3A" 
+                                CornerRadius="12" 
+                                Padding="20" 
+                                Margin="0,0,8,0">
+                            <StackPanel>
+                                <TextBlock Text="|0⟩" 
+                                           FontSize="32" 
+                                           FontWeight="Bold" 
+                                           Foreground="#3B9AE1" 
+                                           TextAlignment="Center"
+                                           Margin="0,0,0,8"/>
+                                <Rectangle Height="2" 
+                                           Fill="#3B9AE1" 
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="Estado Zero" 
+                                           FontSize="15" 
+                                           FontWeight="SemiBold"
+                                           Foreground="White" 
+                                           TextAlignment="Center"
+                                           Margin="0,0,0,4"/>
+                                <TextBlock Text="Estado base fundamental" 
+                                           FontSize="13" 
+                                           Foreground="#B3B3B3" 
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Estado |1⟩ -->
+                        <Border Background="#2E2046" 
+                                CornerRadius="12" 
+                                Padding="20" 
+                                Margin="4,0,4,0">
+                            <StackPanel>
+                                <TextBlock Text="|1⟩" 
+                                           FontSize="32" 
+                                           FontWeight="Bold" 
+                                           Foreground="#FF7E5A" 
+                                           TextAlignment="Center"
+                                           Margin="0,0,0,8"/>
+                                <Rectangle Height="2" 
+                                           Fill="#FF7E5A" 
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="Estado Um" 
+                                           FontSize="15" 
+                                           FontWeight="SemiBold"
+                                           Foreground="White" 
+                                           TextAlignment="Center"
+                                           Margin="0,0,0,4"/>
+                                <TextBlock Text="Estado base excitado" 
+                                           FontSize="13" 
+                                           Foreground="#B3B3B3" 
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Estado Superposição -->
+                        <Border Background="#2A3B2A" 
+                                CornerRadius="12" 
+                                Padding="20" 
+                                Margin="8,0,0,0">
+                            <StackPanel>
+                                <TextBlock Text="|ψ⟩" 
+                                           FontSize="32" 
+                                           FontWeight="Bold" 
+                                           Foreground="#FFD700" 
+                                           TextAlignment="Center"
+                                           Margin="0,0,0,8"/>
+                                <Rectangle Height="2" 
+                                           Fill="#FFD700" 
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="Superposição" 
+                                           FontSize="15" 
+                                           FontWeight="SemiBold"
+                                           Foreground="White" 
+                                           TextAlignment="Center"
+                                           Margin="0,0,0,4"/>
+                                <TextBlock Text="α|0⟩ + β|1⟩" 
+                                           FontSize="13" 
+                                           Foreground="#B3B3B3" 
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+
+                    <!-- Explicação Detalhada -->
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource BodyText}" Foreground="#FFECB3">
+                            <Bold>• |0⟩:</Bold> Representa o estado zero puro do qubit (equivalente ao bit clássico "0")
+                        </TextBlock>
+
+                        <TextBlock Style="{StaticResource BodyText}" Foreground="#FFECB3" Margin="0,8,0,0">
+                            <Bold>• |1⟩:</Bold> Representa o estado um puro do qubit (equivalente ao bit clássico "1")
+                        </TextBlock>
+
+                        <TextBlock Style="{StaticResource BodyText}" Foreground="#FFECB3" Margin="0,8,0,0">
+                            <Bold>• |ψ⟩ = α|0⟩ + β|1⟩:</Bold> O qubit pode estar em superposição, onde α e β são amplitudes de probabilidade complexas
+                        </TextBlock>
+
+                        <Border Background="#2A2520" 
+                                CornerRadius="10" 
+                                Padding="16" 
+                                Margin="0,16,0,0">
+                            <StackPanel>
+                                <TextBlock Text="📊 Medição Quântica" 
+                                           FontSize="16" 
+                                           FontWeight="Bold" 
+                                           Foreground="#FFD700"
+                                           Margin="0,0,0,8"/>
+                                <TextBlock Style="{StaticResource BodyText}" Foreground="#D4D4D4">
+                                    Ao medir, o qubit <Bold>colapsa</Bold> para |0⟩ com probabilidade |α|², ou para |1⟩ com probabilidade |β|².
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource BodyText}" Foreground="#D4D4D4" Margin="0,8,0,0">
+                                    Essa é a essência do "poder" quântico: antes da medição, o qubit existe em múltiplos estados simultaneamente!
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Seção Interativa: Portas Quânticas -->
+            <Border Style="{StaticResource SectionBorder}" Background="#202834">
+                <StackPanel>
+                    <TextBlock Text="⚛️ Laboratório Interativo de Portas Quânticas" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Foreground="#FFD700" 
+                               TextAlignment="Center" 
+                               Margin="0,0,0,12"/>
+
+                    <TextBlock Text="Experimente diferentes operações quânticas e observe como cada porta manipula o estado do qubit" 
+                               FontSize="15" 
+                               Foreground="#B3B3B3" 
+                               TextAlignment="Center" 
+                               Margin="0,0,0,20"
+                               TextWrapping="Wrap"/>
+
+                    <!-- Grupo de Portas Básicas -->
+                    <TextBlock Text="Portas de Um Qubit" 
+                               FontSize="14" 
+                               Foreground="#FFD700" 
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,10"/>
+
+                    <WrapPanel HorizontalAlignment="Center" Margin="0,0,0,16">
+                        <Button Content="🔄 Reset |0⟩" 
+                                Style="{StaticResource QuantumButton}"
+                                Foreground="White"
+                                Background="#2A3F5F" 
+                                Click="BtnReset_Click"
+                                ToolTipService.InitialShowDelay="300">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <StackPanel MaxWidth="200">
+                                        <TextBlock Text="Reset" FontWeight="Bold" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Retorna o qubit para o estado puro |0⟩ (estado fundamental)" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+
+                        <Button Content="🌊 Hadamard (H)" 
+                                Style="{StaticResource QuantumButton}"
+                                Foreground="White"
+                                Background="#4A2E6B" 
+                                Click="BtnH_Click">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <StackPanel MaxWidth="220">
+                                        <TextBlock Text="Hadamard Gate" FontWeight="Bold" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Cria superposição: transforma |0⟩ em (|0⟩+|1⟩)/√2, e |1⟩ em (|0⟩-|1⟩)/√2" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+
+                        <Button Content="❌ Pauli-X" 
+                                Style="{StaticResource QuantumButton}"
+                                Foreground="White"
+                                Background="#5A2E2E" 
+                                Click="BtnX_Click">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <StackPanel MaxWidth="180">
+                                        <TextBlock Text="Pauli-X Gate" FontWeight="Bold" Margin="0,0,0,4"/>
+                                        <TextBlock Text="NOT quântico: troca |0⟩ ↔ |1⟩" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+
+                        <Button Content="📐 Pauli-Y" 
+                                Style="{StaticResource QuantumButton}"
+                                Foreground="White"
+                                Background="#254359" 
+                                Click="BtnY_Click">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <StackPanel MaxWidth="200">
+                                        <TextBlock Text="Pauli-Y Gate" FontWeight="Bold" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Inverte com fase imaginária: |0⟩ → i|1⟩, |1⟩ → -i|0⟩" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+
+                        <Button Content="⚡ Pauli-Z" 
+                                Style="{StaticResource QuantumButton}"
+                                Foreground="White"
+                                Background="#2A3B2A" 
+                                Click="BtnZ_Click">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <StackPanel MaxWidth="180">
+                                        <TextBlock Text="Pauli-Z Gate" FontWeight="Bold" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Inversão de fase: |0⟩ → |0⟩, |1⟩ → -|1⟩" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+
+                        <Button Content="📏 Medir" 
+                                Style="{StaticResource QuantumButton}"
+                                Foreground="White"
+                                Background="#253149" 
+                                Click="BtnMedir_Click">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <StackPanel MaxWidth="180">
+                                        <TextBlock Text="Medição" FontWeight="Bold" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Colapsa a superposição para |0⟩ ou |1⟩ probabilisticamente" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                    </WrapPanel>
+
+                    <!-- Porta de Dois Qubits -->
+                    <TextBlock Text="Portas de Múltiplos Qubits" 
+                               FontSize="14" 
+                               Foreground="#FFD700" 
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,10"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="🔗 CNOT (Controlada)" 
+                                Style="{StaticResource QuantumButton}"
+                                Width="180"
+                                Foreground="White"
+                                Background="#43435C" 
+                                Click="BtnCNOT_Click">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <StackPanel MaxWidth="240">
+                                        <TextBlock Text="CNOT Gate" FontWeight="Bold" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Controlled-NOT: se o qubit de controle for |1⟩, inverte o qubit alvo. Base para emaranhamento quântico." TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+
+                        <TextBlock x:Name="txtQubit2Visual" 
+                                   FontSize="18" 
+                                   FontWeight="SemiBold"
+                                   Foreground="#61DFFF" 
+                                   Margin="16,0,0,0" 
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Resultado da Operação -->
+                    <Border Background="#2A2F3A" 
+                            CornerRadius="10" 
+                            Padding="16" 
+                            Margin="0,20,0,20"
+                            MinHeight="60">
+                        <TextBlock x:Name="txtPortaResultado" 
+                                   FontSize="17" 
+                                   FontWeight="SemiBold" 
+                                   Foreground="#FFD700"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                    </Border>
+
+                    <!-- Guia de Referência das Portas -->
+                    <Border Background="#242529" 
+                            CornerRadius="12" 
+                            Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="📚 Guia de Referência Rápida" 
+                                       FontSize="18" 
+                                       FontWeight="Bold" 
+                                       Foreground="#FFD700" 
+                                       Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Reset -->
+                                <Border Grid.Row="0" Background="#1E2530" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock FontSize="14" Foreground="#3B9AE1" FontWeight="SemiBold">
+                                            🔄 Reset
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#B3B3B3" Margin="20,4,0,0" TextWrapping="Wrap">
+                                            Reinicializa o qubit para o estado fundamental |0⟩
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Hadamard -->
+                                <Border Grid.Row="1" Background="#1E2530" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock FontSize="14" Foreground="#9649CB" FontWeight="SemiBold">
+                                            🌊 Hadamard (H)
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#B3B3B3" Margin="20,4,0,0" TextWrapping="Wrap">
+                                            Cria superposição uniforme: o qubit passa a estar simultaneamente em |0⟩ e |1⟩
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Pauli-X -->
+                                <Border Grid.Row="2" Background="#1E2530" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock FontSize="14" Foreground="#FF7E5A" FontWeight="SemiBold">
+                                            ❌ Pauli-X
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#B3B3B3" Margin="20,4,0,0" TextWrapping="Wrap">
+                                            Porta NOT quântica: inverte os estados |0⟩ ↔ |1⟩
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Pauli-Y -->
+                                <Border Grid.Row="3" Background="#1E2530" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock FontSize="14" Foreground="#7CDEEF" FontWeight="SemiBold">
+                                            📐 Pauli-Y
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#B3B3B3" Margin="20,4,0,0" TextWrapping="Wrap">
+Inverte estados com rotação de fase imaginária no plano YZ da esfera de Bloch
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <!-- Pauli-Z -->
+                                <Border Grid.Row="4" Background="#1E2530" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock FontSize="14" Foreground="#91D970" FontWeight="SemiBold">
+                                        ⚡ Pauli-Z
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#B3B3B3" Margin="20,4,0,0" TextWrapping="Wrap">
+                                        Inversão de fase: preserva |0⟩ mas inverte o sinal de |1⟩, alterando a fase relativa
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <!-- Pauli-Z -->
+                                <Border Grid.Row="4" Background="#1E2530" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock FontSize="14" Foreground="#91D970" FontWeight="SemiBold">
+                                        ⚡ Pauli-Z
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#B3B3B3" Margin="20,4,0,0" TextWrapping="Wrap">
+                                        Inversão de fase: preserva |0⟩ mas inverte o sinal de |1⟩, alterando a fase relativa
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Medição -->
+                                <Border Grid.Row="5" Background="#1E2530" CornerRadius="6" Padding="12" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock FontSize="14" Foreground="#61DFFF" FontWeight="SemiBold">
+                                        📏 Medição
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#B3B3B3" Margin="20,4,0,0" TextWrapping="Wrap">
+                                        Colapsa a superposição para |0⟩ ou |1⟩ de forma probabilística, destruindo a informação quântica
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- CNOT -->
+                                <Border Grid.Row="6" Background="#1E2530" CornerRadius="6" Padding="12">
+                                    <StackPanel>
+                                        <TextBlock FontSize="14" Foreground="#EFCB68" FontWeight="SemiBold">
+                                        🔗 CNOT (Controlada)
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#B3B3B3" Margin="20,4,0,0" TextWrapping="Wrap">
+                                        Opera em dois qubits: se o qubit de controle for |1⟩, inverte o qubit alvo. Fundamental para criar emaranhamento quântico e implementar algoritmos como Deutsch-Jozsa e Shor
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Nota Adicional -->
+                    <Border Background="#2A2520" 
+                        CornerRadius="10" 
+                        Padding="16" 
+                        Margin="0,16,0,0"
+                        BorderBrush="#FFD700"
+                        BorderThickness="1">
+                        <StackPanel>
+                            <TextBlock Text="💡 Dica Importante" 
+                                   FontSize="15" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFD700"
+                                   Margin="0,0,0,8"/>
+                            <TextBlock FontSize="14" 
+                                   Foreground="#D4D4D4" 
+                                   TextWrapping="Wrap">
+                            As portas quânticas são <Bold>reversíveis</Bold> (exceto a medição). Você pode aplicar múltiplas operações em sequência para criar circuitos quânticos complexos. Experimente combinar diferentes portas para observar comportamentos interessantes!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Rodapé Informativo -->
+            <Border Background="#1A1D23" 
+                CornerRadius="12" 
+                Padding="20"
+                Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="🎓 Próximos Passos na Computação Quântica" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Foreground="#FFD700"
+                           TextAlignment="Center"
+                           Margin="0,0,0,12"/>
+
+                    <TextBlock FontSize="14" 
+                           Foreground="#B3B3B3" 
+                           TextAlignment="Center"
+                           TextWrapping="Wrap">
+                    Agora que você compreende os estados básicos e as portas quânticas fundamentais, está pronto para explorar algoritmos quânticos como Deutsch-Jozsa, Grover e Shor, além de conceitos avançados como emaranhamento e teleportação quântica.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

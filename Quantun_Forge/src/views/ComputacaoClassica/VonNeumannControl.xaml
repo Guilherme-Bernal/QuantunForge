@@ -1,114 +1,461 @@
 ﻿<UserControl x:Class="Quantun_Forge.src.views.VonNeumannControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="#1E1E1E">
+             Background="#F5F5F5">
+
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style x:Key="ComponentBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#ECF0F1"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="8"/>
+        </Style>
+
+        <Style x:Key="ActiveComponentStyle" TargetType="Border">
+            <Setter Property="Background" Value="#E8F8F5"/>
+            <Setter Property="BorderBrush" Value="#1ABC9C"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="8"/>
+        </Style>
+
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2E86C1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="30">
+        <Grid Margin="30,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- Título -->
-            <TextBlock Text="🧠 Simulador da Arquitetura de Von Neumann"
-                       Foreground="White" FontSize="22" FontWeight="Bold"
-                       HorizontalAlignment="Center" Margin="0,0,0,20"/>
+            <!-- Coluna Principal - Simulador -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="Simulador - Arquitetura de Von Neumann" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="Modelo computacional clássico" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
 
-            <!-- História -->
-            <Border Background="#2D2D30" CornerRadius="8" Padding="15" Margin="0,0,0,20">
-                <StackPanel>
-                    <TextBlock Text="📜 História da Arquitetura de Von Neumann"
-                               Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,0,0,5"/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="14"
-                               Text="A arquitetura de Von Neumann foi proposta em 1945 por John von Neumann. Ela define a estrutura básica dos computadores modernos, com componentes bem definidos: Unidade de Controle, Memória, Unidade Lógica e Aritmética (ULA), Entrada e Saída. A principal característica dessa arquitetura é o uso de uma única memória para armazenar dados e instruções."/>
-                </StackPanel>
-            </Border>
-
-            <!-- Como Funciona -->
-            <Border Background="#2D2D30" CornerRadius="8" Padding="15" Margin="0,0,0,20">
-                <StackPanel>
-                    <TextBlock Text="⚙️ Como Funciona a Arquitetura"
-                               Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,0,0,5"/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="14"
-                               Text="O processador busca instruções da memória, decodifica, executa e armazena o resultado. A Unidade de Controle coordena esse fluxo. A ULA realiza os cálculos. Tudo passa pela memória central, compartilhada entre dados e instruções."/>
-                </StackPanel>
-            </Border>
-
-            <!-- Como Usar -->
-            <Border Background="#2D2D30" CornerRadius="8" Padding="15" Margin="0,0,0,30">
-                <StackPanel>
-                    <TextBlock Text="🧪 Como Usar este Simulador"
-                               Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,0,0,5"/>
-                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" FontSize="14"
-                               Text="1. Digite um número no campo de Entrada. 
-2. Clique em 'Executar Instrução'. 
-3. O valor será somado com a posição M[1] da memória. 
-4. O resultado será salvo em M[4] e exibido na Saída. 
-5. O log abaixo mostrará cada passo do ciclo simulado."/>
-                </StackPanel>
-            </Border>
-
-            <!-- Interface Visual -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <!-- Entrada -->
-                <Border Grid.Row="0" Grid.Column="0" Background="#2D2D30" CornerRadius="8" Padding="10" Margin="10">
+                <!-- Componentes da Arquitetura -->
+                <Border Style="{StaticResource SectionBorderStyle}">
                     <StackPanel>
-                        <TextBlock Text="📥 Entrada (Input)" Foreground="White" FontWeight="Bold"/>
-                        <TextBox x:Name="txtInput" Height="30" Margin="0,5,0,0"/>
+                        <TextBlock Text="🖥️ Componentes da Arquitetura" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,20"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- CPU - Unidade de Controle -->
+                            <Border x:Name="borderControle" Grid.Row="0" Grid.Column="0" Style="{StaticResource ComponentBorderStyle}">
+                                <StackPanel>
+                                    <TextBlock Text="🧠 Unidade de Controle" 
+                                               FontWeight="Bold" 
+                                               FontSize="14" 
+                                               Foreground="#2C3E50"/>
+                                    <Separator Background="#E0E0E0" Margin="0,8,0,8"/>
+                                    <TextBlock Text="Estado:" FontSize="11" Foreground="#7F8C8D"/>
+                                    <TextBlock x:Name="txtControle" 
+                                               Text="Aguardando instrução" 
+                                               FontSize="12" 
+                                               Foreground="#2C3E50"
+                                               TextWrapping="Wrap"
+                                               Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- CPU - ALU -->
+                            <Border x:Name="borderALU" Grid.Row="0" Grid.Column="1" Style="{StaticResource ComponentBorderStyle}">
+                                <StackPanel>
+                                    <TextBlock Text="🔢 ALU (ULA)" 
+                                               FontWeight="Bold" 
+                                               FontSize="14" 
+                                               Foreground="#2C3E50"/>
+                                    <Separator Background="#E0E0E0" Margin="0,8,0,8"/>
+                                    <TextBlock Text="Operação:" FontSize="11" Foreground="#7F8C8D"/>
+                                    <TextBlock x:Name="txtALU" 
+                                               Text="Nenhuma" 
+                                               FontSize="12" 
+                                               Foreground="#2C3E50"
+                                               TextWrapping="Wrap"
+                                               Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Memória Principal -->
+                            <Border x:Name="borderMemoria" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource ComponentBorderStyle}">
+                                <StackPanel>
+                                    <TextBlock Text="💾 Memória Principal (RAM)" 
+                                               FontWeight="Bold" 
+                                               FontSize="14" 
+                                               Foreground="#2C3E50"
+                                               Margin="0,0,0,10"/>
+                                    <ScrollViewer MaxHeight="150" VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl x:Name="lstMemoria">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="#FFFFFF" 
+                                                            BorderBrush="#D5DBDB" 
+                                                            BorderThickness="1" 
+                                                            Padding="8" 
+                                                            Margin="2">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Text="{Binding Endereco}" 
+                                                                       FontFamily="Consolas" 
+                                                                       FontSize="12" 
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#7F8C8D"
+                                                                       Margin="0,0,15,0"/>
+                                                            <TextBlock Grid.Column="1" 
+                                                                       Text="{Binding Valor}" 
+                                                                       FontFamily="Consolas" 
+                                                                       FontSize="12"
+                                                                       Foreground="#2C3E50"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                    <TextBlock Text="8 endereços de memória disponíveis" 
+                                               FontSize="10" 
+                                               Foreground="#95A5A6" 
+                                               Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Entrada/Saída -->
+                            <Border x:Name="borderIO" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource ComponentBorderStyle}">
+                                <StackPanel>
+                                    <TextBlock Text="🔌 Entrada/Saída (I/O)" 
+                                               FontWeight="Bold" 
+                                               FontSize="14" 
+                                               Foreground="#2C3E50"
+                                               Margin="0,0,0,10"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                            <TextBlock Text="📥 INPUT" FontSize="12" FontWeight="Bold" Foreground="#27AE60"/>
+                                            <TextBox x:Name="txtInput" 
+                                                     Height="35" 
+                                                     FontSize="16"
+                                                     FontFamily="Consolas"
+                                                     Margin="0,5,0,0"
+                                                     ToolTip="Digite um valor numérico"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                            <TextBlock Text="📤 OUTPUT" FontSize="12" FontWeight="Bold" Foreground="#E74C3C"/>
+                                            <Border Background="#FFFFFF" 
+                                                    BorderBrush="#E0E0E0" 
+                                                    BorderThickness="1" 
+                                                    Height="35" 
+                                                    Margin="0,5,0,0"
+                                                    VerticalAlignment="Center">
+                                                <TextBlock x:Name="txtOutput" 
+                                                           Text="--" 
+                                                           FontSize="20" 
+                                                           FontWeight="Bold"
+                                                           FontFamily="Consolas"
+                                                           Foreground="#E74C3C"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </StackPanel>
                 </Border>
 
-                <!-- Memória -->
-                <Border Grid.Row="0" Grid.Column="1" Background="#2D2D30" CornerRadius="8" Padding="10" Margin="10">
+                <!-- Controles de Execução -->
+                <Border Style="{StaticResource SectionBorderStyle}">
                     <StackPanel>
-                        <TextBlock Text="💾 Memória" Foreground="White" FontWeight="Bold"/>
-                        <ListBox x:Name="lstMemoria" Height="100" Margin="0,5,0,0"/>
+                        <TextBlock Text="🎮 Controles de Execução" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Operações Disponíveis:" 
+                                   FontSize="12" 
+                                   Foreground="#2C3E50" 
+                                   Margin="0,0,0,10"/>
+
+                        <WrapPanel>
+                            <Button Content="➕ Somar (ADD)" 
+                                    Style="{StaticResource ButtonPrimaryStyle}"
+                                    Click="ExecutarADD_Click"
+                                    ToolTip="Soma o valor de INPUT com M[1] e armazena em M[4]"/>
+                            <Button Content="➖ Subtrair (SUB)" 
+                                    Style="{StaticResource ButtonPrimaryStyle}"
+                                    Click="ExecutarSUB_Click"
+                                    ToolTip="Subtrai M[1] do valor de INPUT e armazena em M[4]"/>
+                            <Button Content="✖️ Multiplicar (MUL)" 
+                                    Style="{StaticResource ButtonPrimaryStyle}"
+                                    Click="ExecutarMUL_Click"
+                                    ToolTip="Multiplica INPUT por M[1] e armazena em M[4]"/>
+                            <Button Content="📥 Carregar (LOAD)" 
+                                    Style="{StaticResource ButtonPrimaryStyle}"
+                                    Click="ExecutarLOAD_Click"
+                                    ToolTip="Carrega valor de INPUT para M[0]"/>
+                            <Button Content="📤 Armazenar (STORE)" 
+                                    Style="{StaticResource ButtonPrimaryStyle}"
+                                    Click="ExecutarSTORE_Click"
+                                    ToolTip="Envia valor de M[4] para OUTPUT"/>
+                            <Button Content="🔄 Resetar" 
+                                    Style="{StaticResource ButtonSecondaryStyle}"
+                                    Click="Resetar_Click"
+                                    ToolTip="Limpa toda a memória e reinicia"/>
+                        </WrapPanel>
+
+                        <TextBlock Text="💡 Dica: Execute LOAD primeiro para carregar valores na memória" 
+                                   FontSize="11" 
+                                   Foreground="#95A5A6" 
+                                   Margin="0,15,0,0"
+                                   TextWrapping="Wrap"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Unidade de Controle -->
-                <Border Grid.Row="1" Grid.Column="0" Background="#2D2D30" CornerRadius="8" Padding="10" Margin="10">
+                <!-- Registradores -->
+                <Border Style="{StaticResource SectionBorderStyle}">
                     <StackPanel>
-                        <TextBlock Text="🧠 Unidade de Controle" Foreground="White" FontWeight="Bold"/>
-                        <TextBlock x:Name="lblControle" Foreground="LightGray" FontSize="14" Margin="0,5,0,0"/>
+                        <TextBlock Text="📦 Registradores da CPU" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="5">
+                                <TextBlock Text="PC (Program Counter)" FontSize="11" FontWeight="Bold" Foreground="#7F8C8D"/>
+                                <Border Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Padding="8" Margin="0,5,0,0">
+                                    <TextBlock x:Name="txtPC" Text="0x00" FontFamily="Consolas" FontSize="14" Foreground="#2C3E50"/>
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="5">
+                                <TextBlock Text="MAR (Address Register)" FontSize="11" FontWeight="Bold" Foreground="#7F8C8D"/>
+                                <Border Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Padding="8" Margin="0,5,0,0">
+                                    <TextBlock x:Name="txtMAR" Text="--" FontFamily="Consolas" FontSize="14" Foreground="#2C3E50"/>
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="5">
+                                <TextBlock Text="MDR (Data Register)" FontSize="11" FontWeight="Bold" Foreground="#7F8C8D"/>
+                                <Border Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Padding="8" Margin="0,5,0,0">
+                                    <TextBlock x:Name="txtMDR" Text="--" FontFamily="Consolas" FontSize="14" Foreground="#2C3E50"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
                     </StackPanel>
                 </Border>
 
-                <!-- ULA -->
-                <Border Grid.Row="1" Grid.Column="1" Background="#2D2D30" CornerRadius="8" Padding="10" Margin="10">
+                <!-- Log de Execução -->
+                <Border Style="{StaticResource SectionBorderStyle}">
                     <StackPanel>
-                        <TextBlock Text="➗ ULA (Lógica e Aritmética)" Foreground="White" FontWeight="Bold"/>
-                        <TextBlock x:Name="lblUla" Foreground="LightGray" FontSize="14" Margin="0,5,0,0"/>
+                        <TextBlock Text="📋 Log de Execução" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <ListBox x:Name="lstLog" 
+                                 Height="200" 
+                                 Background="#FAFAFA"
+                                 BorderBrush="#E0E0E0"
+                                 BorderThickness="1"
+                                 FontFamily="Consolas"
+                                 FontSize="11"/>
+
+                        <Button Content="🗑️ Limpar Log" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Click="LimparLog_Click"
+                                HorizontalAlignment="Left"
+                                Margin="0,10,0,0"/>
                     </StackPanel>
                 </Border>
-
-                <!-- Saída -->
-                <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#2D2D30" CornerRadius="8" Padding="10" Margin="10">
-                    <StackPanel>
-                        <TextBlock Text="📤 Saída (Output)" Foreground="White" FontWeight="Bold"/>
-                        <TextBlock x:Name="lblSaida" Foreground="#00C8FF" FontSize="20" FontWeight="Bold" Margin="0,5,0,0"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-
-            <!-- Botão + Log -->
-            <StackPanel Margin="0,20,0,0">
-                <Button Content="▶️ Executar Instrução"
-                        Click="ExecutarInstrucao_Click"
-                        Height="40" FontSize="14" FontWeight="Bold"
-                        Background="#007ACC" Foreground="White"
-                        Margin="0,0,0,10" />
-
-                <TextBlock Text="📋 Log de Execução" Foreground="White" FontWeight="Bold" Margin="0,5,0,5"/>
-                <ListBox x:Name="lstLog" Height="100" Background="#1E1E1E" Foreground="LightGray"/>
             </StackPanel>
 
-        </StackPanel>
+            <!-- Coluna Lateral - Informações -->
+            <StackPanel Grid.Column="2">
+                <!-- Sobre a Arquitetura -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📚 Sobre" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="A Arquitetura de Von Neumann foi proposta por John von Neumann em 1945." 
+                                   FontSize="11" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"
+                                   LineHeight="16"
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Características principais:" 
+                                   FontSize="11" 
+                                   FontWeight="Bold"
+                                   Foreground="#2C3E50" 
+                                   Margin="0,0,0,5"/>
+
+                        <TextBlock Text="• Memória unificada para dados e instruções" 
+                                   FontSize="10" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"/>
+                        <TextBlock Text="• Processamento sequencial" 
+                                   FontSize="10" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"/>
+                        <TextBlock Text="• Ciclo fetch-decode-execute" 
+                                   FontSize="10" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"/>
+                        <TextBlock Text="• Barramento único (gargalo)" 
+                                   FontSize="10" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Componentes -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔧 Componentes" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <StackPanel Margin="0,0,0,10">
+                            <TextBlock Text="Unidade de Controle" FontSize="11" FontWeight="Bold" Foreground="#2C3E50"/>
+                            <TextBlock Text="Coordena o fluxo de dados" FontSize="10" Foreground="#7F8C8D" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,0,10">
+                            <TextBlock Text="ALU" FontSize="11" FontWeight="Bold" Foreground="#2C3E50"/>
+                            <TextBlock Text="Executa operações aritméticas" FontSize="10" Foreground="#7F8C8D" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,0,10">
+                            <TextBlock Text="Memória" FontSize="11" FontWeight="Bold" Foreground="#2C3E50"/>
+                            <TextBlock Text="Armazena dados e instruções" FontSize="10" Foreground="#7F8C8D" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="I/O" FontSize="11" FontWeight="Bold" Foreground="#2C3E50"/>
+                            <TextBlock Text="Interface com mundo externo" FontSize="10" Foreground="#7F8C8D" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Estatísticas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Estatísticas" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <StackPanel Margin="0,5">
+                            <TextBlock Text="Instruções executadas:" FontSize="11" Foreground="#7F8C8D"/>
+                            <TextBlock x:Name="txtInstrucoesExecutadas" Text="0" FontSize="16" FontWeight="Bold" Foreground="#3498DB"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,5">
+                            <TextBlock Text="Acessos à memória:" FontSize="11" Foreground="#7F8C8D"/>
+                            <TextBlock x:Name="txtAcessosMemoria" Text="0" FontSize="16" FontWeight="Bold" Foreground="#E67E22"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,5">
+                            <TextBlock Text="Operações ALU:" FontSize="11" Foreground="#7F8C8D"/>
+                            <TextBlock x:Name="txtOperacoesALU" Text="0" FontSize="16" FontWeight="Bold" Foreground="#27AE60"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
     </ScrollViewer>
 </UserControl>

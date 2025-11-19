@@ -1,0 +1,811 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica.MecanicaEstatisticaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Fisica.FisicaClassica"
+        mc:Ignorable="d"
+        Title="Mecânica Estatística - Quantum Forge" 
+        Height="800" Width="1200"
+        Background="#ECF0F1" 
+        WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#9B59B6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#8E44AD"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#F4ECF7"/>
+            <Setter Property="BorderBrush" Value="#9B59B6"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="EquationBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#9B59B6"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Mecânica Estatística" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="Da Desordem Microscópica à Ordem Macroscópica"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução -->
+                    <TextBlock Style="{StaticResource NormalText}">
+                        <Run Foreground="#9B59B6" FontWeight="Bold">Mecânica Estatística</Run> é a ponte entre o mundo 
+                        microscópico (átomos e moléculas) e o mundo macroscópico (termodinâmica). Usando 
+                        <Run FontWeight="Bold">métodos estatísticos</Run>, conseguimos derivar propriedades termodinâmicas 
+                        a partir do comportamento de bilhões de partículas!
+                    </TextBlock>
+
+                    <!-- Conceitos Fundamentais -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Conceitos Fundamentais
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#9B59B6"
+                                     Margin="0,0,0,10">
+                                🔬 Postulados da Mecânica Estatística
+                            </TextBlock>
+
+                            <Border Background="White" 
+                                    BorderBrush="#9B59B6" 
+                                    BorderThickness="2" 
+                                    CornerRadius="6" 
+                                    Padding="15" 
+                                    Margin="0,10,0,0">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Ensemble:</Run> Coleção de todos os microestados possíveis
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Equiprobabilidade:</Run> Microestados acessíveis têm igual probabilidade
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Ergodicidade:</Run> Médias temporais = médias do ensemble
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ✓ <Run FontWeight="Bold">Limite Termodinâmico:</Run> N → ∞ (número de partículas)
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Entropia de Boltzmann -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        1. Entropia de Boltzmann
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#F4ECF7" BorderBrush="#9B59B6">
+                        <StackPanel>
+                            <TextBlock Text="🎲 A Medida da Desordem" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#8E44AD" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                A fórmula mais famosa da mecânica estatística relaciona entropia (propriedade macroscópica) 
+                                com o número de microestados Ω (propriedade microscópica). Esta equação está gravada no 
+                                túmulo de Boltzmann em Viena!
+                            </TextBlock>
+
+                            <Border Background="#E8DAEF" BorderBrush="#7D3C98" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="S = k_B ln Ω" 
+                                             FontSize="28" 
+                                             FontWeight="Bold" 
+                                             Foreground="#6C3483"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="k_B = 1.38×10⁻²³ J/K (Constante de Boltzmann)" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,0">
+                                💡 <Bold>Ω</Bold> = número de microestados compatíveis com o macroestado
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                💡 <Bold>S</Bold> mede a "quantidade de desordem" ou informação faltante
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                💡 Segunda Lei da Termodinâmica: <Bold>ΔS ≥ 0</Bold> (processos irreversíveis)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Distribuições Estatísticas -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        2. Distribuições Estatísticas
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#E8F8F5" BorderBrush="#16A085" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="📊 Como as Partículas se Distribuem" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#138D75"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Diferentes tipos de partículas seguem diferentes estatísticas quânticas:
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#16A085" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="⚛️ Maxwell-Boltzmann (Partículas Clássicas)" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="n_i = g_i · e^(-(E_i - μ)/(k_B T))" 
+                                             FontSize="11" 
+                                             Foreground="#2C3E50"
+                                             Margin="5,2,0,5"/>
+                                    <TextBlock Text="Para partículas distinguíveis a altas temperaturas" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             FontStyle="Italic"
+                                             Margin="0,0,0,10"/>
+
+                                    <TextBlock Text="🌊 Bose-Einstein (Bósons)" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="n_i = g_i / (e^((E_i - μ)/(k_B T)) - 1)" 
+                                             FontSize="11" 
+                                             Foreground="#2C3E50"
+                                             Margin="5,2,0,5"/>
+                                    <TextBlock Text="Spin inteiro: fótons, glúons, bóson de Higgs" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             FontStyle="Italic"
+                                             Margin="0,0,0,10"/>
+
+                                    <TextBlock Text="⚡ Fermi-Dirac (Férmions)" 
+                                             FontSize="13" 
+                                             FontWeight="Bold" 
+                                             Foreground="#117A65"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="n_i = g_i / (e^((E_i - μ)/(k_B T)) + 1)" 
+                                             FontSize="11" 
+                                             Foreground="#2C3E50"
+                                             Margin="5,2,0,5"/>
+                                    <TextBlock Text="Spin semi-inteiro: elétrons, prótons, quarks" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             FontStyle="Italic"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Função de Partição -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        3. Função de Partição
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#FDEDEC" BorderBrush="#E74C3C" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🔑 A Chave da Termodinâmica" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#C0392B" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                A <Run FontWeight="Bold">função de partição Z</Run> contém TODA a informação termodinâmica 
+                                do sistema. Conhecendo Z, podemos calcular qualquer propriedade!
+                            </TextBlock>
+
+                            <Border Background="#FADBD8" BorderBrush="#943126" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Z = Σ e^(-E_i / k_B T)" 
+                                             FontSize="24" 
+                                             FontWeight="Bold" 
+                                             Foreground="#943126"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="Soma sobre todos os microestados i" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,5" FontWeight="SemiBold">
+                                📈 Propriedades derivadas de Z:
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Energia livre:</Bold> F = -k_B T ln Z
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Energia média:</Bold> ⟨E⟩ = -∂(ln Z)/∂β (β = 1/k_B T)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Entropia:</Bold> S = k_B (ln Z + β⟨E⟩)
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Pressão:</Bold> P = k_B T (∂ln Z/∂V)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Ensembles -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        4. Ensembles Estatísticos
+                    </TextBlock>
+
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="🎭 Diferentes Cenários Físicos" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,0,0,10">
+                                Um <Run FontWeight="Bold">ensemble</Run> é uma coleção de réplicas mentais do sistema 
+                                em diferentes microestados, mas com mesmas condições macroscópicas.
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔒 <Run FontWeight="Bold">Microcanônico (NVE):</Run> Sistema isolado (E, V, N fixos)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🌡️ <Run FontWeight="Bold">Canônico (NVT):</Run> Banho térmico (T, V, N fixos)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        ⚖️ <Run FontWeight="Bold">Grande Canônico (μVT):</Run> Reservatório de partículas e energia
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        📦 <Run FontWeight="Bold">Isobárico-Isotérmico (NPT):</Run> Pressão e temperatura constantes
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Transições de Fase -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        5. Transições de Fase
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontWeight="Bold" 
+                                     Foreground="#9B59B6"
+                                     Margin="0,0,0,10">
+                                ❄️🌊💨 Mudanças de Estado
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                <Run FontWeight="Bold">Transições de fase</Run> ocorrem quando o sistema muda 
+                                qualitativamente devido a variações de temperatura ou pressão.
+                            </TextBlock>
+
+                            <Border Background="White" BorderBrush="#9B59B6" BorderThickness="2" CornerRadius="6" Padding="15" Margin="0,10,0,10">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">1ª Ordem:</Run> Descontinuidade na derivada (fusão, ebulição)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">2ª Ordem:</Run> Descontinuidade na 2ª derivada (ferromagnética)
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Ponto Crítico:</Run> Flutuações em todas as escalas
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3">
+                                        🔹 <Run FontWeight="Bold">Parâmetro de Ordem:</Run> Quantifica a transição
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="11" Margin="0,5,0,0">
+                                🔬 <Run FontWeight="Bold">Modelo de Ising:</Run> Sistema paradigmático para transições de fase
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Teorema de Equipartição -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        6. Teorema de Equipartição da Energia
+                    </TextBlock>
+
+                    <Border Style="{StaticResource EquationBox}" Background="#FEF5E7" BorderBrush="#F39C12" Margin="0,8">
+                        <StackPanel>
+                            <TextBlock Text="⚖️ Energia Distribuída Igualmente" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#D68910" 
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0,0,0,10">
+                                Cada <Run FontWeight="Bold">grau de liberdade quadrático</Run> contribui com 
+                                k_B T/2 para a energia média do sistema.
+                            </TextBlock>
+
+                            <Border Background="#FAD7A0" BorderBrush="#B9770E" BorderThickness="2" CornerRadius="6" Padding="12" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="⟨E⟩ = (f/2) k_B T" 
+                                             FontSize="22" 
+                                             FontWeight="Bold" 
+                                             Foreground="#BA4A00"
+                                             HorizontalAlignment="Center"
+                                             Margin="0,5"/>
+                                    <TextBlock Text="f = número de graus de liberdade" 
+                                             FontSize="10" 
+                                             Foreground="#7F8C8D"
+                                             HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,10,0,5" FontWeight="SemiBold">
+                                🌡️ Exemplos:
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Gás monoatômico:</Bold> f = 3 (translação) → ⟨E⟩ = (3/2)k_B T
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Gás diatômico:</Bold> f = 5 (trans. + rotação) → ⟨E⟩ = (5/2)k_B T
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12" Margin="0,3,0,0">
+                                • <Bold>Sólido cristalino:</Bold> f = 6 (3 cinéticas + 3 potenciais) → ⟨E⟩ = 3k_B T
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Aplicações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        Aplicações da Mecânica Estatística
+                    </TextBlock>
+
+                    <StackPanel Margin="0,5,0,10">
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌡️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Termodinâmica:</Run> Derivação das leis da termodinâmica
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🧊" FontSize="16"/> 
+                                <Run FontWeight="Bold">Transições de Fase:</Run> Modelo de Ising, cristalização
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="⚛️" FontSize="16"/> 
+                                <Run FontWeight="Bold">Física Quântica:</Run> Condensação de Bose-Einstein
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🌌" FontSize="16"/> 
+                                <Run FontWeight="Bold">Cosmologia:</Run> Radiação de corpo negro, CMB
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="💻" FontSize="16"/> 
+                                <Run FontWeight="Bold">Computação:</Run> Algoritmos de Monte Carlo
+                            </TextBlock>
+                        </Border>
+                        <Border Style="{StaticResource InfoBox}">
+                            <TextBlock Style="{StaticResource NormalText}" Margin="0">
+                                <Run Text="🧬" FontSize="16"/> 
+                                <Run FontWeight="Bold">Biofísica:</Run> Dobramento de proteínas
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Curiosidade -->
+                    <Border Background="#E8DAEF" BorderBrush="#8E44AD" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🌟 Curiosidade: O Demônio de Maxwell" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#7D3C98"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" FontSize="12">
+                                Em 1867, James Clerk Maxwell propôs um experimento mental: um "demônio" microscópico que 
+                                separa moléculas rápidas e lentas, aparentemente violando a Segunda Lei da Termodinâmica. 
+                                O paradoxo foi resolvido apenas em 1929 por Leó Szilárd, que mostrou que o ato de medir 
+                                e processar informação gera entropia! Isso conectou informação com termodinâmica e deu origem 
+                                à física da informação. O demônio não pode funcionar porque adquirir informação sobre as 
+                                moléculas tem um custo termodinâmico que compensa a diminuição de entropia!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: SIMULADOR DE DISTRIBUIÇÕES -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Simulador Estatístico" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Visualize as distribuições estatísticas!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- Área de Visualização -->
+                <Border Grid.Row="1" Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="2" CornerRadius="8" Padding="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Seletor de Simulação -->
+                        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                            <TextBlock Text="Escolha uma Simulação:" FontWeight="SemiBold" FontSize="13" Margin="0,0,0,8"/>
+                            <ComboBox x:Name="StatisticsSelector" 
+                                    FontSize="12" 
+                                    SelectionChanged="StatisticsSelector_Changed"
+                                    Padding="8">
+                                <ComboBoxItem Content="📊 Distribuição de Maxwell-Boltzmann" IsSelected="True"/>
+                                <ComboBoxItem Content="🌊 Distribuição de Bose-Einstein"/>
+                                <ComboBoxItem Content="⚡ Distribuição de Fermi-Dirac"/>
+                                <ComboBoxItem Content="🎲 Modelo de Ising 2D"/>
+                                <ComboBoxItem Content="🔥 Diagrama de Fase (P-T)"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Canvas de Visualização -->
+                        <Border Grid.Row="1" Background="White" BorderBrush="#9B59B6" BorderThickness="2" CornerRadius="6" Margin="0,10">
+                            <Canvas x:Name="StatisticsCanvas" Background="White" />
+                        </Border>
+
+                        <!-- Controles -->
+                        <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                            <TextBlock Text="Parâmetros:" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8"/>
+
+                            <!-- Temperatura -->
+                            <StackPanel x:Name="TemperaturePanel" Margin="0,5">
+                                <TextBlock Text="Temperatura (K):" FontSize="11" Foreground="#7F8C8D"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <Slider x:Name="TemperatureSlider" 
+                                          Width="200" 
+                                          Minimum="100" 
+                                          Maximum="1000" 
+                                          Value="300"
+                                          TickFrequency="10"
+                                          ValueChanged="Parameter_Changed"/>
+                                    <TextBlock x:Name="TemperatureValue" 
+                                             Text="300 K" 
+                                             Margin="10,0,0,0" 
+                                             FontWeight="Bold"
+                                             Foreground="#9B59B6"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Número de Partículas -->
+                            <StackPanel x:Name="ParticlesPanel" Margin="0,5">
+                                <TextBlock Text="Número de Partículas:" FontSize="11" Foreground="#7F8C8D"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <Slider x:Name="ParticlesSlider" 
+                                          Width="200" 
+                                          Minimum="100" 
+                                          Maximum="2000" 
+                                          Value="500"
+                                          TickFrequency="100"
+                                          ValueChanged="Parameter_Changed"/>
+                                    <TextBlock x:Name="ParticlesValue" 
+                                             Text="500" 
+                                             Margin="10,0,0,0" 
+                                             FontWeight="Bold"
+                                             Foreground="#9B59B6"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Potencial Químico (para Grande Canônico) -->
+                            <StackPanel x:Name="ChemicalPotentialPanel" Margin="0,5" Visibility="Collapsed">
+                                <TextBlock Text="Potencial Químico μ (eV):" FontSize="11" Foreground="#7F8C8D"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,3">
+                                    <Slider x:Name="ChemicalPotentialSlider" 
+                                          Width="200" 
+                                          Minimum="-2" 
+                                          Maximum="2" 
+                                          Value="0"
+                                          TickFrequency="0.1"
+                                          ValueChanged="Parameter_Changed"/>
+                                    <TextBlock x:Name="ChemicalPotentialValue" 
+                                             Text="0.00 eV" 
+                                             Margin="10,0,0,0" 
+                                             FontWeight="Bold"
+                                             Foreground="#9B59B6"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Botões de Controle -->
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" Content="▶ SIMULAR" Height="35" Style="{StaticResource ButtonStyle}" FontSize="12" Click="Simulate_Click"/>
+                                <Button Grid.Column="2" Content="🔄 LIMPAR" Height="35" Style="{StaticResource SecondaryButtonStyle}" FontSize="12" Click="Clear_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Informações e Interpretação -->
+                <StackPanel Grid.Row="2" Margin="0,15,0,0">
+                    <Border Background="#F4ECF7" BorderBrush="#9B59B6" BorderThickness="1" CornerRadius="6" Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="📊 Sobre a Simulação Atual" 
+                                     FontWeight="Bold" 
+                                     FontSize="12"
+                                     Foreground="#8E44AD"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock x:Name="CurrentSimulationInfo" 
+                                     FontSize="11"
+                                     Foreground="#2C3E50"
+                                     TextWrapping="Wrap"
+                                     Text="Distribuição de Maxwell-Boltzmann: descreve a distribuição de velocidades de partículas clássicas em equilíbrio térmico. Válida para gases ideais."/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#E8F8F5" BorderBrush="#16A085" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,10,0,0">
+                        <StackPanel>
+                            <TextBlock Text="💡 O que Observar" 
+                                     FontWeight="Bold" 
+                                     FontSize="11"
+                                     Foreground="#138D75"
+                                     Margin="0,0,0,5"/>
+                            <TextBlock x:Name="ObservationText" 
+                                     FontSize="10"
+                                     Foreground="#2C3E50"
+                                     TextWrapping="Wrap"
+                                     Text="Observe como a distribuição muda com a temperatura. Em altas temperaturas, mais partículas têm energias elevadas. O pico se desloca para energias maiores."/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Comparação de Estatísticas -->
+                    <Expander Header="📚 Comparação de Estatísticas" 
+                            IsExpanded="False" 
+                            Margin="0,10,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            FontSize="11"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" BorderBrush="#9B59B6" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Maxwell-Boltzmann (Clássica):" 
+                                             Foreground="#8E44AD" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="• Partículas distinguíveis" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="• Sem limite de ocupação" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="• Válida para T alta" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="Exemplo: gases moleculares" 
+                                             Foreground="#7F8C8D" FontSize="9" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#9B59B6" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Bose-Einstein (Bósons):" 
+                                             Foreground="#8E44AD" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="• Partículas indistinguíveis" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="• Múltiplas partículas por estado" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="• Condensação de BE a T baixa" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="Exemplo: fótons, átomos frios" 
+                                             Foreground="#7F8C8D" FontSize="9" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" BorderBrush="#9B59B6" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="Fermi-Dirac (Férmions):" 
+                                             Foreground="#8E44AD" 
+                                             FontWeight="Bold"
+                                             FontSize="11"/>
+                                    <TextBlock Text="• Partículas indistinguíveis" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                                    <TextBlock Text="• Máximo 1 partícula por estado (Pauli)" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="• Mar de Fermi a T=0" 
+                                             Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                                    <TextBlock Text="Exemplo: elétrons em metais" 
+                                             Foreground="#7F8C8D" FontSize="9" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+
+                    <!-- Valores de Referência -->
+                    <Expander Header="🌡️ Temperaturas de Referência" 
+                            IsExpanded="False" 
+                            Margin="0,5,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            FontSize="11"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="• Zero Absoluto: 0 K (-273.15°C)" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,3,0,0"/>
+                            <TextBlock Text="• Hélio líquido: 4 K" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                            <TextBlock Text="• Nitrogênio líquido: 77 K" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                            <TextBlock Text="• Temperatura ambiente: ~300 K (27°C)" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                            <TextBlock Text="• Água fervendo: 373 K (100°C)" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                            <TextBlock Text="• Superfície do Sol: 5778 K" 
+                                     Foreground="#2C3E50" FontSize="10" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Expander>
+
+                    <!-- Botões Finais -->
+                    <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="6" Padding="15" Margin="0,15,0,0">
+                        <StackPanel>
+                            <TextBlock Text="🎓 Recursos Adicionais" 
+                                     FontWeight="Bold" 
+                                     FontSize="13"
+                                     Foreground="#9B59B6"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,12"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0" x:Name="ExercisesButton" Content="📝 Exercícios" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="ExercisesButton_Click"/>
+                                <Button Grid.Column="2" x:Name="QuizButton" Content="🧪 Quiz" Style="{StaticResource ButtonStyle}" Height="35" FontSize="12" Click="QuizButton_Click"/>
+                            </Grid>
+
+                            <Button x:Name="BackButton" Content="← Voltar ao Menu" Style="{StaticResource SecondaryButtonStyle}" Height="35" FontSize="12" Margin="0,10,0,0" Click="BackButton_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

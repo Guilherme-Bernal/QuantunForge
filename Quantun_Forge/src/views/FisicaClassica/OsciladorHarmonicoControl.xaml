@@ -1,0 +1,807 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.FisicaClassica.OsciladorHarmonicoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Quantun_Forge.src.views.FisicaClassica"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" 
+             d:DesignWidth="1200"
+             Background="#F5F5F5">
+
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#9C27B0"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#9C27B0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7B1FA2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Coluna Principal -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="🔄 Oscilador Harmônico Simples" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="Movimento periódico causado por uma força restauradora proporcional ao deslocamento" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
+
+                <!-- Fórmula Principal -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📐 Lei de Hooke e Equações do MHS" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Border Background="#F3E5F5" BorderBrush="#9C27B0" BorderThickness="3" CornerRadius="8" Padding="20">
+                            <StackPanel>
+                                <!-- Lei de Hooke -->
+                                <TextBlock Text="F = -k · x" 
+                                          FontSize="28" 
+                                          FontWeight="Bold" 
+                                          Foreground="#6A1B9A"
+                                          HorizontalAlignment="Center"
+                                          Margin="0,0,0,15"/>
+
+                                <!-- Período e Frequência -->
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Background="#E1BEE7" CornerRadius="5" Padding="10" Margin="0,0,5,0">
+                                        <StackPanel>
+                                            <TextBlock Text="Período (T):" FontSize="11" Foreground="#4A148C" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="T = 2π√(m/k)" FontSize="18" FontWeight="Bold" Foreground="#6A1B9A" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Background="#E1BEE7" CornerRadius="5" Padding="10" Margin="5,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="Frequência (f):" FontSize="11" Foreground="#4A148C" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="f = 1/(2π)√(k/m)" FontSize="18" FontWeight="Bold" Foreground="#6A1B9A" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Legenda -->
+                                <TextBlock FontSize="11" Foreground="#7F8C8D" Margin="0,15,0,0" TextWrapping="Wrap">
+                                    <Run Text="• F:" FontWeight="Bold" Foreground="#9C27B0"/> Força restauradora (N)
+                                    <Run Text="  • k:" FontWeight="Bold" Foreground="#9C27B0"/> Constante da mola (N/m)
+                                    <Run Text="  • x:" FontWeight="Bold" Foreground="#9C27B0"/> Deslocamento (m)
+                                    <LineBreak/>
+                                    <Run Text="• m:" FontWeight="Bold" Foreground="#9C27B0"/> Massa (kg)
+                                    <Run Text="  • T:" FontWeight="Bold" Foreground="#9C27B0"/> Período (s)
+                                    <Run Text="  • f:" FontWeight="Bold" Foreground="#9C27B0"/> Frequência (Hz)
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Simulação Visual -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎯 Simulação Interativa - Sistema Massa-Mola" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Canvas Principal -->
+                        <Border Background="#E8EAF6" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="400"
+                                Margin="0,0,0,15">
+                            <Canvas x:Name="CanvasOscilador" ClipToBounds="True" Width="800">
+                                <!-- Fundo -->
+                                <Rectangle Fill="#FFFFFF" Width="800" Height="400" Opacity="0.3"/>
+
+                                <!-- Grade de referência -->
+                                <Line X1="400" Y1="0" X2="400" Y2="400" Stroke="#BDBDBD" StrokeThickness="1" StrokeDashArray="5,5"/>
+                                <Line X1="0" Y1="200" X2="800" Y2="200" Stroke="#BDBDBD" StrokeThickness="1" StrokeDashArray="5,5"/>
+
+                                <!-- Parede (suporte fixo) -->
+                                <Rectangle Fill="#616161" Width="20" Height="120" Canvas.Left="50" Canvas.Top="140">
+                                    <Rectangle.Effect>
+                                        <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="3" Opacity="0.5"/>
+                                    </Rectangle.Effect>
+                                </Rectangle>
+
+                                <!-- Hachuras da parede -->
+                                <Line X1="50" Y1="140" X2="35" Y2="130" Stroke="#424242" StrokeThickness="3"/>
+                                <Line X1="50" Y1="160" X2="35" Y2="150" Stroke="#424242" StrokeThickness="3"/>
+                                <Line X1="50" Y1="180" X2="35" Y2="170" Stroke="#424242" StrokeThickness="3"/>
+                                <Line X1="50" Y1="200" X2="35" Y2="190" Stroke="#424242" StrokeThickness="3"/>
+                                <Line X1="50" Y1="220" X2="35" Y2="210" Stroke="#424242" StrokeThickness="3"/>
+                                <Line X1="50" Y1="240" X2="35" Y2="230" Stroke="#424242" StrokeThickness="3"/>
+
+                                <!-- Mola (desenhada com Path) -->
+                                <Path x:Name="MolaPath" 
+                                      Stroke="#FF6F00" 
+                                      StrokeThickness="4" 
+                                      Canvas.Left="70" 
+                                      Canvas.Top="200">
+                                    <Path.Data>
+                                        <PathGeometry>
+                                            <PathFigure StartPoint="0,0">
+                                                <PolyLineSegment x:Name="MolaSegment" Points="0,0 15,-10 30,10 45,-10 60,10 75,-10 90,10 105,-10 120,10 135,-10 150,0"/>
+                                            </PathFigure>
+                                        </PathGeometry>
+                                    </Path.Data>
+                                    <Path.Effect>
+                                        <DropShadowEffect Color="#FF6F00" BlurRadius="8" ShadowDepth="0" Opacity="0.6"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- Massa (bloco) -->
+                                <Rectangle x:Name="Massa" 
+                                          Fill="#2196F3" 
+                                          Width="80" 
+                                          Height="80" 
+                                          Canvas.Left="220" 
+                                          Canvas.Top="160"
+                                          Stroke="#1565C0"
+                                          StrokeThickness="3">
+                                    <Rectangle.Effect>
+                                        <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="8" Opacity="0.4"/>
+                                    </Rectangle.Effect>
+                                </Rectangle>
+
+                                <!-- Label da massa -->
+                                <TextBlock x:Name="LabelMassa" 
+                                          Text="m" 
+                                          FontSize="32" 
+                                          FontWeight="Bold"
+                                          Foreground="White" 
+                                          Canvas.Left="245" 
+                                          Canvas.Top="183"/>
+
+                                <!-- Vetores de Força -->
+                                <!-- Força Restauradora -->
+                                <Line x:Name="VetorForca"
+                                     X1="260" Y1="200"
+                                     X2="180" Y2="200"
+                                     Stroke="#F44336"
+                                     StrokeThickness="5"
+                                     Visibility="Collapsed">
+                                    <Line.Effect>
+                                        <DropShadowEffect Color="#F44336" BlurRadius="15" ShadowDepth="0"/>
+                                    </Line.Effect>
+                                </Line>
+                                <Polygon x:Name="SetaForca"
+                                        Points="180,200 190,195 190,205"
+                                        Fill="#F44336"
+                                        Visibility="Collapsed">
+                                    <Polygon.Effect>
+                                        <DropShadowEffect Color="#F44336" BlurRadius="15" ShadowDepth="0"/>
+                                    </Polygon.Effect>
+                                </Polygon>
+
+                                <!-- Label da Força -->
+                                <Border x:Name="LabelForcaBorder" Background="#000000" Opacity="0.85" CornerRadius="5" Padding="8,4" Canvas.Left="160" Canvas.Top="165" Visibility="Collapsed">
+                                    <TextBlock x:Name="LabelForca" Text="F = -kx" FontSize="13" FontWeight="Bold" Foreground="#F44336"/>
+                                </Border>
+
+                                <!-- Marcador de Equilíbrio -->
+                                <Line X1="260" Y1="120" X2="260" Y2="280" Stroke="#4CAF50" StrokeThickness="2" StrokeDashArray="8,4" Opacity="0.6"/>
+                                <Border Background="#4CAF50" Opacity="0.9" CornerRadius="3" Padding="5,2" Canvas.Left="230" Canvas.Top="285">
+                                    <TextBlock Text="Equilíbrio (x=0)" FontSize="10" FontWeight="Bold" Foreground="White"/>
+                                </Border>
+
+                                <!-- Medição de Deslocamento -->
+                                <Line x:Name="LinhaDeslocamento" X1="260" Y1="150" X2="260" Y2="150" Stroke="#FF9800" StrokeThickness="3" Visibility="Collapsed"/>
+                                <Polygon x:Name="SetaDeslocamento1" Points="260,150 265,155 265,145" Fill="#FF9800" Visibility="Collapsed"/>
+                                <Polygon x:Name="SetaDeslocamento2" Points="260,150 255,155 255,145" Fill="#FF9800" Visibility="Collapsed"/>
+
+                                <Border x:Name="LabelDeslocamentoBorder" Background="#FF9800" Opacity="0.9" CornerRadius="5" Padding="8,4" Canvas.Left="270" Canvas.Top="135" Visibility="Collapsed">
+                                    <TextBlock x:Name="LabelDeslocamento" Text="x = 0.0 m" FontSize="12" FontWeight="Bold" Foreground="White"/>
+                                </Border>
+
+                                <!-- Trajetória (rastro) -->
+                                <Polyline x:Name="Trajetoria" Stroke="#9C27B0" StrokeThickness="2" Opacity="0.5" Canvas.Top="200"/>
+
+                                <!-- Informações em Tempo Real -->
+                                <Border Background="#000000" 
+                                       Opacity="0.85" 
+                                       CornerRadius="8" 
+                                       Padding="15"
+                                       Canvas.Left="520"
+                                       Canvas.Top="15"
+                                       x:Name="InfoTempoReal"
+                                       Visibility="Collapsed">
+                                    <StackPanel>
+                                        <TextBlock Text="📊 Dados em Tempo Real" 
+                                                  FontSize="12" 
+                                                  FontWeight="Bold"
+                                                  Foreground="#9C27B0"
+                                                  Margin="0,0,0,8"/>
+                                        <TextBlock x:Name="TxtPosicao" 
+                                                  Text="Posição: 0.00 m" 
+                                                  FontSize="11"
+                                                  Foreground="#4CAF50"
+                                                  Margin="0,0,0,3"/>
+                                        <TextBlock x:Name="TxtVelocidade" 
+                                                  Text="Velocidade: 0.00 m/s" 
+                                                  FontSize="11"
+                                                  Foreground="#2196F3"
+                                                  Margin="0,0,0,3"/>
+                                        <TextBlock x:Name="TxtAceleracao" 
+                                                  Text="Aceleração: 0.00 m/s²" 
+                                                  FontSize="11"
+                                                  Foreground="#F44336"
+                                                  Margin="0,0,0,3"/>
+                                        <Separator Background="#424242" Margin="0,5"/>
+                                        <TextBlock x:Name="TxtEnergia" 
+                                                  Text="Energia Total: 0.00 J" 
+                                                  FontSize="11"
+                                                  FontWeight="Bold"
+                                                  Foreground="#FFD54F"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Indicador de Amplitude -->
+                                <Rectangle x:Name="IndicadorAmplitude" 
+                                          Fill="#9C27B0" 
+                                          Width="4" 
+                                          Height="80" 
+                                          Canvas.Left="340" 
+                                          Canvas.Top="160"
+                                          Opacity="0.4"
+                                          Visibility="Collapsed"/>
+                            </Canvas>
+                        </Border>
+
+                        <!-- Legenda -->
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Rectangle Fill="#FF6F00" Width="25" Height="4" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Mola" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Rectangle Fill="#2196F3" Width="20" Height="20" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Massa" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Polygon Points="0,10 20,10 18,5 20,10 18,15" Fill="#F44336" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="Força (F)" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Line X1="0" Y1="10" X2="25" Y2="10" Stroke="#4CAF50" StrokeThickness="2" StrokeDashArray="4,2" VerticalAlignment="Center"/>
+                                <TextBlock Text="Equilíbrio" FontSize="11" Foreground="#2C3E50" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Gráfico de Posição vs Tempo -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📈 Gráfico: Posição x Tempo" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Border Background="#FFFFFF" 
+                                BorderBrush="#9C27B0" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="250"
+                                Padding="10">
+                            <Canvas x:Name="CanvasGrafico" ClipToBounds="True">
+                                <!-- Eixos -->
+                                <Line X1="50" Y1="125" X2="750" Y2="125" Stroke="#424242" StrokeThickness="2"/>
+                                <Line X1="50" Y1="10" X2="50" Y2="230" Stroke="#424242" StrokeThickness="2"/>
+
+                                <!-- Labels dos eixos -->
+                                <TextBlock Text="t (s)" FontSize="12" FontWeight="Bold" Foreground="#424242" Canvas.Left="755" Canvas.Top="115"/>
+                                <TextBlock Text="x (m)" FontSize="12" FontWeight="Bold" Foreground="#424242" Canvas.Left="15" Canvas.Top="5"/>
+
+                                <!-- Linha zero -->
+                                <Line X1="50" Y1="125" X2="750" Y2="125" Stroke="#4CAF50" StrokeThickness="1" StrokeDashArray="5,3" Opacity="0.5"/>
+
+                                <!-- Curva senoidal (será desenhada dinamicamente) -->
+                                <Polyline x:Name="CurvaGrafico" 
+                                         Stroke="#9C27B0" 
+                                         StrokeThickness="3" 
+                                         Points="50,125">
+                                    <Polyline.Effect>
+                                        <DropShadowEffect Color="#9C27B0" BlurRadius="8" ShadowDepth="0" Opacity="0.4"/>
+                                    </Polyline.Effect>
+                                </Polyline>
+
+                                <!-- Marcador atual -->
+                                <Ellipse x:Name="MarcadorAtual" 
+                                        Fill="#F44336" 
+                                        Width="10" 
+                                        Height="10" 
+                                        Canvas.Left="45" 
+                                        Canvas.Top="120"
+                                        Visibility="Collapsed">
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect Color="#F44336" BlurRadius="10" ShadowDepth="0"/>
+                                    </Ellipse.Effect>
+                                </Ellipse>
+                            </Canvas>
+                        </Border>
+
+                        <TextBlock Text="A curva representa o deslocamento da massa ao longo do tempo (senoide)" 
+                                  FontSize="10" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Resultados e Análise -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Análise dos Resultados" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Período e Frequência -->
+                            <Border Grid.Column="0" Background="#F3E5F5" BorderBrush="#9C27B0" BorderThickness="2" CornerRadius="5" Padding="15" Margin="0,0,5,0">
+                                <StackPanel>
+                                    <TextBlock Text="⏱️ Características Temporais" FontSize="13" FontWeight="Bold" Foreground="#6A1B9A" Margin="0,0,0,10"/>
+
+                                    <TextBlock Text="Período (T):" FontSize="11" Foreground="#7F8C8D" Margin="0,0,0,3"/>
+                                    <TextBlock x:Name="TxtPeriodoResultado" 
+                                              Text="T = ? s" 
+                                              FontSize="18"
+                                              FontWeight="Bold"
+                                              Foreground="#4A148C"
+                                              Margin="0,0,0,10"/>
+
+                                    <TextBlock Text="Frequência (f):" FontSize="11" Foreground="#7F8C8D" Margin="0,0,0,3"/>
+                                    <TextBlock x:Name="TxtFrequenciaResultado" 
+                                              Text="f = ? Hz" 
+                                              FontSize="18"
+                                              FontWeight="Bold"
+                                              Foreground="#4A148C"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Energia -->
+                            <Border Grid.Column="1" Background="#E8F5E9" BorderBrush="#4CAF50" BorderThickness="2" CornerRadius="5" Padding="15" Margin="5,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="⚡ Energia do Sistema" FontSize="13" FontWeight="Bold" Foreground="#2E7D32" Margin="0,0,0,10"/>
+
+                                    <TextBlock Text="Energia Cinética:" FontSize="11" Foreground="#7F8C8D" Margin="0,0,0,3"/>
+                                    <TextBlock x:Name="TxtEnergiaCinetica" 
+                                              Text="Ec = ? J" 
+                                              FontSize="16"
+                                              FontWeight="Bold"
+                                              Foreground="#1B5E20"
+                                              Margin="0,0,0,10"/>
+
+                                    <TextBlock Text="Energia Potencial:" FontSize="11" Foreground="#7F8C8D" Margin="0,0,0,3"/>
+                                    <TextBlock x:Name="TxtEnergiaPotencial" 
+                                              Text="Ep = ? J" 
+                                              FontSize="16"
+                                              FontWeight="Bold"
+                                              Foreground="#1B5E20"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <!-- Fórmulas Aplicadas -->
+                        <Border Background="#E1F5FE" BorderBrush="#2196F3" BorderThickness="2" CornerRadius="5" Padding="15" Margin="0,10,0,0">
+                            <StackPanel>
+                                <TextBlock Text="🔢 Cálculos Aplicados:" FontSize="13" FontWeight="Bold" Foreground="#0277BD" Margin="0,0,0,8"/>
+                                <TextBlock x:Name="TxtCalculos" 
+                                          TextWrapping="Wrap"
+                                          FontSize="11" 
+                                          Foreground="#2C3E50" 
+                                          LineHeight="20"
+                                          FontFamily="Consolas"
+                                          Text="Configure os parâmetros e inicie a simulação para ver os cálculos"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Coluna Lateral - Controles -->
+            <StackPanel Grid.Column="2">
+                <!-- Parâmetros do Sistema -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Parâmetros do Sistema" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Massa -->
+                        <TextBlock Text="Massa (kg):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderMassa"
+                               Minimum="0.1"
+                               Maximum="10"
+                               Value="1"
+                               TickFrequency="0.1"
+                               ValueChanged="Sliders_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtMassaSlider" 
+                                  Text="1.0 kg" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Constante da Mola -->
+                        <TextBlock Text="Constante da Mola k (N/m):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderConstanteMola"
+                               Minimum="1"
+                               Maximum="100"
+                               Value="10"
+                               TickFrequency="1"
+                               ValueChanged="Sliders_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtConstanteMolaSlider" 
+                                  Text="10 N/m" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Amplitude -->
+                        <TextBlock Text="Amplitude (m):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderAmplitude"
+                               Minimum="0.1"
+                               Maximum="2"
+                               Value="0.5"
+                               TickFrequency="0.1"
+                               ValueChanged="Sliders_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtAmplitudeSlider" 
+                                  Text="0.5 m" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,20"/>
+
+                        <!-- Resultados Calculados -->
+                        <Border Background="#F3E5F5" BorderBrush="#9C27B0" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0,0,0,15">
+                            <StackPanel>
+                                <TextBlock Text="📐 Propriedades Calculadas:" FontSize="11" FontWeight="Bold" Foreground="#6A1B9A" Margin="0,0,0,8"/>
+
+                                <TextBlock x:Name="TxtPeriodoInfo" 
+                                          Text="Período: ? s" 
+                                          FontSize="11"
+                                          Foreground="#4A148C"
+                                          Margin="0,0,0,3"/>
+
+                                <TextBlock x:Name="TxtFrequenciaInfo" 
+                                          Text="Frequência: ? Hz" 
+                                          FontSize="11"
+                                          Foreground="#4A148C"
+                                          Margin="0,0,0,3"/>
+
+                                <TextBlock x:Name="TxtFrequenciaAngularInfo" 
+                                          Text="ω: ? rad/s" 
+                                          FontSize="11"
+                                          Foreground="#4A148C"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Botões de Controle -->
+                        <Button Content="▶️ Iniciar Oscilação" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               x:Name="BtnIniciar"
+                               Click="BtnIniciar_Click"/>
+
+                        <Button Content="⏸️ Pausar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               x:Name="BtnPausar"
+                               Click="BtnPausar_Click"
+                               IsEnabled="False"/>
+
+                        <Button Content="⏹️ Parar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               x:Name="BtnParar"
+                               Click="BtnParar_Click"
+                               IsEnabled="False"/>
+
+                        <Button Content="🔄 Resetar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnResetar_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Condições Iniciais -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎯 Condições Iniciais" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Posição Inicial -->
+                        <TextBlock Text="Posição Inicial (m):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderPosicaoInicial"
+                               Minimum="-2"
+                               Maximum="2"
+                               Value="0.5"
+                               TickFrequency="0.1"
+                               ValueChanged="Sliders_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtPosicaoInicialSlider" 
+                                  Text="0.5 m" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,15"/>
+
+                        <!-- Velocidade Inicial -->
+                        <TextBlock Text="Velocidade Inicial (m/s):" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderVelocidadeInicial"
+                               Minimum="-5"
+                               Maximum="5"
+                               Value="0"
+                               TickFrequency="0.1"
+                               ValueChanged="Sliders_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtVelocidadeInicialSlider" 
+                                  Text="0.0 m/s" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,10"/>
+
+                        <Border Background="#FFF3E0" BorderBrush="#FF9800" BorderThickness="1" CornerRadius="5" Padding="8">
+                            <TextBlock Text="💡 Dica: Defina a posição inicial para deslocar a massa ou a velocidade inicial para dar impulso!" 
+                                      FontSize="10" 
+                                      Foreground="#E65100"
+                                      TextWrapping="Wrap"
+                                      LineHeight="14"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Configurações de Visualização -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="👁️ Visualização" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <CheckBox x:Name="ChkMostrarVetores" 
+                                 Content="Mostrar Vetores de Força" 
+                                 FontSize="11"
+                                 Foreground="#2C3E50"
+                                 IsChecked="True"
+                                 Margin="0,0,0,8"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+
+                        <CheckBox x:Name="ChkMostrarTrajetoria" 
+                                 Content="Mostrar Trajetória" 
+                                 FontSize="11"
+                                 Foreground="#2C3E50"
+                                 IsChecked="False"
+                                 Margin="0,0,0,8"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+
+                        <CheckBox x:Name="ChkMostrarEnergia" 
+                                 Content="Mostrar Info de Energia" 
+                                 FontSize="11"
+                                 Foreground="#2C3E50"
+                                 IsChecked="True"
+                                 Margin="0,0,0,8"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+
+                        <CheckBox x:Name="ChkMostrarGrafico" 
+                                 Content="Atualizar Gráfico em Tempo Real" 
+                                 FontSize="11"
+                                 Foreground="#2C3E50"
+                                 IsChecked="True"
+                                 Margin="0,0,0,15"
+                                 Checked="ChkVisualizacao_Changed"
+                                 Unchecked="ChkVisualizacao_Changed"/>
+
+                        <!-- Velocidade da Animação -->
+                        <TextBlock Text="Velocidade da Simulação:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                        <Slider x:Name="SliderVelocidadeAnimacao"
+                               Minimum="0.1"
+                               Maximum="3"
+                               Value="1"
+                               TickFrequency="0.1"
+                               ValueChanged="SliderVelocidadeAnimacao_ValueChanged"
+                               Margin="0,0,0,5"/>
+                        <TextBlock x:Name="TxtVelocidadeAnimacaoSlider" 
+                                  Text="1.0x" 
+                                  FontSize="11" 
+                                  Foreground="#7F8C8D" 
+                                  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Presets de Exemplos -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📚 Exemplos Pré-Configurados" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Button Content="🔵 Sistema Leve (m=0.5kg)" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnExemplo1_Click"/>
+
+                        <Button Content="🟣 Sistema Padrão (m=1kg)" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnExemplo2_Click"/>
+
+                        <Button Content="🔴 Sistema Pesado (m=5kg)" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnExemplo3_Click"/>
+
+                        <Button Content="🟡 Mola Rígida (k=50)" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnExemplo4_Click"/>
+
+                        <Button Content="🟢 Mola Fraca (k=5)" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnExemplo5_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Informações Teóricas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📖 Conceitos Importantes" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Border Background="#E8EAF6" CornerRadius="5" Padding="12" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="🔄 Período" FontSize="12" FontWeight="Bold" Foreground="#3F51B5" Margin="0,0,0,5"/>
+                                <TextBlock Text="Tempo para completar uma oscilação completa. Não depende da amplitude!" 
+                                          FontSize="10" 
+                                          Foreground="#5A5A6B"
+                                          TextWrapping="Wrap"
+                                          LineHeight="14"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="#F3E5F5" CornerRadius="5" Padding="12" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="📊 Frequência" FontSize="12" FontWeight="Bold" Foreground="#9C27B0" Margin="0,0,0,5"/>
+                                <TextBlock Text="Número de oscilações por segundo. Quanto maior k ou menor m, maior a frequência." 
+                                          FontSize="10" 
+                                          Foreground="#5A5A6B"
+                                          TextWrapping="Wrap"
+                                          LineHeight="14"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="#E8F5E9" CornerRadius="5" Padding="12" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="⚡ Energia" FontSize="12" FontWeight="Bold" Foreground="#4CAF50" Margin="0,0,0,5"/>
+                                <TextBlock Text="A energia total se conserva! Ela oscila entre cinética (movimento) e potencial (mola esticada)." 
+                                          FontSize="10" 
+                                          Foreground="#5A5A6B"
+                                          TextWrapping="Wrap"
+                                          LineHeight="14"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="#FFEBEE" CornerRadius="5" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="🎯 Força Restauradora" FontSize="12" FontWeight="Bold" Foreground="#F44336" Margin="0,0,0,5"/>
+                                <TextBlock Text="Sempre aponta para o equilíbrio. É proporcional ao deslocamento (Lei de Hooke)." 
+                                          FontSize="10" 
+                                          Foreground="#5A5A6B"
+                                          TextWrapping="Wrap"
+                                          LineHeight="14"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Sobre o Oscilador -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="ℹ️ Sobre o Oscilador" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock TextWrapping="Wrap" 
+                                  FontSize="11" 
+                                  Foreground="#5A5A6B" 
+                                  LineHeight="18">
+                            O Oscilador Harmônico Simples é um modelo fundamental na física. Ele descreve desde vibrações moleculares até pontes oscilando, sendo essencial para entender ondas, som e até a luz!
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

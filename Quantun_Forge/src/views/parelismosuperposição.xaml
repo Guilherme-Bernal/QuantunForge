@@ -1,0 +1,1006 @@
+﻿<UserControl x:Class="Quantun_Forge.src.views.parelismosuperposição"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1000"
+             Background="White">
+
+    <UserControl.Resources>
+        <!-- Cores -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#2C3E50"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#E74C3C"/>
+        <SolidColorBrush x:Key="SuccessColor" Color="#27AE60"/>
+        <SolidColorBrush x:Key="WarningColor" Color="#F39C12"/>
+        <SolidColorBrush x:Key="LightGray" Color="#ECF0F1"/>
+        <SolidColorBrush x:Key="DarkGray" Color="#7F8C8D"/>
+        <SolidColorBrush x:Key="ClassicalColor" Color="#3498DB"/>
+        <SolidColorBrush x:Key="QuantumColor" Color="#9B59B6"/>
+
+        <!-- Animações -->
+        <Storyboard x:Key="FadeInAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                           From="0" To="1" Duration="0:0:0.8"/>
+        </Storyboard>
+
+        <Storyboard x:Key="PulseAnimation" RepeatBehavior="Forever" AutoReverse="True">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                           From="0.3" To="1" Duration="0:0:1"/>
+        </Storyboard>
+
+        <!-- Estilos -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#BDC3C7" BlurRadius="15" ShadowDepth="3" Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SimulationButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2980B9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BadgeStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="5,0"/>
+        </Style>
+
+        <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="22"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                  HorizontalScrollBarVisibility="Disabled"
+                  Background="#FAFAFA">
+        <StackPanel MaxWidth="1200" Margin="40,30">
+
+            <!-- Header -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <Viewbox Width="50" Height="50" Margin="0,0,15,0">
+                            <Canvas Width="100" Height="100">
+                                <!-- Processamento Sequencial: Fila de bits -->
+                                <Rectangle Canvas.Left="5" Canvas.Top="25" Width="12" Height="12"
+                                          Stroke="#3498DB" StrokeThickness="2" Fill="White"/>
+                                <Line X1="17" Y1="31" X2="22" Y2="31" Stroke="#3498DB" StrokeThickness="2"/>
+                                <Rectangle Canvas.Left="22" Canvas.Top="25" Width="12" Height="12"
+                                          Stroke="#3498DB" StrokeThickness="2" Fill="White"/>
+                                <Line X1="34" Y1="31" X2="39" Y2="31" Stroke="#3498DB" StrokeThickness="2"/>
+                                <TextBlock Text="→" Canvas.Left="15" Canvas.Top="40" 
+                                          FontSize="8" Foreground="#3498DB" FontWeight="Bold"/>
+
+                                <!-- Paralelismo: Grade de qubits -->
+                                <Rectangle Canvas.Left="55" Canvas.Top="20" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <Rectangle Canvas.Left="67" Canvas.Top="20" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <Rectangle Canvas.Left="79" Canvas.Top="20" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <Rectangle Canvas.Left="55" Canvas.Top="32" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <Rectangle Canvas.Left="67" Canvas.Top="32" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <Rectangle Canvas.Left="79" Canvas.Top="32" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <Rectangle Canvas.Left="55" Canvas.Top="44" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <Rectangle Canvas.Left="67" Canvas.Top="44" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <Rectangle Canvas.Left="79" Canvas.Top="44" Width="10" Height="10"
+                                          Stroke="#9B59B6" StrokeThickness="2" Fill="#F3E5F5"/>
+                                <TextBlock Text="∀" Canvas.Left="68" Canvas.Top="55" 
+                                          FontSize="12" Foreground="#9B59B6" FontWeight="Bold"/>
+                            </Canvas>
+                        </Viewbox>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="⚡ Superposição e Paralelismo Quântico" 
+                                     Style="{StaticResource SectionTitleStyle}" Margin="0"/>
+                            <TextBlock Text="Processando Múltiplos Estados Simultaneamente" 
+                                     FontSize="16" Foreground="{StaticResource DarkGray}" FontStyle="Italic"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,15">
+                        <Border Style="{StaticResource BadgeStyle}" Background="#E3F2FD">
+                            <TextBlock Text="📊 1 Estado" Foreground="#1976D2" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#F3E5F5">
+                            <TextBlock Text="🌌 2ⁿ Estados" Foreground="#7B1FA2" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#FFF3E0">
+                            <TextBlock Text="🌊 Interferência" Foreground="#E65100" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <Border Style="{StaticResource BadgeStyle}" Background="#E8F5E9">
+                            <TextBlock Text="⚡ Paralelismo" Foreground="#2E7D32" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                    </StackPanel>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,15,0,20"/>
+
+                    <TextBlock Style="{StaticResource ContentTextStyle}" FontSize="15">
+                        <Run FontWeight="Bold" FontSize="16">🎯 O Poder da Superposição:</Run>
+                        <LineBreak/><LineBreak/>
+                        
+                        <Run FontWeight="SemiBold" Foreground="#3498DB">→ COMPUTAÇÃO CLÁSSICA:</Run> Processamento sequencial
+                        <LineBreak/>
+                        • Um registrador de n bits está sempre em <Run FontWeight="Bold">1 único estado</Run>
+                        <LineBreak/>
+                        • Exemplo: 3 bits = estados possíveis {000, 001, 010, 011, 100, 101, 110, 111}
+                        <LineBreak/>
+                        • A cada momento, o registrador é apenas UM desses 8 estados
+                        <LineBreak/>
+                        • Para processar todos: precisa executar 8 vezes (ou ter 8 processadores)
+                        <LineBreak/><LineBreak/>
+                        
+                        <Run FontWeight="SemiBold" Foreground="#9B59B6">→ COMPUTAÇÃO QUÂNTICA:</Run> Paralelismo massivo via superposição
+                        <LineBreak/>
+                        • Um registrador de n qubits pode estar em <Run FontWeight="Bold" Foreground="#E74C3C">SUPERPOSIÇÃO de TODOS os 2ⁿ estados</Run>
+                        <LineBreak/>
+                        • Exemplo: 3 qubits = |ψ⟩ = α₀|000⟩ + α₁|001⟩ + α₂|010⟩ + ... + α₇|111⟩
+                        <LineBreak/>
+                        • <Run FontWeight="Bold">Uma única operação</Run> transforma TODOS os 8 componentes simultaneamente!
+                        <LineBreak/>
+                        • Não precisa repetir — é <Run FontStyle="Italic">paralelismo quântico inerente</Run>
+                        <LineBreak/><LineBreak/>
+                        
+                        <Run FontWeight="Bold" Foreground="#E74C3C">⚠️ MAS ATENÇÃO:</Run> 
+                        Ao medir, você obtém apenas <Run FontWeight="Bold">um resultado</Run>. 
+                        O ganho real vem da <Run FontWeight="Bold">interferência</Run> que amplifica as respostas corretas!
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Explicação Visual: Crescimento Exponencial -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="📈 O Crescimento Exponencial" 
+                             FontSize="24" FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,15"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Clássico -->
+                        <Border Grid.Column="0" Background="#E3F2FD" CornerRadius="10" Padding="20" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="💾 Bits Clássicos" 
+                                         FontSize="18" FontWeight="Bold"
+                                         Foreground="#1976D2"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <Border Background="White" BorderBrush="#1976D2" BorderThickness="2"
+                                        CornerRadius="8" Padding="15">
+                                    <TextBlock TextWrapping="Wrap" LineHeight="24" FontSize="13">
+                                        <Run FontWeight="Bold">n bits = 1 estado ativo:</Run>
+                                        <LineBreak/><LineBreak/>
+                                        
+                                        • 1 bit → 2 possibilidades → <Run FontWeight="Bold" Foreground="#E74C3C">1 estado</Run>
+                                        <LineBreak/>
+                                        • 2 bits → 4 possibilidades → <Run FontWeight="Bold" Foreground="#E74C3C">1 estado</Run>
+                                        <LineBreak/>
+                                        • 3 bits → 8 possibilidades → <Run FontWeight="Bold" Foreground="#E74C3C">1 estado</Run>
+                                        <LineBreak/>
+                                        • 10 bits → 1024 possibilidades → <Run FontWeight="Bold" Foreground="#E74C3C">1 estado</Run>
+                                        <LineBreak/><LineBreak/>
+                                        
+                                        <Run FontStyle="Italic">
+                                            O registrador sempre armazena um único número por vez.
+                                        </Run>
+                                    </TextBlock>
+                                </Border>
+
+                                <Border Background="#FFEBEE" CornerRadius="8" Padding="12" Margin="0,15,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="Para processar todos:" FontWeight="Bold" FontSize="13"
+                                                 Foreground="#C62828" Margin="0,0,0,8"/>
+                                        <TextBlock TextWrapping="Wrap" FontSize="12" LineHeight="20">
+                                            → Executar 2ⁿ vezes (sequencial)
+                                            <LineBreak/>
+                                            → Ou ter 2ⁿ processadores (paralelo clássico)
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Quântico -->
+                        <Border Grid.Column="1" Background="#F3E5F5" CornerRadius="10" Padding="20" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="⚛️ Qubits em Superposição" 
+                                         FontSize="18" FontWeight="Bold"
+                                         Foreground="#7B1FA2"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <Border Background="White" BorderBrush="#9B59B6" BorderThickness="2"
+                                        CornerRadius="8" Padding="15">
+                                    <TextBlock TextWrapping="Wrap" LineHeight="24" FontSize="13">
+                                        <Run FontWeight="Bold">n qubits = 2ⁿ estados simultâneos:</Run>
+                                        <LineBreak/><LineBreak/>
+                                        
+                                        • 1 qubit → <Run FontWeight="Bold" Foreground="#27AE60">2 estados</Run> em superposição
+                                        <LineBreak/>
+                                        • 2 qubits → <Run FontWeight="Bold" Foreground="#27AE60">4 estados</Run> em superposição
+                                        <LineBreak/>
+                                        • 3 qubits → <Run FontWeight="Bold" Foreground="#27AE60">8 estados</Run> em superposição
+                                        <LineBreak/>
+                                        • 10 qubits → <Run FontWeight="Bold" Foreground="#27AE60">1024 estados</Run> em superposição!
+                                        <LineBreak/><LineBreak/>
+                                        
+                                        <Run FontStyle="Italic">
+                                            O registrador "contém" todos os números ao mesmo tempo.
+                                        </Run>
+                                    </TextBlock>
+                                </Border>
+
+                                <Border Background="#E8F5E9" CornerRadius="8" Padding="12" Margin="0,15,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="Para processar todos:" FontWeight="Bold" FontSize="13"
+                                                 Foreground="#2E7D32" Margin="0,0,0,8"/>
+                                        <TextBlock TextWrapping="Wrap" FontSize="12" LineHeight="20">
+                                            ✓ Uma ÚNICA operação!
+                                            <LineBreak/>
+                                            ✓ Todos os 2ⁿ componentes transformados juntos
+                                            <LineBreak/>
+                                            ✓ Paralelismo inerente à mecânica quântica
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Gráfico de crescimento -->
+                    <Border Background="#FFF3E0" BorderBrush="#F39C12" BorderThickness="2"
+                            CornerRadius="10" Padding="20" Margin="0,20,0,0">
+                        <StackPanel>
+                            <TextBlock Text="📊 Comparação de Capacidade" 
+                                     FontSize="16" FontWeight="Bold"
+                                     Foreground="#E65100"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,15"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Headers -->
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="n" FontWeight="Bold" Margin="10"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="Bits (estados ativos)" FontWeight="Bold" Margin="10"/>
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="Qubits (em superposição)" FontWeight="Bold" Margin="10"/>
+
+                                <!-- Dados -->
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="3" Margin="10"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="1" Foreground="#E74C3C" FontWeight="Bold" Margin="10"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2" Text="8" Foreground="#27AE60" FontWeight="Bold" Margin="10"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="5" Margin="10"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="1" Foreground="#E74C3C" FontWeight="Bold" Margin="10"/>
+                                <TextBlock Grid.Row="2" Grid.Column="2" Text="32" Foreground="#27AE60" FontWeight="Bold" Margin="10"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="10" Margin="10"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="1" Foreground="#E74C3C" FontWeight="Bold" Margin="10"/>
+                                <TextBlock Grid.Row="3" Grid.Column="2" Text="1.024" Foreground="#27AE60" FontWeight="Bold" Margin="10"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="20" Margin="10"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="1" Foreground="#E74C3C" FontWeight="Bold" Margin="10"/>
+                                <TextBlock Grid.Row="4" Grid.Column="2" Text="1.048.576" Foreground="#27AE60" FontWeight="Bold" Margin="10"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="50" Margin="10"/>
+                                <TextBlock Grid.Row="5" Grid.Column="1" Text="1" Foreground="#E74C3C" FontWeight="Bold" Margin="10"/>
+                                <TextBlock Grid.Row="5" Grid.Column="2" Text="1.125.899.906.842.624" Foreground="#27AE60" FontWeight="Bold" Margin="10" FontSize="11"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Simulador 1: Visualização de Estados -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="🎮 Simulador 1: 1 Estado vs 2ⁿ Estados" 
+                             FontSize="24" FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,20"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,0,0,20">
+                        Ajuste o número de bits/qubits e veja a diferença na capacidade de armazenamento:
+                    </TextBlock>
+
+                    <!-- Controle de n -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,10">
+                            <Run Text="Número de bits/qubits (n): "/>
+                            <Run x:Name="TxtNValue" Text="3" Foreground="#E74C3C" FontSize="16"/>
+                        </TextBlock>
+                        <Slider x:Name="SliderN"
+                                Minimum="1" Maximum="5" Value="3"
+                                TickFrequency="1" IsSnapToTickEnabled="True"
+                                ValueChanged="SliderN_ValueChanged"/>
+                        <TextBlock x:Name="TxtNInfo"
+                                 Text="2³ = 8 estados possíveis"
+                                 FontSize="12" Foreground="{StaticResource DarkGray}"
+                                 HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- BITS CLÁSSICOS -->
+                        <Border Grid.Column="0" Background="#E3F2FD" CornerRadius="10" Padding="20" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="💾 Bits Clássicos" 
+                                         FontSize="18" FontWeight="Bold"
+                                         Foreground="#1976D2"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <!-- Grade de estados (apenas 1 ativo) -->
+                                <Border Background="White" CornerRadius="8" Padding="15" MinHeight="300">
+                                    <StackPanel>
+                                        <TextBlock Text="Estados possíveis:" FontWeight="SemiBold" FontSize="13"
+                                                 HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                                        <WrapPanel x:Name="ClassicalStatesGrid" 
+                                                 HorizontalAlignment="Center"
+                                                 MaxWidth="300"/>
+
+                                        <TextBlock x:Name="TxtClassicalInfo"
+                                                 Text="Apenas 1 estado ativo"
+                                                 FontSize="13" FontWeight="Bold"
+                                                 Foreground="#E74C3C"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,20,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Button Content="🔄 Trocar Estado" 
+                                        Style="{StaticResource SimulationButtonStyle}"
+                                        Background="{StaticResource ClassicalColor}"
+                                        Click="BtnChangeClassicalState_Click"
+                                        Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- QUBITS EM SUPERPOSIÇÃO -->
+                        <Border Grid.Column="1" Background="#F3E5F5" CornerRadius="10" Padding="20" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="⚛️ Qubits em Superposição" 
+                                         FontSize="18" FontWeight="Bold"
+                                         Foreground="#7B1FA2"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <!-- Grade de estados (todos ativos) -->
+                                <Border Background="White" CornerRadius="8" Padding="15" MinHeight="300">
+                                    <StackPanel>
+                                        <TextBlock Text="Estados em superposição:" FontWeight="SemiBold" FontSize="13"
+                                                 HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                                        <WrapPanel x:Name="QuantumStatesGrid" 
+                                                 HorizontalAlignment="Center"
+                                                 MaxWidth="300"/>
+
+                                        <TextBlock x:Name="TxtQuantumInfo"
+                                                 Text="Todos os 8 estados simultâneos!"
+                                                 FontSize="13" FontWeight="Bold"
+                                                 Foreground="#27AE60"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,20,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Button Content="🌊 Criar Superposição (H em todos)" 
+                                        Style="{StaticResource SimulationButtonStyle}"
+                                        Background="{StaticResource QuantumColor}"
+                                        Click="BtnCreateSuperposition_Click"
+                                        Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Simulador 2: Função em Paralelo -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="🎮 Simulador 2: Aplicação de Função" 
+                             FontSize="24" FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,20"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0,0,0,20">
+                        Veja como uma função f(x) é aplicada: sequencialmente no clássico vs. simultaneamente no quântico.
+                        <LineBreak/>
+                        Função exemplo: <Run FontWeight="Bold">f(x) = x mod 2</Run> (retorna 0 se par, 1 se ímpar)
+                    </TextBlock>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- PROCESSAMENTO CLÁSSICO -->
+                        <Border Grid.Column="0" Background="#E3F2FD" CornerRadius="10" Padding="20" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="💾 Processamento Sequencial" 
+                                         FontSize="18" FontWeight="Bold"
+                                         Foreground="#1976D2"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <Border Background="White" CornerRadius="8" Padding="15" MinHeight="250">
+                                    <StackPanel>
+                                        <TextBlock Text="Processando um valor por vez:" 
+                                                 FontWeight="SemiBold" FontSize="13"
+                                                 HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+                                        <!-- Lista de processamento -->
+                                        <ItemsControl x:Name="ClassicalProcessingList">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="#FAFAFA" BorderBrush="{StaticResource LightGray}"
+                                                            BorderThickness="1" CornerRadius="5" Padding="10" Margin="5">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock Grid.Column="0" Text="{Binding Input}" 
+                                                                     FontWeight="Bold" FontSize="14" Margin="0,0,10,0"/>
+                                                            <TextBlock Grid.Column="1" Text="→ f(x) →" 
+                                                                     FontSize="12" HorizontalAlignment="Center"/>
+                                                            <TextBlock Grid.Column="2" Text="{Binding Output}" 
+                                                                     FontWeight="Bold" FontSize="14" 
+                                                                     Foreground="{Binding Color}" Margin="10,0,0,0"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+
+                                        <TextBlock x:Name="TxtClassicalTime"
+                                                 Text="Tempo: 0 passos"
+                                                 FontSize="12" FontWeight="Bold"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,15,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Button Content="▶️ Processar Sequencialmente" 
+                                        Style="{StaticResource SimulationButtonStyle}"
+                                        Background="{StaticResource ClassicalColor}"
+                                        Click="BtnProcessClassical_Click"
+                                        Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- PROCESSAMENTO QUÂNTICO -->
+                        <Border Grid.Column="1" Background="#F3E5F5" CornerRadius="10" Padding="20" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="⚛️ Processamento Paralelo" 
+                                         FontSize="18" FontWeight="Bold"
+                                         Foreground="#7B1FA2"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,0,0,15"/>
+
+                                <Border Background="White" CornerRadius="8" Padding="15" MinHeight="250">
+                                    <StackPanel>
+                                        <TextBlock Text="Todos os valores processados juntos:" 
+                                                 FontWeight="SemiBold" FontSize="13"
+                                                 HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+                                        <!-- Grid de estados com resultado -->
+                                        <WrapPanel x:Name="QuantumProcessingGrid" 
+                                                 HorizontalAlignment="Center"
+                                                 MaxWidth="300"/>
+
+                                        <Border Background="#E8F5E9" CornerRadius="6" Padding="10" Margin="0,15,0,0">
+                                            <TextBlock TextWrapping="Wrap" FontSize="12" TextAlignment="Center">
+                                                <Run FontWeight="Bold" Foreground="#2E7D32">
+                                                    Uma única aplicação de Uf transforma
+                                                </Run>
+                                                <LineBreak/>
+                                                <Run>TODOS os componentes da superposição!</Run>
+                                            </TextBlock>
+                                        </Border>
+
+                                        <TextBlock x:Name="TxtQuantumTime"
+                                                 Text="Tempo: 0 passos"
+                                                 FontSize="12" FontWeight="Bold"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Button Content="⚡ Processar em Paralelo (Uf)" 
+                                        Style="{StaticResource SimulationButtonStyle}"
+                                        Background="{StaticResource QuantumColor}"
+                                        Click="BtnProcessQuantum_Click"
+                                        Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Seção: O Papel da Interferência -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="🌊 O Segredo: Interferência Quântica" 
+                             FontSize="24" FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,15"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <Border Background="#FFF3E0" CornerRadius="10" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="⚠️ Paralelismo Não Basta!" 
+                                     FontSize="18" FontWeight="Bold"
+                                     Foreground="#E65100"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,15"/>
+
+                            <TextBlock Style="{StaticResource ContentTextStyle}" TextAlignment="Center">
+                                <Run FontSize="15">
+                                    Processar todos os estados em paralelo é inútil se você
+                                </Run>
+                                <LineBreak/>
+                                <Run FontSize="15">
+                                    só consegue ler UM resultado ao medir!
+                                </Run>
+                                <LineBreak/><LineBreak/>
+                                <Run FontSize="16" FontWeight="Bold" Foreground="#E74C3C">
+                                    É aqui que entra a INTERFERÊNCIA.
+                                </Run>
+                            </TextBlock>
+
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Interferência Construtiva -->
+                                <Border Grid.Column="0" Background="White" CornerRadius="8" Padding="15" Margin="5">
+                                    <StackPanel>
+                                        <TextBlock Text="✅ Construtiva" 
+                                                 FontWeight="Bold" FontSize="15"
+                                                 Foreground="#27AE60"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,0,0,10"/>
+
+                                        <!-- Vetores na mesma direção -->
+                                        <Canvas Height="100" Margin="10">
+                                            <!-- Vetor 1 -->
+                                            <Line X1="50" Y1="50" X2="100" Y2="50"
+                                                  Stroke="#27AE60" StrokeThickness="3">
+                                                <Line.Effect>
+                                                    <DropShadowEffect Color="#27AE60" BlurRadius="10" ShadowDepth="0"/>
+                                                </Line.Effect>
+                                            </Line>
+                                            <Polygon Points="100,50 95,45 95,55" Fill="#27AE60"/>
+                                            <TextBlock Text="A" Canvas.Left="45" Canvas.Top="55" 
+                                                     FontWeight="Bold" FontSize="12"/>
+
+                                            <!-- Vetor 2 -->
+                                            <Line X1="100" Y1="50" X2="150" Y2="50"
+                                                  Stroke="#27AE60" StrokeThickness="3">
+                                                <Line.Effect>
+                                                    <DropShadowEffect Color="#27AE60" BlurRadius="10" ShadowDepth="0"/>
+                                                </Line.Effect>
+                                            </Line>
+                                            <Polygon Points="150,50 145,45 145,55" Fill="#27AE60"/>
+                                            <TextBlock Text="B" Canvas.Left="145" Canvas.Top="55" 
+                                                     FontWeight="Bold" FontSize="12"/>
+
+                                            <!-- Resultado -->
+                                            <Line X1="50" Y1="70" X2="150" Y2="70"
+                                                  Stroke="#FFD700" StrokeThickness="4">
+                                                <Line.Effect>
+                                                    <DropShadowEffect Color="#FFD700" BlurRadius="15" ShadowDepth="0"/>
+                                                </Line.Effect>
+                                            </Line>
+                                            <Polygon Points="150,70 143,65 143,75" Fill="#FFD700"/>
+                                            <TextBlock Text="A+B" Canvas.Left="90" Canvas.Top="75" 
+                                                     FontWeight="Bold" FontSize="14" Foreground="#FFD700"/>
+                                        </Canvas>
+
+                                        <TextBlock TextWrapping="Wrap" FontSize="12" LineHeight="20" TextAlignment="Center">
+                                            Amplitudes somam-se
+                                            <LineBreak/>
+                                            <Run FontWeight="Bold" Foreground="#27AE60">
+                                                Probabilidade AUMENTA
+                                            </Run>
+                                            <LineBreak/>
+                                            (reforça respostas corretas)
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Interferência Destrutiva -->
+                                <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="15" Margin="5">
+                                    <StackPanel>
+                                        <TextBlock Text="❌ Destrutiva" 
+                                                 FontWeight="Bold" FontSize="15"
+                                                 Foreground="#E74C3C"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,0,0,10"/>
+
+                                        <!-- Vetores em direções opostas -->
+                                        <Canvas Height="100" Margin="10">
+                                            <!-- Vetor 1 -->
+                                            <Line X1="50" Y1="50" X2="100" Y2="50"
+                                                  Stroke="#E74C3C" StrokeThickness="3">
+                                                <Line.Effect>
+                                                    <DropShadowEffect Color="#E74C3C" BlurRadius="10" ShadowDepth="0"/>
+                                                </Line.Effect>
+                                            </Line>
+                                            <Polygon Points="100,50 95,45 95,55" Fill="#E74C3C"/>
+                                            <TextBlock Text="A" Canvas.Left="45" Canvas.Top="55" 
+                                                     FontWeight="Bold" FontSize="12"/>
+
+                                            <!-- Vetor 2 (oposto) -->
+                                            <Line X1="100" Y1="50" X2="50" Y2="50"
+                                                  Stroke="#E74C3C" StrokeThickness="3">
+                                                <Line.Effect>
+                                                    <DropShadowEffect Color="#E74C3C" BlurRadius="10" ShadowDepth="0"/>
+                                                </Line.Effect>
+                                            </Line>
+                                            <Polygon Points="50,50 55,45 55,55" Fill="#E74C3C"/>
+                                            <TextBlock Text="-B" Canvas.Left="48" Canvas.Top="30" 
+                                                     FontWeight="Bold" FontSize="12"/>
+
+                                            <!-- Resultado = 0 -->
+                                            <Ellipse Canvas.Left="95" Canvas.Top="65" Width="10" Height="10"
+                                                    Fill="#7F8C8D"/>
+                                            <TextBlock Text="0" Canvas.Left="92" Canvas.Top="77" 
+                                                     FontWeight="Bold" FontSize="14" Foreground="#7F8C8D"/>
+                                        </Canvas>
+
+                                        <TextBlock TextWrapping="Wrap" FontSize="12" LineHeight="20" TextAlignment="Center">
+                                            Amplitudes cancelam-se
+                                            <LineBreak/>
+                                            <Run FontWeight="Bold" Foreground="#E74C3C">
+                                                Probabilidade → ZERO
+                                            </Run>
+                                            <LineBreak/>
+                                            (elimina respostas erradas)
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <Border Background="White" CornerRadius="8" Padding="20" Margin="0,20,0,0"
+                                    BorderBrush="#F39C12" BorderThickness="2">
+                                <TextBlock TextWrapping="Wrap" TextAlignment="Center" LineHeight="26" FontSize="14">
+                                    <Run FontWeight="Bold" FontSize="16" Foreground="#E65100">
+                                        A Estratégia dos Algoritmos Quânticos:
+                                    </Run>
+                                    <LineBreak/><LineBreak/>
+                                    1️⃣ Criar <Run FontWeight="Bold">superposição</Run> (processar todos os caminhos)
+                                    <LineBreak/>
+                                    2️⃣ Aplicar operações que causam <Run FontWeight="Bold">interferência</Run>
+                                    <LineBreak/>
+                                    3️⃣ <Run FontWeight="Bold" Foreground="#27AE60">Amplificar</Run> as respostas corretas (construtiva)
+                                    <LineBreak/>
+                                    4️⃣ <Run FontWeight="Bold" Foreground="#E74C3C">Cancelar</Run> as respostas erradas (destrutiva)
+                                    <LineBreak/>
+                                    5️⃣ Medir → obter resultado com alta probabilidade
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Tabela Comparativa -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                <StackPanel>
+                    <TextBlock Text="⚖️ Comparação Completa" 
+                             FontSize="24" FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             Margin="0,0,0,15"/>
+
+                    <Separator Background="{StaticResource LightGray}" Margin="0,0,0,20"/>
+
+                    <!-- Header -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="{StaticResource LightGray}" 
+                                Padding="12" CornerRadius="8,0,0,0">
+                            <TextBlock Text="Aspecto" FontWeight="Bold" FontSize="14"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="#E3F2FD" Padding="12">
+                            <TextBlock Text="💾 Processamento Clássico" FontWeight="Bold" FontSize="14" Foreground="#1976D2"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="#F3E5F5" 
+                                Padding="12" CornerRadius="0,8,0,0">
+                            <TextBlock Text="⚛️ Processamento Quântico" FontWeight="Bold" FontSize="14" Foreground="#7B1FA2"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Estados -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="⭐ Estados Ativos" FontWeight="Bold" Foreground="#E74C3C"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0">
+                                <Run FontWeight="Bold">1 único estado</Run>
+                                <LineBreak/>
+                                n bits = 1 estado ativo
+                            </TextBlock>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0">
+                                <Run FontWeight="Bold" Foreground="#27AE60">2ⁿ estados simultâneos</Run>
+                                <LineBreak/>
+                                n qubits = 2ⁿ estados em superposição
+                            </TextBlock>
+                        </Border>
+                    </Grid>
+
+                    <!-- Processamento -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="⭐ Processamento" FontWeight="Bold" Foreground="#27AE60"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0">
+                                <Run FontWeight="Bold">Sequencial</Run>
+                                <LineBreak/>
+                                Processar 2ⁿ valores = 2ⁿ operações
+                            </TextBlock>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0">
+                                <Run FontWeight="Bold" Foreground="#27AE60">Paralelo inerente</Run>
+                                <LineBreak/>
+                                Processar 2ⁿ valores = 1 operação!
+                            </TextBlock>
+                        </Border>
+                    </Grid>
+
+                    <!-- Resultado -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Leitura" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Acessa todos os resultados sequencialmente" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Medir = colapsa para 1 resultado (precisa de interferência!)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Escalabilidade -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1">
+                            <TextBlock Text="Escalabilidade" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Linear (dobrar capacidade = dobrar hardware)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Text="Exponencial (mais 1 qubit = dobrar capacidade)" Style="{StaticResource ContentTextStyle}" Margin="0"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Exemplos -->
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#FAFAFA" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="1" CornerRadius="0,0,0,8">
+                            <TextBlock Text="Exemplo" FontWeight="SemiBold"/>
+                        </Border>
+                        <Border Grid.Column="1" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1">
+                            <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0">
+                                10 bits: avaliar f(x) em 1024 valores
+                                <LineBreak/>
+                                = 1024 execuções
+                            </TextBlock>
+                        </Border>
+                        <Border Grid.Column="2" Background="White" Padding="12" BorderBrush="{StaticResource LightGray}" BorderThickness="0,1,1,1" CornerRadius="0,0,8,0">
+                            <TextBlock Style="{StaticResource ContentTextStyle}" Margin="0">
+                                10 qubits: avaliar f(x) em 1024 valores
+                                <LineBreak/>
+                                <Run FontWeight="Bold" Foreground="#27AE60">= 1 execução (Uf)</Run>
+                            </TextBlock>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Conclusão -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,20,0,40">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#E3F2FD" Offset="0"/>
+                        <GradientStop Color="#F3E5F5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel>
+                    <TextBlock Text="💭 Síntese Final" 
+                             FontSize="24" FontWeight="Bold"
+                             Foreground="{StaticResource SecondaryColor}"
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,20"/>
+
+                    <Border Background="White" CornerRadius="10" Padding="25"
+                            BorderBrush="{StaticResource QuantumColor}" BorderThickness="2">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center"
+                                 LineHeight="28" FontSize="16"
+                                 Foreground="{StaticResource SecondaryColor}">
+                            <Run FontSize="20" Text="✨" />
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#3498DB">
+                                Bits clássicos processam um caminho por vez.
+                            </Run>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="18" Foreground="#9B59B6">
+                                Qubits exploram 2ⁿ caminhos simultaneamente.
+                            </Run>
+                            <LineBreak/><LineBreak/>
+                            <Run FontWeight="Bold" FontSize="17" Foreground="#E74C3C">
+                                Mas paralelismo sozinho não basta!
+                            </Run>
+                            <LineBreak/>
+                            <Run FontSize="15">
+                                O poder real vem da INTERFERÊNCIA:
+                            </Run>
+                            <LineBreak/>
+                            <Run FontSize="15" Foreground="#27AE60">
+                                amplifica respostas corretas,
+                            </Run>
+                            <Run FontSize="15" Foreground="#E74C3C">
+                                cancela respostas erradas.
+                            </Run>
+                            <LineBreak/><LineBreak/>
+                            <Run FontStyle="Italic" Foreground="{StaticResource DarkGray}" FontSize="14">
+                                "Computação quântica não é apenas fazer tudo em paralelo.
+                                É orquestrar a interferência para que, no final,
+                                o resultado certo tenha a maior probabilidade de aparecer."
+                            </Run>
+                            <LineBreak/>
+                            <Run FontSize="20" Text="✨" />
+                        </TextBlock>
+                    </Border>
+
+                    <!-- Box adicional sobre limitações -->
+                    <Border Background="#FFEBEE" BorderBrush="#E74C3C" BorderThickness="2"
+                            CornerRadius="10" Padding="20" Margin="0,20,0,0">
+                        <StackPanel>
+                            <TextBlock Text="⚠️ Importante: Limitações da Medição" 
+                                     FontSize="16" FontWeight="Bold"
+                                     Foreground="#C62828"
+                                     HorizontalAlignment="Center"
+                                     Margin="0,0,0,15"/>
+
+                            <TextBlock TextWrapping="Wrap" LineHeight="24" FontSize="14">
+                                Mesmo processando 2ⁿ estados em paralelo, ao medir você obtém apenas <Run FontWeight="Bold">UM resultado</Run>.
+                                <LineBreak/><LineBreak/>
+                                
+                                Por isso, algoritmos quânticos não servem para "ler todas as respostas de uma vez".
+                                <LineBreak/><LineBreak/>
+                                
+                                O ganho está em problemas onde:
+                                <LineBreak/>
+                                • Você busca uma <Run FontWeight="Bold">propriedade global</Run> (não cada valor individual)
+                                <LineBreak/>
+                                • A interferência pode <Run FontWeight="Bold">amplificar</Run> o padrão desejado
+                                <LineBreak/>
+                                • Exemplos: encontrar período (Shor), buscar em banco de dados (Grover), simulação quântica
+                                <LineBreak/><LineBreak/>
+                                
+                                <Run FontWeight="Bold">Conclusão:</Run> 
+                                Paralelismo quântico + Interferência = vantagem exponencial em problemas específicos!
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

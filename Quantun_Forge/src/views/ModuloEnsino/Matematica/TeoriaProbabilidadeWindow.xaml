@@ -1,0 +1,732 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Matematica.TeoriaProbabilidadeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Matematica"
+        mc:Ignorable="d"
+        Title="Teoria da Probabilidade - Quantum Forge" Height="800" Width="1200"
+        Background="#ECF0F1" WindowStartupLocation="CenterScreen"
+        MinHeight="700" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,15,0,8"/>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,6"/>
+            <Setter Property="LineHeight" Value="22"/>
+        </Style>
+
+        <Style x:Key="FormulaText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Cambria Math, Segoe UI"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="15,10"/>
+            <Setter Property="Foreground" Value="#2980B9"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HighlightBox" TargetType="Border">
+            <Setter Property="Background" Value="#EBF5FB"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="InfoBox" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style x:Key="ConceptCard" TargetType="Border">
+            <Setter Property="Background" Value="#F8F9FA"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+
+        <Style x:Key="FormulaBox" TargetType="Border">
+            <Setter Property="Background" Value="#FDFEFE"/>
+            <Setter Property="BorderBrush" Value="#3498DB"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,6"/>
+        </Style>
+
+        <Style x:Key="ExampleBox" TargetType="Border">
+            <Setter Property="Background" Value="#FEF9E7"/>
+            <Setter Property="BorderBrush" Value="#F39C12"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,8"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" MinWidth="400"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*" MinWidth="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- PAINEL ESQUERDO: TEORIA -->
+        <Border Grid.Column="0" Background="White" 
+                BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <!-- Cabeçalho -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Teoria da Probabilidade" 
+                                 Style="{StaticResource TitleStyle}"
+                                 FontSize="24"/>
+                        <TextBlock Text="A Matemática da Incerteza e do Acaso"
+                                 FontSize="14" 
+                                 Foreground="#7F8C8D" 
+                                 FontStyle="Italic"
+                                 Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Introdução Simplificada -->
+                    <Border Background="#E8F8F5" 
+                            BorderBrush="#1ABC9C" 
+                            BorderThickness="2" 
+                            CornerRadius="8" 
+                            Padding="15" 
+                            Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="🎯 O que é Teoria da Probabilidade?" 
+                                     FontSize="15" 
+                                     FontWeight="Bold" 
+                                     Foreground="#16A085"
+                                     Margin="0,0,0,8"/>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="13" 
+                                     Margin="0">
+                                Qual a chance de chover amanhã? De ganhar na loteria? De um remédio funcionar? A Teoria da Probabilidade é a ferramenta matemática que nos ajuda a responder essas perguntas!
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="13" 
+                                     Margin="0,8,0,0">
+                                Ela transforma incertezas em números que podemos trabalhar, permitindo tomar decisões melhores mesmo quando não sabemos exatamente o que vai acontecer.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Conceitos Fundamentais -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        🎲 Conceitos Fundamentais
+                    </TextBlock>
+
+                    <TextBlock Style="{StaticResource NormalText}" 
+                             FontSize="12" 
+                             Margin="0,0,0,12">
+                        Para entender probabilidade, precisamos primeiro dominar alguns conceitos básicos:
+                    </TextBlock>
+
+                    <!-- Espaço Amostral -->
+                    <Border Style="{StaticResource ConceptCard}">
+                        <StackPanel>
+                            <TextBlock Text="🎲 Espaço Amostral (Ω)" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9" 
+                                     Margin="0,0,0,8"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="12" 
+                                     Margin="0,0,0,8">
+                                É o conjunto de TODOS os resultados possíveis de uma situação. Pense como todas as cartas do baralho quando você vai jogar.
+                            </TextBlock>
+
+                            <Border Style="{StaticResource ExampleBox}">
+                                <StackPanel>
+                                    <TextBlock Text="Exemplos práticos:" 
+                                             FontSize="11" 
+                                             FontWeight="Bold" 
+                                             Foreground="#D68910"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             FontSize="11" 
+                                             Margin="0,4,0,0">
+                                        <Run FontWeight="Bold">• Jogar um dado:</Run> Ω = {1, 2, 3, 4, 5, 6}
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">• Cara ou coroa:</Run> Ω = {Cara, Coroa}
+                                        <LineBreak/>
+                                        <Run FontWeight="Bold">• Chover ou não:</Run> Ω = {Sim, Não}
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Evento -->
+                    <Border Style="{StaticResource ConceptCard}">
+                        <StackPanel>
+                            <TextBlock Text="📌 Evento (E)" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9" 
+                                     Margin="0,0,0,8"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="12" 
+                                     Margin="0,0,0,8">
+                                É o resultado específico (ou conjunto de resultados) que você está interessado. É como escolher algumas cartas específicas do baralho.
+                            </TextBlock>
+
+                            <Border Style="{StaticResource ExampleBox}">
+                                <StackPanel>
+                                    <TextBlock Text="Exemplo do dia a dia:" 
+                                             FontSize="11" 
+                                             FontWeight="Bold" 
+                                             Foreground="#D68910"/>
+                                    <TextBlock Text="Ao jogar um dado, o evento 'número par' seria E = {2, 4, 6}" 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             TextWrapping="Wrap"
+                                             Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Probabilidade -->
+                    <Border Style="{StaticResource ConceptCard}">
+                        <StackPanel>
+                            <TextBlock Text="📐 Probabilidade P(E)" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9" 
+                                     Margin="0,0,0,8"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="12" 
+                                     Margin="0,0,0,8">
+                                É um número entre 0 e 1 que mede a chance de algo acontecer. Quanto mais perto de 1, maior a chance!
+                            </TextBlock>
+
+                            <Border Style="{StaticResource FormulaBox}">
+                                <TextBlock FontFamily="Cambria Math" 
+                                         FontSize="14" 
+                                         Foreground="#2980B9" 
+                                         TextAlignment="Center"
+                                         FontWeight="Bold">
+                                    P(E) = casos favoráveis ÷ casos possíveis
+                                    <LineBreak/>
+                                    <LineBreak/>
+                                    <Run FontSize="12">0 ≤ P(E) ≤ 1</Run>
+                                </TextBlock>
+                            </Border>
+
+                            <Border Style="{StaticResource ExampleBox}">
+                                <StackPanel>
+                                    <TextBlock Text="Exemplo prático:" 
+                                             FontSize="11" 
+                                             FontWeight="Bold" 
+                                             Foreground="#D68910"/>
+                                    <TextBlock Style="{StaticResource NormalText}" 
+                                             FontSize="11" 
+                                             Margin="0,4,0,0">
+                                        Qual a probabilidade de tirar número par no dado?
+                                        <LineBreak/>
+                                        P(par) = 3 pares (2,4,6) ÷ 6 possíveis = 3/6 = 0,5 ou 50%
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D"
+                                     Margin="0,8,0,0">
+                                <Run FontWeight="Bold">Lembretes importantes:</Run>
+                                <LineBreak/>
+                                • P(E) = 0 → evento impossível (0% de chance)
+                                <LineBreak/>
+                                • P(E) = 1 → evento certo (100% de chance)
+                                <LineBreak/>
+                                • P(E) = 0,5 → 50% de chance (uma em duas)
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Probabilidade Condicional -->
+                    <Border Style="{StaticResource ConceptCard}">
+                        <StackPanel>
+                            <TextBlock Text="🔗 Probabilidade Condicional" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9" 
+                                     Margin="0,0,0,8"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="12" 
+                                     Margin="0,0,0,8">
+                                É a probabilidade de algo acontecer SABENDO que outra coisa já aconteceu. Como "se está chovendo, qual a chance de eu me molhar?"
+                            </TextBlock>
+
+                            <Border Style="{StaticResource FormulaBox}">
+                                <TextBlock FontFamily="Cambria Math" 
+                                         FontSize="13" 
+                                         Foreground="#2980B9" 
+                                         TextAlignment="Center">
+                                    P(A|B) = P(A ∩ B) / P(B)
+                                </TextBlock>
+                            </Border>
+
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D"
+                                     Margin="0,6,0,0">
+                                Lê-se: "probabilidade de A dado que B ocorreu"
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Teorema de Bayes -->
+                    <Border Style="{StaticResource ConceptCard}">
+                        <StackPanel>
+                            <TextBlock Text="⚡ Teorema de Bayes" 
+                                     FontSize="14" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9" 
+                                     Margin="0,0,0,8"/>
+
+                            <TextBlock Style="{StaticResource NormalText}" 
+                                     FontSize="12" 
+                                     Margin="0,0,0,8">
+                                Um dos teoremas mais poderosos! Permite atualizar nossas crenças com base em novas evidências. Usado MUITO em IA!
+                            </TextBlock>
+
+                            <Border Style="{StaticResource FormulaBox}">
+                                <TextBlock FontFamily="Cambria Math" 
+                                         FontSize="12" 
+                                         Foreground="#2980B9" 
+                                         TextAlignment="Center">
+                                    P(A|B) = [P(B|A) × P(A)] / P(B)
+                                </TextBlock>
+                            </Border>
+
+                            <Border Style="{StaticResource ExampleBox}">
+                                <StackPanel>
+                                    <TextBlock Text="Aplicação real:" 
+                                             FontSize="11" 
+                                             FontWeight="Bold" 
+                                             Foreground="#D68910"/>
+                                    <TextBlock Text="Filtros de spam usam Bayes! Eles atualizam a probabilidade de um email ser spam baseado nas palavras que ele contém." 
+                                             FontSize="11" 
+                                             Foreground="#7F8C8D"
+                                             TextWrapping="Wrap"
+                                             Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Aplicações -->
+                    <TextBlock Style="{StaticResource SubtitleStyle}">
+                        🌍 Aplicações Práticas
+                    </TextBlock>
+
+                    <TextBlock Style="{StaticResource NormalText}" 
+                             FontSize="12" 
+                             Margin="0,0,0,12">
+                        Probabilidade não é só teoria - está em TUDO ao nosso redor!
+                    </TextBlock>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Text="🤖 Inteligência Artificial" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="ChatGPT, reconhecimento facial, carros autônomos - todos usam modelos probabilísticos"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Text="💰 Finanças e Investimentos" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="Análise de risco, precificação de seguros e opções"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Text="🌦️ Previsão do Tempo" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="Modelos climáticos calculam probabilidades de eventos meteorológicos"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Text="⚛️ Física Quântica" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="No mundo quântico, tudo é probabilidade - base dos computadores quânticos"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Text="🏥 Medicina e Saúde" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="Eficácia de vacinas, testes de doenças e estudos clínicos"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource HighlightBox}">
+                        <StackPanel>
+                            <TextBlock Text="🎮 Jogos e Entretenimento" 
+                                     FontSize="13" 
+                                     FontWeight="Bold" 
+                                     Foreground="#2980B9"/>
+                            <TextBlock Text="Poker, estratégias de jogos e sistemas de drop em RPGs"
+                                     FontSize="11" 
+                                     Foreground="#7F8C8D" 
+                                     TextWrapping="Wrap" 
+                                     Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Separador -->
+        <GridSplitter Grid.Column="1" Width="10" 
+                    Background="Transparent" 
+                    ResizeBehavior="PreviousAndNext" 
+                    Cursor="SizeWE"/>
+
+        <!-- PAINEL DIREITO: INTERPRETADOR -->
+        <Border Grid.Column="2" Background="White" Margin="0">
+            <Grid Margin="25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" MinHeight="200"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Título do Interpretador -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="🎲 Calculadora de Probabilidade" 
+                             Style="{StaticResource TitleStyle}"/>
+                    <TextBlock Text="Experimente calcular probabilidades!" 
+                             FontSize="13" 
+                             Foreground="#7F8C8D" 
+                             Margin="0,2,0,0"/>
+
+                    <!-- Comandos Disponíveis -->
+                    <Expander Header="📚 Comandos Disponíveis" 
+                            IsExpanded="False" 
+                            Margin="0,15,0,0"
+                            Foreground="#2C3E50" 
+                            FontWeight="SemiBold"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="1"
+                            Background="#F8F9FA">
+                        <StackPanel Margin="10">
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="probabilidade(favoraveis, totais)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Calcula P(E) = favoráveis / totais" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="combinacao(n, k)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Calcula C(n,k) - ordem não importa" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="permutacao(n)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Calcula n! - formas de ordenar elementos" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="arranjo(n, k)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Calcula A(n,k) - ordem importa" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="White" 
+                                    BorderBrush="#3498DB" 
+                                    BorderThickness="1" 
+                                    CornerRadius="6" 
+                                    Padding="10" 
+                                    Margin="0,5">
+                                <StackPanel>
+                                    <TextBlock Text="escreva(&quot;mensagem&quot;)" 
+                                             Foreground="#2980B9" 
+                                             FontFamily="Cascadia Code, Consolas"
+                                             FontSize="12"/>
+                                    <TextBlock Text="Mostra uma mensagem no console" 
+                                             Foreground="#7F8C8D" 
+                                             FontSize="11" 
+                                             Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+
+                <!-- Editor de Código -->
+                <Border Grid.Row="1" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="✏️ Editor de Código" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <TextBox x:Name="CodeEditor" 
+                                 Grid.Row="1"
+                                 AcceptsReturn="True" 
+                                 AcceptsTab="True" 
+                                 FontFamily="Cascadia Code, Consolas"
+                                 FontSize="13"
+                                 Background="White"
+                                 Foreground="#2C3E50"
+                                 CaretBrush="#3498DB"
+                                 VerticalScrollBarVisibility="Auto" 
+                                 BorderThickness="0"
+                                 Padding="15"
+                                 Text="// Bem-vindo! Vamos calcular probabilidades&#x0A;escreva(&quot;🎲 Qual a chance de tirar número par no dado?&quot;)&#x0A;&#x0A;// 3 números pares (2,4,6) de 6 possíveis&#x0A;probabilidade(3, 6)&#x0A;&#x0A;// Quantas combinações de 2 cartas em 5?&#x0A;escreva(&quot;🃏 Combinações de 2 em 5:&quot;)&#x0A;combinacao(5, 2)" />
+                    </Grid>
+                </Border>
+
+                <!-- Botões de Ação -->
+                <Grid Grid.Row="2" Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" 
+                            Content="▶️ EXECUTAR" 
+                            Height="45" 
+                            Style="{StaticResource ButtonStyle}"
+                            FontSize="14" 
+                            Click="RunCode_Click"/>
+
+                    <Button Grid.Column="2" 
+                            Content="🗑️ LIMPAR" 
+                            Height="45"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            FontSize="14"
+                            Click="ClearCode_Click"/>
+                </Grid>
+
+                <!-- Console de Saída -->
+                <Border Grid.Row="3" 
+                        Background="White" 
+                        BorderBrush="#BDC3C7" 
+                        BorderThickness="2" 
+                        CornerRadius="8" 
+                        Margin="0,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="#ECF0F1" 
+                                CornerRadius="8,8,0,0" 
+                                Padding="10,8">
+                            <TextBlock Text="💻 Console de Saída" 
+                                     Foreground="#2C3E50" 
+                                     FontWeight="SemiBold"
+                                     FontSize="13"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" 
+                                    VerticalScrollBarVisibility="Auto" 
+                                    Padding="15">
+                            <TextBlock x:Name="ConsoleOutput" 
+                                     Foreground="#27AE60" 
+                                     FontFamily="Cascadia Code, Consolas"
+                                     FontSize="12"
+                                     TextWrapping="Wrap"
+                                     Text="&gt; 🚀 Calculadora de Probabilidade iniciada!&#x0A;&gt; 📝 Digite seu código acima e clique em EXECUTAR.&#x0A;&gt; 💡 Dica: Experimente calcular a chance de eventos do dia a dia!"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <!-- Botão de Exercícios -->
+                <Button Grid.Row="4" 
+                        Content="🎓 IR PARA EXERCÍCIOS PRÁTICOS"
+                        Height="50" 
+                        Margin="0,15,0,0"
+                        Style="{StaticResource DangerButtonStyle}"
+                        FontSize="15"
+                        Click="btnExerciciosClick"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

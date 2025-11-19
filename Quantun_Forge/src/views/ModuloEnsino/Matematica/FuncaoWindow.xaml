@@ -1,0 +1,249 @@
+﻿<Window x:Class="Quantun_Forge.src.views.ModuloEnsino.Matematica.FuncaoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quantun_Forge.src.views.ModuloEnsino.Matematica"
+        mc:Ignorable="d"
+        Title="Módulo de Funções - Quantum Forge" Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Estilos -->
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="SubtitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="Margin" Value="0,10,0,5"/>
+        </Style>
+
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#7F8C8D"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,5,10,5"/>
+        </Style>
+
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#ECF0F1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Painel Lateral Esquerdo - Controles -->
+        <Border Grid.Column="0" Background="White" BorderBrush="#BDC3C7" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="20">
+                    <!-- Título -->
+                    <TextBlock Text="Estudo de Funções" Style="{StaticResource TitleStyle}"/>
+
+                    <!-- Seletor de Tipo de Função -->
+                    <TextBlock Text="Tipo de Função:" Style="{StaticResource SubtitleStyle}"/>
+                    <ComboBox x:Name="cmbTipoFuncao" 
+                              FontSize="12" 
+                              Padding="8,5" 
+                              Margin="0,5,0,15"
+                              SelectionChanged="CmbTipoFuncao_SelectionChanged">
+                        <ComboBoxItem Content="Função Afim (1º Grau)" IsSelected="True"/>
+                        <ComboBoxItem Content="Função Quadrática (2º Grau)"/>
+                    </ComboBox>
+
+                    <!-- Painel Função Afim -->
+                    <StackPanel x:Name="pnlFuncaoAfim" Visibility="Visible">
+                        <TextBlock Text="f(x) = ax + b" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#2980B9"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Coeficiente Angular (a):" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtAfimA" 
+                                 Style="{StaticResource InputStyle}" 
+                                 Text="2"
+                                 TextChanged="Parametros_Changed"/>
+
+                        <TextBlock Text="Coeficiente Linear (b):" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtAfimB" 
+                                 Style="{StaticResource InputStyle}" 
+                                 Text="1"
+                                 TextChanged="Parametros_Changed"/>
+                    </StackPanel>
+
+                    <!-- Painel Função Quadrática -->
+                    <StackPanel x:Name="pnlFuncaoQuadratica" Visibility="Collapsed">
+                        <TextBlock Text="f(x) = ax² + bx + c" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#8E44AD"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Coeficiente a:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtQuadA" 
+                                 Style="{StaticResource InputStyle}" 
+                                 Text="1"
+                                 TextChanged="Parametros_Changed"/>
+
+                        <TextBlock Text="Coeficiente b:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtQuadB" 
+                                 Style="{StaticResource InputStyle}" 
+                                 Text="0"
+                                 TextChanged="Parametros_Changed"/>
+
+                        <TextBlock Text="Coeficiente c:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtQuadC" 
+                                 Style="{StaticResource InputStyle}" 
+                                 Text="-4"
+                                 TextChanged="Parametros_Changed"/>
+                    </StackPanel>
+
+                    <!-- Botões de Ação -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                        <Button Content="Plotar Gráfico" 
+                                Style="{StaticResource ButtonStyle}"
+                                Click="BtnPlotar_Click"/>
+                        <Button Content="Limpar" 
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="BtnLimpar_Click"/>
+                    </StackPanel>
+
+                    <!-- Análise da Função -->
+                    <Border Background="#F8F9FA" 
+                            CornerRadius="5" 
+                            Padding="15" 
+                            Margin="0,20,0,0"
+                            BorderBrush="#DEE2E6"
+                            BorderThickness="1">
+                        <StackPanel>
+                            <TextBlock Text="Análise da Função" 
+                                       Style="{StaticResource SubtitleStyle}"
+                                       Margin="0,0,0,10"/>
+                            <TextBlock x:Name="txtAnalise" 
+                                       TextWrapping="Wrap" 
+                                       FontSize="11"
+                                       Foreground="#495057"
+                                       LineHeight="18"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exemplos Práticos -->
+                    <TextBlock Text="Exemplos Rápidos:" 
+                               Style="{StaticResource SubtitleStyle}"
+                               Margin="0,20,0,5"/>
+                    <StackPanel x:Name="pnlExemplos">
+                        <!-- Exemplos serão adicionados dinamicamente -->
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Painel Direito - Gráfico e Explicação -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+
+            <!-- Área do Gráfico -->
+            <Border Grid.Row="0" Background="White" Margin="10" CornerRadius="8">
+                <Grid>
+                    <Canvas x:Name="canvasGrafico" 
+                            Background="White"
+                            ClipToBounds="True"/>
+
+                    <!-- Informações do Gráfico -->
+                    <StackPanel VerticalAlignment="Top" 
+                                HorizontalAlignment="Right" 
+                                Margin="15"
+                                Background="#F8F9FA"
+                                Opacity="0.95">
+                        <Border CornerRadius="5" 
+                                Padding="10" 
+                                BorderBrush="#DEE2E6" 
+                                BorderThickness="1">
+                            <TextBlock x:Name="txtInfoGrafico" 
+                                       FontSize="11" 
+                                       Foreground="#495057"
+                                       TextWrapping="Wrap"
+                                       MaxWidth="200"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Painel de Explicação -->
+            <Border Grid.Row="1" 
+                    Background="White" 
+                    Margin="10,0,10,10" 
+                    CornerRadius="8"
+                    BorderBrush="#BDC3C7"
+                    BorderThickness="1">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="15">
+                        <TextBlock Text="Conceitos Fundamentais" 
+                                   Style="{StaticResource SubtitleStyle}"/>
+                        <TextBlock x:Name="txtExplicacao" 
+                                   TextWrapping="Wrap" 
+                                   FontSize="12"
+                                   Foreground="#495057"
+                                   LineHeight="20"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

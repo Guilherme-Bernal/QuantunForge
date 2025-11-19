@@ -4,96 +4,741 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="550" d:DesignWidth="900">
+             d:DesignHeight="700"
+             d:DesignWidth="1200"
+             Background="#F5F5F5">
 
-    <Grid Background="#1E1E1E" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <UserControl.Resources>
+        <!-- Estilos -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#F72585"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
 
-        <!-- TÍTULO -->
-        <TextBlock Text="3ª Lei da Termodinâmica – Entropia e o Zero Absoluto"
-                   FontSize="24" FontWeight="Bold" Foreground="White"
-                   HorizontalAlignment="Center" Margin="0,10"/>
+        <Style x:Key="ButtonPrimaryStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F72585"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF4DA6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- TEORIA -->
-        <StackPanel Grid.Row="1" Margin="20,5,20,10">
-            <TextBlock Text="📘 Conceito" FontSize="16" FontWeight="Bold" Foreground="White"/>
-            <TextBlock Text="A 3ª Lei afirma que a entropia de um sistema tende a zero quando a temperatura se aproxima do zero absoluto (0 K)." 
-                       FontSize="14" Foreground="White" TextWrapping="Wrap" Margin="0,4,0,0"/>
-            <TextBlock Text="É impossível atingir 0 K em um número finito de etapas." 
-                       FontSize="14" Foreground="LightBlue" Margin="0,4,0,0"/>
-        </StackPanel>
+        <Style x:Key="ButtonSecondaryStyle" TargetType="Button" BasedOn="{StaticResource ButtonPrimaryStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7F8C8D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- SIMULAÇÃO -->
-        <Grid Grid.Row="2">
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.5*"/>
-                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- VISUALIZAÇÃO -->
-            <Border Grid.Column="0" Margin="10" Padding="10" Background="#2E2E2E" CornerRadius="10" BorderBrush="#444" BorderThickness="2">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+            <!-- Coluna Principal -->
+            <StackPanel Grid.Column="0">
+                <!-- Cabeçalho -->
+                <TextBlock Text="🧊 3ª Lei da Termodinâmica" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           Margin="0,0,0,10"/>
+                <TextBlock Text="O Zero Absoluto e o Limite da Entropia" 
+                           FontSize="14" 
+                           Foreground="#5A5A6B" 
+                           Margin="0,0,0,25"/>
 
-                    <TextBlock Text="📦 Partículas no Sistema" Foreground="White" FontWeight="Bold" Margin="0,0,0,10"/>
+                <!-- Equação Fundamental -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📐 Enunciado da 3ª Lei" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
 
-                    <UniformGrid x:Name="GridParticulas" Grid.Row="1" Columns="6" Rows="4" Margin="0,5,0,0">
-                        <!-- Esses emojis serão atualizados dinamicamente no .cs -->
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                        <TextBlock Text="❄️" FontSize="24" HorizontalAlignment="Center"/>
-                    </UniformGrid>
-                </Grid>
-            </Border>
+                        <Border Background="#F8F9FA" BorderBrush="#3498DB" BorderThickness="3" CornerRadius="10" Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="lim S = 0" 
+                                          FontSize="28" 
+                                          FontWeight="Bold" 
+                                          Foreground="#3498DB" 
+                                          HorizontalAlignment="Center" 
+                                          Margin="0,10"/>
+                                <TextBlock Text="T → 0 K" 
+                                          FontSize="18" 
+                                          Foreground="#7F8C8D" 
+                                          HorizontalAlignment="Center" 
+                                          Margin="0,0,0,10"/>
 
-            <!-- SLIDER -->
-            <StackPanel Grid.Column="1" Margin="10">
-                <TextBlock Text="🌡️ Temperatura (K)" Foreground="White"/>
-                <Slider x:Name="SliderTemp" Minimum="0" Maximum="300" Value="300" ValueChanged="SliderTemp_ValueChanged"/>
-                <TextBlock x:Name="TxtTemp" Text="Temperatura: 300 K" Foreground="White" Margin="0,0,0,10"/>
+                                <Separator Background="#E0E0E0" Margin="0,15"/>
 
-                <TextBlock Text="📉 Entropia visual" Foreground="White" Margin="0,10,0,0"/>
-                <Border Background="White" Width="30" Height="160" Margin="0,5">
-                    <Rectangle x:Name="BarraEntropia" Width="30" Height="0" Fill="LimeGreen" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Quando a temperatura de um cristal perfeito tende a zero absoluto, sua entropia tende a zero." 
+                                          FontSize="12" 
+                                          Foreground="#2C3E50" 
+                                          TextWrapping="Wrap"
+                                          TextAlignment="Center"
+                                          Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="5" Padding="12" Margin="0,15,0,0">
+                            <StackPanel>
+                                <TextBlock Text="💡 Princípio Fundamental:" FontSize="12" FontWeight="Bold" Foreground="#16A085" Margin="0,0,0,5"/>
+                                <TextBlock Text="A 3ª Lei estabelece um ponto de referência absoluto para a entropia e determina que é impossível alcançar o zero absoluto em um número finito de processos."
+                                          FontSize="11" 
+                                          Foreground="#2C3E50" 
+                                          TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
                 </Border>
 
-                <Button Content="⏹ Resetar" Width="150" Margin="0,10,0,0" Click="BtnResetar_Click"/>
+                <!-- Simulação Visual -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔬 Simulação: Comportamento das Partículas vs Temperatura" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Observe como o movimento molecular diminui conforme a temperatura se aproxima do zero absoluto!" 
+                                   FontSize="12" 
+                                   Foreground="#7F8C8D" 
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Canvas de Partículas -->
+                        <Border Background="#2C3E50" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Height="400"
+                                Margin="0,0,0,15">
+                            <Grid>
+                                <Canvas x:Name="CanvasParticulas" ClipToBounds="True">
+                                    <!-- Fundo com gradiente -->
+                                    <Rectangle Width="800" Height="400">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#34495E" Offset="0"/>
+                                                <GradientStop Color="#2C3E50" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+
+                                    <!-- Grid de fundo -->
+                                    <Line X1="0" Y1="200" X2="800" Y2="200" Stroke="#555555" StrokeThickness="1" StrokeDashArray="5,5"/>
+                                    <Line X1="400" Y1="0" X2="400" Y2="400" Stroke="#555555" StrokeThickness="1" StrokeDashArray="5,5"/>
+
+                                    <!-- As partículas serão criadas dinamicamente no code-behind -->
+                                </Canvas>
+
+                                <!-- Painel de informações -->
+                                <Border Background="#000000" 
+                                        Opacity="0.85" 
+                                        CornerRadius="8" 
+                                        Padding="15" 
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right"
+                                        Margin="20">
+                                    <StackPanel Width="200">
+                                        <TextBlock Text="📊 Estado do Sistema" 
+                                                   Foreground="White" 
+                                                   FontSize="14" 
+                                                   FontWeight="Bold"
+                                                   Margin="0,0,0,15"/>
+
+                                        <TextBlock x:Name="TxtEstadoSistema" 
+                                                   Text="🔥 Alta Temperatura" 
+                                                   Foreground="#E74C3C" 
+                                                   FontSize="13" 
+                                                   FontWeight="Bold"
+                                                   Margin="0,0,0,15"/>
+
+                                        <!-- Temperatura -->
+                                        <TextBlock Text="Temperatura:" Foreground="#BDC3C7" FontSize="11" Margin="0,0,0,3"/>
+                                        <TextBlock x:Name="TxtTempDisplay" 
+                                                   Text="300 K (27°C)" 
+                                                   Foreground="White" 
+                                                   FontSize="13" 
+                                                   FontWeight="Bold"
+                                                   Margin="0,0,0,10"/>
+
+                                        <!-- Entropia Relativa -->
+                                        <TextBlock Text="Entropia Relativa:" Foreground="#BDC3C7" FontSize="11" Margin="0,0,0,3"/>
+                                        <Border Background="#1E1E1E" Height="20" CornerRadius="4" Margin="0,0,0,3">
+                                            <Rectangle x:Name="BarraEntropiaInfo" 
+                                                       Fill="#9B59B6" 
+                                                       HorizontalAlignment="Left" 
+                                                       Width="200"/>
+                                        </Border>
+                                        <TextBlock x:Name="TxtEntropiaPercent" 
+                                                   Text="100%" 
+                                                   Foreground="#9B59B6" 
+                                                   FontSize="11" 
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="0,2,0,10"/>
+
+                                        <!-- Agitação Molecular -->
+                                        <TextBlock Text="Agitação Molecular:" Foreground="#BDC3C7" FontSize="11" Margin="0,0,0,3"/>
+                                        <TextBlock x:Name="TxtAgitacao" 
+                                                   Text="Muito Alta" 
+                                                   Foreground="#F39C12" 
+                                                   FontSize="12" 
+                                                   FontWeight="Bold"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Legenda -->
+                                <Border Background="#000000" 
+                                        Opacity="0.85" 
+                                        CornerRadius="8" 
+                                        Padding="12" 
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Left"
+                                        Margin="20">
+                                    <StackPanel>
+                                        <TextBlock Text="Códigos de Cor:" Foreground="#BDC3C7" FontSize="11" FontWeight="Bold" Margin="0,0,0,8"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,3">
+                                            <Ellipse Width="12" Height="12" Fill="#E74C3C" Margin="0,0,8,0"/>
+                                            <TextBlock Text="Alta temp (maior que 200K)" Foreground="White" FontSize="10"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,3">
+                                            <Ellipse Width="12" Height="12" Fill="#F39C12" Margin="0,0,8,0"/>
+                                            <TextBlock Text="Média temp (100-200K)" Foreground="White" FontSize="10"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,3">
+                                            <Ellipse Width="12" Height="12" Fill="#3498DB" Margin="0,0,8,0"/>
+                                            <TextBlock Text="Baixa temp (menor que 100K)" Foreground="White" FontSize="10"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Gráfico de Entropia vs Temperatura -->
+                        <Border Background="#FFFFFF" 
+                                BorderBrush="#BDC3C7" 
+                                BorderThickness="2" 
+                                CornerRadius="8" 
+                                Padding="15"
+                                Margin="0,0,0,0">
+                            <StackPanel>
+                                <TextBlock Text="📉 Gráfico: Entropia vs Temperatura" 
+                                           FontSize="13" 
+                                           FontWeight="Bold" 
+                                           Foreground="#2C3E50" 
+                                           Margin="0,0,0,10"/>
+
+                                <Canvas Width="700" Height="200" Background="#F8F9FA">
+                                    <!-- Eixos -->
+                                    <Line X1="50" Y1="180" X2="680" Y2="180" Stroke="#2C3E50" StrokeThickness="2"/>
+                                    <Line X1="50" Y1="20" X2="50" Y2="180" Stroke="#2C3E50" StrokeThickness="2"/>
+
+                                    <!-- Labels -->
+                                    <TextBlock Text="S" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" Canvas.Left="25" Canvas.Top="15"/>
+                                    <TextBlock Text="T (K)" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" Canvas.Left="660" Canvas.Top="185"/>
+                                    <TextBlock Text="0" FontSize="12" Foreground="#7F8C8D" Canvas.Left="45" Canvas.Top="185"/>
+
+                                    <!-- Curva de Entropia -->
+                                    <Path x:Name="CurvaEntropia" 
+                                          Stroke="#9B59B6" 
+                                          StrokeThickness="3"
+                                          Data="M 50,180 Q 100,160 150,120 Q 250,60 400,30 Q 550,20 680,20">
+                                        <Path.Effect>
+                                            <DropShadowEffect Color="#9B59B6" BlurRadius="8" ShadowDepth="0" Opacity="0.5"/>
+                                        </Path.Effect>
+                                    </Path>
+
+                                    <!-- Marcador de posição atual -->
+                                    <Ellipse x:Name="MarcadorTemp" 
+                                             Width="12" 
+                                             Height="12" 
+                                             Fill="#F72585" 
+                                             Stroke="White" 
+                                             StrokeThickness="2"
+                                             Canvas.Left="674"
+                                             Canvas.Top="14">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect Color="#F72585" BlurRadius="10" ShadowDepth="0"/>
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+
+                                    <!-- Linha vertical do marcador -->
+                                    <Line x:Name="LinhaMarcador" 
+                                          X1="680" Y1="20" X2="680" Y2="180" 
+                                          Stroke="#F72585" 
+                                          StrokeThickness="2" 
+                                          StrokeDashArray="5,3"
+                                          Opacity="0.6"/>
+                                </Canvas>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Consequências da 3ª Lei -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎯 Consequências e Implicações" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" Grid.Column="0" Background="#EBF5FB" BorderBrush="#3498DB" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,0,5,5">
+                                <StackPanel>
+                                    <TextBlock Text="❄️ Impossibilidade do Zero Absoluto" FontSize="13" FontWeight="Bold" Foreground="#3498DB" Margin="0,0,0,10"/>
+                                    <TextBlock Text="É impossível resfriar qualquer sistema até 0 K em um número finito de etapas. Cada processo de resfriamento remove menos energia que o anterior." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="0" Grid.Column="1" Background="#FEF3E8" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="8" Padding="15" Margin="5,0,0,5">
+                                <StackPanel>
+                                    <TextBlock Text="📏 Ponto de Referência Absoluto" FontSize="13" FontWeight="Bold" Foreground="#F39C12" Margin="0,0,0,10"/>
+                                    <TextBlock Text="A 3ª Lei fornece um ponto zero absoluto para entropia, permitindo calcular valores absolutos de S, não apenas variações ΔS." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="0" Background="#F4ECF7" BorderBrush="#9B59B6" BorderThickness="2" CornerRadius="8" Padding="15" Margin="0,5,5,0">
+                                <StackPanel>
+                                    <TextBlock Text="🔬 Cristais Perfeitos" FontSize="13" FontWeight="Bold" Foreground="#9B59B6" Margin="0,0,0,10"/>
+                                    <TextBlock Text="A entropia zero só é atingida por cristais perfeitos sem defeitos. Cristais reais sempre têm alguma entropia residual." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="1" Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="8" Padding="15" Margin="5,5,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🌡️ Comportamento Quântico" FontSize="13" FontWeight="Bold" Foreground="#1ABC9C" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Próximo ao zero absoluto, efeitos quânticos dominam. Os átomos ocupam o estado fundamental com mínima energia." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Aplicações -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔧 Aplicações e Pesquisa" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" Grid.Column="0" Background="#E8F6F3" CornerRadius="5" Padding="12" Margin="0,0,5,5">
+                                <StackPanel>
+                                    <TextBlock Text="❄️ Criogenia" FontSize="13" FontWeight="Bold" Foreground="#1ABC9C" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Estudo de materiais e fenômenos em temperaturas extremamente baixas." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="0" Grid.Column="1" Background="#FEF3E8" CornerRadius="5" Padding="12" Margin="5,0,0,5">
+                                <StackPanel>
+                                    <TextBlock Text="🔬 Supercondutividade" FontSize="13" FontWeight="Bold" Foreground="#F39C12" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Materiais que conduzem eletricidade sem resistência em baixíssimas temperaturas." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="0" Background="#EBF5FB" CornerRadius="5" Padding="12" Margin="0,5,5,5">
+                                <StackPanel>
+                                    <TextBlock Text="🧲 Magnetismo Quântico" FontSize="13" FontWeight="Bold" Foreground="#3498DB" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Comportamentos magnéticos exóticos próximos ao zero absoluto." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="1" Background="#F4ECF7" CornerRadius="5" Padding="12" Margin="5,5,0,5">
+                                <StackPanel>
+                                    <TextBlock Text="💎 Condensados de Bose-Einstein" FontSize="13" FontWeight="Bold" Foreground="#9B59B6" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Estado da matéria formado próximo ao zero absoluto." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="2" Grid.Column="0" Background="#FADBD8" CornerRadius="5" Padding="12" Margin="0,5,5,0">
+                                <StackPanel>
+                                    <TextBlock Text="💻 Computação Quântica" FontSize="13" FontWeight="Bold" Foreground="#E74C3C" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Qubits necessitam de temperaturas próximas a 0 K para funcionar." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="2" Grid.Column="1" Background="#E8F8F5" CornerRadius="5" Padding="12" Margin="5,5,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="🌌 Astrofísica" FontSize="13" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Estudo da radiação cósmica de fundo (2.7 K)." 
+                                              FontSize="11" 
+                                              Foreground="#2C3E50" 
+                                              TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </StackPanel>
 
-            <!-- INTERPRETAÇÃO -->
-            <StackPanel Grid.Column="2" Margin="10">
-                <TextBlock Text="📊 Interpretação" FontWeight="Bold" FontSize="16" Foreground="White"/>
-                <TextBlock x:Name="TxtInterpretacao" FontSize="14" Foreground="LightGreen" TextWrapping="Wrap" Margin="0,10,0,0"/>
+            <!-- Coluna Lateral - Controles -->
+            <StackPanel Grid.Column="2">
+                <!-- Controle de Temperatura -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Controle de Temperatura" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="🌡️ Temperatura:" FontSize="12" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+
+                        <!-- Slider Vertical -->
+                        <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="5" Padding="15" Margin="0,5,0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Slider x:Name="SliderTemp"
+                                       Orientation="Vertical"
+                                       Minimum="0"
+                                       Maximum="300"
+                                       Value="300"
+                                       TickFrequency="10"
+                                       IsSnapToTickEnabled="True"
+                                       Height="250"
+                                       ValueChanged="SliderTemp_ValueChanged"
+                                       Margin="0,0,15,0"/>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                                    <TextBlock Text="300 K" FontSize="10" Foreground="#E74C3C" FontWeight="Bold" Margin="0,0,0,20"/>
+                                    <TextBlock Text="200 K" FontSize="10" Foreground="#F39C12" Margin="0,0,0,40"/>
+                                    <TextBlock Text="100 K" FontSize="10" Foreground="#3498DB" Margin="0,0,0,40"/>
+                                    <TextBlock Text="0 K" FontSize="10" Foreground="#9B59B6" FontWeight="Bold" Margin="0,0,0,0" VerticalAlignment="Bottom"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <TextBlock x:Name="TxtTempSlider" 
+                                  Text="T = 300 K (27°C)" 
+                                  FontSize="13" 
+                                  FontWeight="Bold"
+                                  Foreground="#F72585" 
+                                  HorizontalAlignment="Center"
+                                  Margin="0,0,0,20"/>
+
+                        <!-- Botões -->
+                        <Button Content="▶️ Animar Partículas" 
+                               Style="{StaticResource ButtonPrimaryStyle}"
+                               Click="BtnAnimar_Click"/>
+
+                        <Button Content="⏸️ Pausar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnPausar_Click"/>
+
+                        <Button Content="🔄 Resetar" 
+                               Style="{StaticResource ButtonSecondaryStyle}"
+                               Click="BtnResetar_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Cenários Rápidos -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⚡ Temperaturas Extremas" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <Button Content="🔥 Temperatura Ambiente (300K)" 
+                                Click="BtnCenario1_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#E74C3C"/>
+
+                        <Button Content="❄️ Nitrogênio Líquido (77K)" 
+                                Click="BtnCenario2_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#3498DB"/>
+
+                        <Button Content="🧊 Hélio Líquido (4K)" 
+                                Click="BtnCenario3_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#1ABC9C"/>
+
+                        <Button Content="🌌 Quase Zero (0.1K)" 
+                                Click="BtnCenario4_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#9B59B6"/>
+
+                        <Button Content="💎 Recorde Laboratorial (0.001K)" 
+                                Click="BtnCenario5_Click" 
+                                Style="{StaticResource ButtonSecondaryStyle}"
+                                Background="#F39C12"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Resultados -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊 Análise Atual" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,15"/>
+
+                        <!-- Valores -->
+                        <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="5" Padding="12" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Temperatura:" FontSize="10" Foreground="#7F8C8D" Margin="0,0,0,3"/>
+                                <TextBlock x:Name="TxtTempResultado" 
+                                           Text="300 K" 
+                                           FontSize="18" 
+                                           FontWeight="Bold" 
+                                           Foreground="#E74C3C"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="#F8F9FA" BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="5" Padding="12" Margin="0,0,0,15">
+                            <StackPanel>
+                                <TextBlock Text="Entropia Relativa:" FontSize="10" Foreground="#7F8C8D" Margin="0,0,0,3"/>
+                                <TextBlock x:Name="TxtEntropiaResultado" 
+                                           Text="100.0%" 
+                                           FontSize="18" 
+                                           FontWeight="Bold" 
+                                           Foreground="#9B59B6"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Interpretação -->
+                        <Border Background="#E8F8F5" BorderBrush="#1ABC9C" BorderThickness="2" CornerRadius="5" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="📖 Interpretação:" 
+                                           FontSize="12" 
+                                           FontWeight="Bold" 
+                                           Foreground="#16A085" 
+                                           Margin="0,0,0,8"/>
+                                <TextBlock x:Name="TxtInterpretacao" 
+                                           Text="Ajuste a temperatura para observar como o comportamento molecular muda." 
+                                           FontSize="11" 
+                                           Foreground="#2C3E50" 
+                                           TextWrapping="Wrap" 
+                                           LineHeight="16"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Análise Física -->
+                <Border x:Name="PainelAnalise" 
+                        Style="{StaticResource SectionBorderStyle}"
+                        Visibility="Visible">
+                    <StackPanel>
+                        <TextBlock Text="🔬 Análise Física" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtAnaliseDetalhada" 
+                                   Text="A temperatura está alta. As partículas possuem muita energia cinética e se movem caoticamente." 
+                                   FontSize="11" 
+                                   Foreground="#2C3E50" 
+                                   TextWrapping="Wrap" 
+                                   LineHeight="16"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Recordes de Temperatura -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🏆 Recordes" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <Border Background="#FEF5E7" BorderBrush="#F39C12" BorderThickness="2" CornerRadius="5" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="Temperaturas Mais Baixas:" FontSize="11" FontWeight="Bold" Foreground="#F39C12" Margin="0,0,0,8"/>
+
+                                <TextBlock FontSize="10" Foreground="#2C3E50" Margin="0,3" TextWrapping="Wrap">
+                                    <Run Text="• Recorde:" FontWeight="Bold"/>
+                                    <Run Text=" 0.0000000001 K (100 pK)"/>
+                                </TextBlock>
+
+                                <TextBlock FontSize="10" Foreground="#2C3E50" Margin="0,3" TextWrapping="Wrap">
+                                    <Run Text="• Radiação cósmica:" FontWeight="Bold"/>
+                                    <Run Text=" 2.7 K"/>
+                                </TextBlock>
+
+                                <TextBlock FontSize="10" Foreground="#2C3E50" Margin="0,3" TextWrapping="Wrap">
+                                    <Run Text="• Hélio líquido:" FontWeight="Bold"/>
+                                    <Run Text=" 4.2 K"/>
+                                </TextBlock>
+
+                                <TextBlock FontSize="10" Foreground="#2C3E50" Margin="0,3" TextWrapping="Wrap">
+                                    <Run Text="• Nitrogênio líquido:" FontWeight="Bold"/>
+                                    <Run Text=" 77 K"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Dicas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💡 Dica Útil" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F39C12" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtDica" 
+                                   Text="Conforme a temperatura diminui, as partículas se movem mais lentamente até quase pararem no zero absoluto!" 
+                                   FontSize="11" 
+                                   Foreground="#2C3E50" 
+                                   TextWrapping="Wrap" 
+                                   LineHeight="16"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Estatísticas -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📈 Estatísticas" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#000000" 
+                                   Margin="0,0,0,10"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock Text="Simulações:" FontSize="11" Foreground="#7F8C8D" Margin="0,3"/>
+                                <TextBlock Text="Temp. Mínima:" FontSize="11" Foreground="#7F8C8D" Margin="0,3"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock x:Name="TxtContadorSimulacoes" 
+                                           Text="0" 
+                                           FontSize="11" 
+                                           FontWeight="Bold" 
+                                           Foreground="#2C3E50" 
+                                           Margin="0,3"/>
+                                <TextBlock x:Name="TxtTempMinima" 
+                                           Text="300 K" 
+                                           FontSize="11" 
+                                           FontWeight="Bold" 
+                                           Foreground="#2C3E50" 
+                                           Margin="0,3"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Info Extra -->
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📚 Curiosidade" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F72585" 
+                                   Margin="0,0,0,10"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#7F8C8D" LineHeight="16">
+                            <Run Text="Walther Nernst formulou a 3ª Lei em 1906. O prêmio Nobel de Física de 1997 foi dado pela obtenção de temperaturas da ordem de nanokelvin usando resfriamento a laser!"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

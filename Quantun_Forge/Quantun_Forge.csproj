@@ -28,4 +28,8 @@
 	  <ProjectReference Include="..\Quantum_Forge.Services\Quantum_Forge.Services.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="src\views\ModuloEnsino\Computacao\ComputacaoQuantica\" />
+	</ItemGroup>
+
 </Project>
